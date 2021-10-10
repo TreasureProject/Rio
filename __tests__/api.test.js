@@ -2,25 +2,25 @@ const request = require('supertest');
 const rio = require('../src/index');
 const { app, server } = require('../api');
 
-const { ArgumentType } = rio;
 const {
   Integer,
   String,
   Float,
-  Array,
+  rArray,
   Boolean,
   Map,
-} = ArgumentType;
+  ArgumentType,
+} = rio;
 
 const Nothing = new ArgumentType('nothing');
 
-const A = new rio.Argument('a', Integer, true, 'A number to be added');
-const B = new rio.Argument('b', Integer, true, 'Another number to be added');
-const C = new rio.Argument('c', String, true);
-const D = new rio.Argument('d', Float, true);
-const E = new rio.Argument('e', Array, true);
-const F = new rio.Argument('f', Boolean, true);
-const G = new rio.Argument('g', Map, true);
+const A = Integer('a', true, 'A number to be added');
+const B = Integer('b', true, 'Another number to be added');
+const C = String('c', true);
+const D = Float('d', true);
+const E = rArray('e', true);
+const F = Boolean('f', true);
+const G = Map('g', true);
 const H = new rio.Argument('h', Nothing, false);
 const I = new rio.Argument('i', Nothing);
 

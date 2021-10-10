@@ -11,7 +11,8 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "test": "jest"
+    "test": "jest",
+    "fix": "eslint . --fix"
   },
   "dependencies": {
     "commander": "^8.2.0"

@@ -5,8 +5,7 @@ const rio = require('./src/index');
 const app = express();
 const server = http.createServer(app);
 
-const { ArgumentType } = rio;
-const { Integer } = ArgumentType;
+const { Integer } = rio;
 
 rio.init(app, 'RIO Example API');
 
@@ -14,8 +13,8 @@ const limit = '300KB';
 app.use(express.json({ limit }));
 app.use(express.urlencoded({ limit, extended: true, parameterLimit: 50000 }));
 
-const A = new rio.Argument('a', Integer, true, 'A number to be added');
-const B = new rio.Argument('b', Integer, true, 'Another number to be added');
+const A = Integer('a', true, 'A number to be added');
+const B = Integer('b', true, 'Another number to be added');
 
 rio.get('/', (req, res) => {
   const result = JSON.stringify({ result: 'Hello, world' });

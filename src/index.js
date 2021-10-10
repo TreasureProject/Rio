@@ -51,4 +51,11 @@ rio.init = (app, name = null) => {
   }
 };
 
+rio.Integer = (name, required = false, description = null) => new rio.Argument(name, rio.ArgumentType.Integer, required, description);
+rio.String = (name, required = false, description = null) => new rio.Argument(name, rio.ArgumentType.String, required, description);
+rio.Float = (name, required = false, description = null) => new rio.Argument(name, rio.ArgumentType.Float, required, description);
+rio.Boolean = (name, required = false, description = null) => new rio.Argument(name, rio.ArgumentType.Boolean, required, description);
+rio.Map = (name, required = false, description = null) => new rio.Argument(name, rio.ArgumentType.Map, required, description);
+rio.rArray = (name, required = false, description = null) => new rio.Argument(name, rio.ArgumentType.Array, required, description);
+
 module.exports = rio;
