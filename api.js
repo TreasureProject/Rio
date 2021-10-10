@@ -9,8 +9,8 @@ const limit = '300KB';
 app.use(express.json({ limit }));
 app.use(express.urlencoded({ limit, extended: true, parameterLimit: 50000 }));
 
-const A = new rio.Argument('a', rio.ArgumentType.Integer, true);
-const B = new rio.Argument('b', rio.ArgumentType.Integer, true);
+const A = new rio.Argument('a', rio.ArgumentType.Integer, true, 'A number to be added');
+const B = new rio.Argument('b', rio.ArgumentType.Integer, true, 'Another number to be added');
 const C = new rio.Argument('c', rio.ArgumentType.String, true);
 const D = new rio.Argument('d', rio.ArgumentType.Float, true);
 const E = new rio.Argument('e', rio.ArgumentType.Array, true);
