@@ -13,7 +13,7 @@ GET - /
 ```
 
 #### Description:
-- Hello, world endpoint. No functionality
+- Returns the string 'Hello, world'
 
 _No parameters_
 

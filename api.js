@@ -25,7 +25,7 @@ rio.get('/', (req, res) => {
   res.status(200).send(result);
 },
 [],
-'Hello, world endpoint. No functionality',
+'Returns the string \'Hello, world\'',
 { result: 'Hello, world' });
 
 rio.get('/sum', (req, res) => {
