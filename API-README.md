@@ -25,7 +25,9 @@ Example Request:
 
 Example Response:
 ```
-"Hello, world"
+{
+  "result": "Hello, world"
+}
 ```
 ___
 ###### endpt #2
