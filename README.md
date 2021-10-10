@@ -33,7 +33,9 @@ rio.init(app);
 
 rio.get('/', (req, res) => {
   res.status(200).send('Hello, world');
-}, [], 'Hello, world endpoint. No functionality');
+},
+[],
+'Hello, world endpoint. No functionality');
 ```
 
 The key differences are:
@@ -62,7 +64,12 @@ rio.get(app, '/sum', (req, res) => {
   b = parseInt(b, 10);
   const result = JSON.stringify({ result: a + b });
   res.status(200).send(result);
-}, [A, B], 'Adds two numbers together');
+},
+[
+  A,
+  B,
+],
+'Adds two numbers together');
 ```
 
 Initialize arguments with:
@@ -103,16 +110,18 @@ rio.init(app);
 
 const { rInt } = rio;
 
-const A = rInt('a', 'A number to be added');
-const B = rInt('b', 'Another number to be added');
-
 rio.get(app, '/sum', (req, res) => {
   let { a, b } = req.query;
   a = parseInt(a, 10);
   b = parseInt(b, 10);
   const result = JSON.stringify({ result: a + b });
   res.status(200).send(result);
-}, [A, B], 'Adds two numbers together');
+},
+[
+  rInt('a', 'A number to be added'),
+  rInt('b', 'Another number to be added'),
+],
+'Adds two numbers together');
 ```
 
 ## The Rio CLI

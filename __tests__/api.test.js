@@ -27,7 +27,8 @@ const I = new rio.Argument('i', Nothing);
 rio.get('/hello', (req, res) => {
   const result = JSON.stringify({ result: 'Hello, world' });
   res.status(200).send(result);
-}, []);
+},
+[]);
 
 rio.post('/add', (req, res) => {
   let { a, b } = req.body;
@@ -35,7 +36,11 @@ rio.post('/add', (req, res) => {
   b = parseInt(b, 10);
   const result = JSON.stringify({ result: a + b });
   res.status(200).send(result);
-}, [A, B]);
+},
+[
+  A,
+  B,
+]);
 
 rio.post('/valids', (req, res) => {
   let {
@@ -82,7 +87,18 @@ rio.post('/valids', (req, res) => {
 
   const result = JSON.stringify({ result: r });
   res.status(200).send(result);
-}, [A, B, C, D, E, F, G, H, I]);
+},
+[
+  A,
+  B,
+  C,
+  D,
+  E,
+  F,
+  G,
+  H,
+  I,
+]);
 
 afterEach(async () => {
   await server.close();
