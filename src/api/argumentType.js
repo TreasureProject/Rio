@@ -40,7 +40,7 @@ format.Float = (data) => {
 
 format.Array = (arr) => {
   if (Array.isArray(arr)) {
-    return true;
+    return arr;
   }
 
   let array;

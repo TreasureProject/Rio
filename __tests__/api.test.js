@@ -217,4 +217,19 @@ describe('Type formatters', () => {
     formatted = rio.format.Float('ABC');
     expect(formatted).toBe(0);
   });
+
+  test('Array formatter', () => {
+    let formatted = rio.format.Array([]);
+    expect(formatted).toEqual([]);
+
+    formatted = rio.format.Array([[[[]]]]);
+    expect(formatted).toEqual([[[[]]]]);
+
+    formatted = rio.format.Array('ABC');
+    expect(formatted).toEqual(null);
+
+    const stringified = JSON.stringify(['1', '2', '3']);
+    formatted = rio.format.Array(stringified);
+    expect(formatted).toEqual(['1', '2', '3']);
+  });
 });
