@@ -1,21 +1,24 @@
 # Rio
-Automatic Express API README generator
+Automatic Express API argument checker and README generator
 
 [![Actions Status](https://github.com/RyuGames/Rio/workflows/Tests/badge.svg)](https://github.com/RyuGames/Rio/actions)
 [![Actions Status](https://github.com/RyuGames/Rio/workflows/Linter/badge.svg)](https://github.com/RyuGames/Rio/actions)
 [![codecov](https://codecov.io/gh/RyuGames/Rio/branch/main/graph/badge.svg?token=V2HH92MN1A)](https://codecov.io/gh/RyuGames/Rio)
 [![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
 
-## Installation Guide
-Install CLI with:
-```bash
-npm i -g ./
-```
+### Summary
+Rio has two main purposes:
+1. It allows you to specify arguments for an endpoint and automatically checks for them calling the endpoint.
+2. Automatically generates an API README of those endpoints.
 
-## Converting Express endpoint to Rio endpoint:
+## Usage
+
+### Converting Express endpoint to Rio endpoint:
 Here is an example Express API endpoint that takes no arguments and returns the string `"Hello, world"`:
 
 ```javascript
+const app = express();
+
 app.get('/', (req, res) => {
   res.status(200).send('Hello, world');
 });
@@ -23,20 +26,31 @@ app.get('/', (req, res) => {
 
 The corresponding Rio endpoint looks like this:
 ```javascript
+const rio = require('rio-express');
+
+const app = express();
+rio.init(app);
+
 rio.get('/', (req, res) => {
   res.status(200).send('Hello, world');
 }, [], 'Hello, world endpoint. No functionality');
 ```
 
 The key differences are:
+- Initializing rio with the express application
 - Changing `app` to `rio`
 - Adding an empty array for the expected arguments, after the callback
 - Adding an optional description string, after the arguments array
 
-## More complicated usage
+### More complicated usage
 Here is an implementation of an API used to sum two integer values:
 
 ```javascript
+const rio = require('rio-express');
+
+const app = express();
+rio.init(app);
+
 const { ArgumentType } = rio;
 const { Integer } = ArgumentType;
 
@@ -69,7 +83,15 @@ Rio currently supports the following types:
 - Array
 - Map
 
-## Using the CLI to generate a README
+## The Rio CLI
+
+### Installation Guide
+Install CLI with:
+```bash
+npm i -g ./
+```
+
+### Using the CLI to generate a README
 Use the CLI command to generate API docs with:
 ```bash
 rio init <path-to-api.js>

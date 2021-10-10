@@ -44,9 +44,11 @@ function writeREADME() {
 
 rio.writeREADME = writeREADME;
 
-rio.init = (app, name) => {
+rio.init = (app, name = null) => {
   rio.app = app;
-  rio.appName = name;
+  if (name != null) {
+    rio.appName = name;
+  }
 };
 
 module.exports = rio;
