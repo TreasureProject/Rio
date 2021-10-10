@@ -64,8 +64,8 @@ describe('Using rio.get and rio.put', () => {
     const res = await request(app)
       .post('/add')
       .send({
-        a: '1',
-        b: '2',
+        a: 1,
+        b: 2,
       });
     expect(res.statusCode).toEqual(200);
     const { text } = res;
@@ -77,11 +77,24 @@ describe('Using rio.get and rio.put', () => {
     const res = await request(app)
       .post('/add')
       .send({
-        a: '1',
+        a: 1,
       });
     expect(res.statusCode).toEqual(403);
     const { text } = res;
     const { error } = JSON.parse(text);
     expect(error).toEqual('Missing integer argument b');
+  });
+
+  test('Post, with wrong type arguments', async () => {
+    const res = await request(app)
+      .post('/add')
+      .send({
+        a: 1,
+        b: 'A',
+      });
+    expect(res.statusCode).toEqual(403);
+    const { text } = res;
+    const { error } = JSON.parse(text);
+    expect(error).toEqual('Argument b was not of the specified type integer');
   });
 });
