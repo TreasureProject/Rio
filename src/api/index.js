@@ -15,11 +15,28 @@ function handleHTTP(req, res, next, callback, isPost) {
     const value = (isPost ? req.body : req.query)[providedArg.name];
     if (value != null) {
       let validType = true;
+
       switch (providedArg.type) {
+        case ArgumentType.String:
+          validType = format.String(value);
+          break;
         case ArgumentType.Integer:
-          if (!format.Int(value)) {
-            validType = false;
-          }
+          validType = format.Int(value);
+          break;
+        case ArgumentType.Float:
+          validType = format.Float(value);
+          break;
+        case ArgumentType.Array:
+          validType = format.Array(value);
+          break;
+        case ArgumentType.Boolean:
+          validType = format.Boolean(value);
+          break;
+        case ArgumentType.Map:
+          validType = format.Map(value);
+          break;
+        default:
+          break;
       }
 
       if (!validType) {

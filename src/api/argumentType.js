@@ -8,10 +8,11 @@ ArgumentType.Integer = new ArgumentType('integer');
 ArgumentType.Float = new ArgumentType('float');
 ArgumentType.Array = new ArgumentType('array');
 ArgumentType.Boolean = new ArgumentType('boolean');
+ArgumentType.Map = new ArgumentType('map');
 
 const format = {};
 
-format.string = (str) => {
+format.String = (str) => {
   if (str == null) {
     return null;
   }
@@ -54,6 +55,8 @@ format.Boolean = (bool) => {
   }
   return string === 'true' || string === 'True';
 };
+
+format.Map = (val) => typeof val === 'object' && val !== null;
 
 module.exports = {
   ArgumentType,
