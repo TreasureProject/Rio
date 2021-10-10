@@ -39,6 +39,10 @@ format.Float = (data) => {
 };
 
 format.Array = (arr) => {
+  if (Array.isArray(arr)) {
+    return true;
+  }
+
   let array;
   try {
     array = JSON.parse(arr);

@@ -71,4 +71,5 @@ module.exports = {
   get,
   Argument,
   ArgumentType,
+  format,
 };

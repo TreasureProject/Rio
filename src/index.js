@@ -4,6 +4,7 @@ const {
   get,
   Argument,
   ArgumentType,
+  format,
 } = require('./api');
 
 process.rio = {};
@@ -15,4 +16,5 @@ module.exports = {
   get,
   Argument,
   ArgumentType,
+  format,
 };
