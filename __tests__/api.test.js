@@ -232,4 +232,27 @@ describe('Type formatters', () => {
     formatted = rio.format.Array(stringified);
     expect(formatted).toEqual(['1', '2', '3']);
   });
+
+  test('Boolean formatter', () => {
+    let formatted = rio.format.Boolean(false);
+    expect(formatted).toEqual(false);
+
+    formatted = rio.format.Boolean(true);
+    expect(formatted).toEqual(true);
+
+    formatted = rio.format.Boolean('true');
+    expect(formatted).toEqual(true);
+
+    formatted = rio.format.Boolean('True');
+    expect(formatted).toEqual(true);
+
+    formatted = rio.format.Boolean(55);
+    expect(formatted).toEqual(false);
+
+    formatted = rio.format.Boolean('ABC');
+    expect(formatted).toEqual(false);
+
+    formatted = rio.format.Boolean(null);
+    expect(formatted).toEqual(null);
+  });
 });
