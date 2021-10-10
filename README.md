@@ -19,8 +19,7 @@ app.get('/', (req, res) => {
 The corresponding Rio endpoint looks like this:
 ```javascript
 rio.get(app, '/', [], (req, res) => {
-  const result = JSON.stringify({ result: 'Hello, world' });
-  res.status(200).send(result);
+  res.status(200).send('Hello, world');
 }, 'Hello, world endpoint. No functionality');
 ```
 
