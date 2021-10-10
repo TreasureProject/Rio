@@ -3,24 +3,24 @@ const rio = require('../src/index');
 const { app, server } = require('../api');
 
 const {
-  Integer,
-  String,
-  Float,
-  rArray,
-  Boolean,
-  Map,
+  RequiredInteger,
+  RequiredString,
+  RequiredFloat,
+  RequiredArray,
+  RequiredBoolean,
+  RequiredMap,
   ArgumentType,
 } = rio;
 
 const Nothing = new ArgumentType('nothing');
 
-const A = Integer('a', true, 'A number to be added');
-const B = Integer('b', true, 'Another number to be added');
-const C = String('c', true);
-const D = Float('d', true);
-const E = rArray('e', true);
-const F = Boolean('f', true);
-const G = Map('g', true);
+const A = RequiredInteger('a', true, 'A number to be added');
+const B = RequiredInteger('b', true, 'Another number to be added');
+const C = RequiredString('c', true);
+const D = RequiredFloat('d', true);
+const E = RequiredArray('e', true);
+const F = RequiredBoolean('f', true);
+const G = RequiredMap('g', true);
 const H = new rio.Argument('h', Nothing, false);
 const I = new rio.Argument('i', Nothing);
 

@@ -51,11 +51,10 @@ const rio = require('rio-express');
 const app = express();
 rio.init(app);
 
-const { ArgumentType } = rio;
-const { Integer } = ArgumentType;
+const { RequiredInteger } = rio;
 
-const A = new rio.Argument('a', Integer, true, 'A number to be added');
-const B = new rio.Argument('b', Integer, true, 'Another number to be added');
+const A = RequiredInteger('a', 'A number to be added');
+const B = RequiredInteger('b', 'Another number to be added');
 
 rio.get(app, '/sum', (req, res) => {
   let { a, b } = req.query;
@@ -68,20 +67,21 @@ rio.get(app, '/sum', (req, res) => {
 
 Initialize arguments with:
 - The expected name of the variable
-- The type
-- Whether they are required
 - An optional description
 
 They are then passed into the `rio.get` or `rio.post` functions. If the request to the endpoint is missing either an integer value for `a` or `b`, then the endpoint will automatically return an error 403, without calling the callback.
 
+### Argument Optionality
+Initializers begin with the word `'Required'` or `'Optional'` and are followed by the type.
+
 ### Argument Types
 Rio currently supports the following types:
-- String
-- Integer
-- Float
-- Boolean
-- Array
-- Map
+- String (`RequiredString` or `OptionalString`)
+- Integer (`RequiredInteger` or `OptionalInteger`)
+- Float (`RequiredFloat` or `OptionalFloat`)
+- Boolean (`RequiredBoolean` or `OptionalBoolean`)
+- Array (`RequiredArray` or `OptionalArray`)
+- Map (`RequiredMap` or `OptionalMap`)
 
 ## The Rio CLI
 

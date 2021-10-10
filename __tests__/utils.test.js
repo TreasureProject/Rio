@@ -13,94 +13,138 @@ test('Getting endpoints', () => {
   expect(routes.length).toBe(1);
 });
 
-describe('Argument initializers', () => {
+describe('Required Argument initializers', () => {
   test('Integer', () => {
-    const func = rio.Integer;
+    const func = rio.RequiredInteger;
     let a = func('name');
-    expect(a.required).toBe(false);
-    expect(a.description).toBe(null);
-
-    a = func('name', true);
     expect(a.required).toBe(true);
     expect(a.description).toBe(null);
 
-    a = func('name', true, 'Hi!');
+    a = func('name', 'Hi!');
     expect(a.required).toBe(true);
     expect(a.description).toBe('Hi!');
   });
 
   test('Float', () => {
-    const func = rio.Float;
+    const func = rio.RequiredFloat;
     let a = func('name');
-    expect(a.required).toBe(false);
-    expect(a.description).toBe(null);
-
-    a = func('name', true);
     expect(a.required).toBe(true);
     expect(a.description).toBe(null);
 
-    a = func('name', true, 'Hi!');
+    a = func('name', 'Hi!');
     expect(a.required).toBe(true);
     expect(a.description).toBe('Hi!');
   });
 
   test('String', () => {
-    const func = rio.String;
+    const func = rio.RequiredString;
     let a = func('name');
-    expect(a.required).toBe(false);
-    expect(a.description).toBe(null);
-
-    a = func('name', true);
     expect(a.required).toBe(true);
     expect(a.description).toBe(null);
 
-    a = func('name', true, 'Hi!');
+    a = func('name', 'Hi!');
     expect(a.required).toBe(true);
     expect(a.description).toBe('Hi!');
   });
 
   test('Boolean', () => {
-    const func = rio.Boolean;
+    const func = rio.RequiredBoolean;
     let a = func('name');
-    expect(a.required).toBe(false);
-    expect(a.description).toBe(null);
-
-    a = func('name', true);
     expect(a.required).toBe(true);
     expect(a.description).toBe(null);
 
-    a = func('name', true, 'Hi!');
+    a = func('name', 'Hi!');
     expect(a.required).toBe(true);
     expect(a.description).toBe('Hi!');
   });
 
   test('Array', () => {
-    const func = rio.rArray;
+    const func = rio.RequiredArray;
     let a = func('name');
-    expect(a.required).toBe(false);
-    expect(a.description).toBe(null);
-
-    a = func('name', true);
     expect(a.required).toBe(true);
     expect(a.description).toBe(null);
 
-    a = func('name', true, 'Hi!');
+    a = func('name', 'Hi!');
     expect(a.required).toBe(true);
     expect(a.description).toBe('Hi!');
   });
 
   test('Map', () => {
-    const func = rio.Map;
+    const func = rio.RequiredMap;
+    let a = func('name');
+    expect(a.required).toBe(true);
+    expect(a.description).toBe(null);
+
+    a = func('name', 'Hi!');
+    expect(a.required).toBe(true);
+    expect(a.description).toBe('Hi!');
+  });
+});
+
+describe('Optional Argument initializers', () => {
+  test('Integer', () => {
+    const func = rio.OptionalInteger;
     let a = func('name');
     expect(a.required).toBe(false);
     expect(a.description).toBe(null);
 
-    a = func('name', true);
-    expect(a.required).toBe(true);
+    a = func('name', 'Hi!');
+    expect(a.required).toBe(false);
+    expect(a.description).toBe('Hi!');
+  });
+
+  test('Float', () => {
+    const func = rio.OptionalFloat;
+    let a = func('name');
+    expect(a.required).toBe(false);
     expect(a.description).toBe(null);
 
-    a = func('name', true, 'Hi!');
-    expect(a.required).toBe(true);
+    a = func('name', 'Hi!');
+    expect(a.required).toBe(false);
+    expect(a.description).toBe('Hi!');
+  });
+
+  test('String', () => {
+    const func = rio.OptionalString;
+    let a = func('name');
+    expect(a.required).toBe(false);
+    expect(a.description).toBe(null);
+
+    a = func('name', 'Hi!');
+    expect(a.required).toBe(false);
+    expect(a.description).toBe('Hi!');
+  });
+
+  test('Boolean', () => {
+    const func = rio.OptionalBoolean;
+    let a = func('name');
+    expect(a.required).toBe(false);
+    expect(a.description).toBe(null);
+
+    a = func('name', 'Hi!');
+    expect(a.required).toBe(false);
+    expect(a.description).toBe('Hi!');
+  });
+
+  test('Array', () => {
+    const func = rio.OptionalArray;
+    let a = func('name');
+    expect(a.required).toBe(false);
+    expect(a.description).toBe(null);
+
+    a = func('name', 'Hi!');
+    expect(a.required).toBe(false);
+    expect(a.description).toBe('Hi!');
+  });
+
+  test('Map', () => {
+    const func = rio.OptionalMap;
+    let a = func('name');
+    expect(a.required).toBe(false);
+    expect(a.description).toBe(null);
+
+    a = func('name', 'Hi!');
+    expect(a.required).toBe(false);
     expect(a.description).toBe('Hi!');
   });
 });
