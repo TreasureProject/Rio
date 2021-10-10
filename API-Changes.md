@@ -27,14 +27,6 @@ The key differences are:
             app.get('/', (req, res) => {  
               res.status(200).send('Hello, world');  
             });
-            <br>
-            app.get('/sum', (req, res) => {
-              let { a, b } = req.query;  
-              a = parseInt(a, 10);  
-              b = parseInt(b, 10);  
-              const result = JSON.stringify({ result: a + b }); 
-              res.status(200).send(result); 
-            });
       </pre>    
     </td>    
     <td>    
@@ -50,21 +42,7 @@ The key differences are:
             },
             [],
             'Returns the string \'Hello, world\'',
-            'Hello, world');
-            <br>
-            app.get('/sum', (req, res) => {
-              let { a, b } = req.query;  
-              a = parseInt(a, 10);  
-              b = parseInt(b, 10);  
-              const result = JSON.stringify({ result: a + b }); 
-              res.status(200).send(result); 
-            },
-            [
-              rio.rInt('a', 'A number to be added'),  
-              rio.rInt('b', 'Another number to be added'),
-            ],
-            'Adds two numbers together',
-            { result: 2 });     
+            'Hello, world');  
       </pre>    
     </td>    
   </tr>    
@@ -79,10 +57,8 @@ const rio = require('rio-express');
 const app = express();
 rio.init(app);
 
-const { RequiredInteger } = rio;
-
-const A = RequiredInteger('a', 'A number to be added');
-const B = RequiredInteger('b', 'Another number to be added');
+const A = rio.RequiredInteger('a', 'A number to be added');
+const B = rio.RequiredInteger('b', 'Another number to be added');
 
 rio.get(app, '/sum', (req, res) => {
   let { a, b } = req.query;
@@ -136,8 +112,6 @@ const rio = require('rio-express');
 const app = express();
 rio.init(app);
 
-const { rInt } = rio;
-
 rio.get(app, '/sum', (req, res) => {
   let { a, b } = req.query;
   a = parseInt(a, 10);
@@ -146,8 +120,8 @@ rio.get(app, '/sum', (req, res) => {
   res.status(200).send(result);
 },
 [
-  rInt('a', 'A number to be added'),
-  rInt('b', 'Another number to be added'),
+  rio.rInt('a', 'A number to be added'),
+  rio.rInt('b', 'Another number to be added'),
 ],
 'Adds two numbers together');
 ```
