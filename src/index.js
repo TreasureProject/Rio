@@ -28,10 +28,6 @@ function get(app, endpoint, args, callback, description) {
   }));
 }
 
-function writeREADME() {
-  utils.writeREADME(rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint);
-}
-
 const rio = {
   utils,
   post,
@@ -41,8 +37,13 @@ const rio = {
   formatter,
   argsForEndpoint: rioArgsForEndpoint,
   cli: false,
-  writeREADME,
   appName: 'My API',
 };
+
+function writeREADME() {
+  utils.writeREADME(rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rio.appName);
+}
+
+rio.writeREADME = writeREADME;
 
 module.exports = rio;
