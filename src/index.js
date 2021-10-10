@@ -1,20 +1,36 @@
 const utils = require('./utils');
 const {
-  post,
-  get,
   Argument,
   ArgumentType,
-  format,
+  formatter,
+  handleHTTP,
 } = require('./api');
 
-process.rio = {};
-process.rio.argsForEndpoint = {};
+const rioArgsForEndpoint = {};
 
-module.exports = {
+function post(app, endpoint, args, callback) {
+  rioArgsForEndpoint[endpoint] = args;
+  app.post(endpoint, ((req, res, next) => {
+    handleHTTP(rioArgsForEndpoint, req, res, next, callback, true);
+  }));
+}
+
+function get(app, endpoint, args, callback) {
+  rioArgsForEndpoint[endpoint] = args;
+  app.get(endpoint, ((req, res, next) => {
+    handleHTTP(rioArgsForEndpoint, req, res, next, callback, false);
+  }));
+}
+
+const rio = {
   utils,
   post,
   get,
   Argument,
   ArgumentType,
-  format,
+  formatter,
+  argsForEndpoint: rioArgsForEndpoint,
+  cli: false,
 };
+
+module.exports = rio;

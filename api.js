@@ -51,11 +51,11 @@ rio.post(app, '/valids', [A, B, C, D, E, F, G, H, I], (req, res) => {
     g,
   } = req.body;
 
-  const cString = rio.format.String(c);
-  const dFloat = rio.format.Float(d);
-  const eArray = rio.format.Array(e);
-  const fBool = rio.format.Boolean(f);
-  const gMap = rio.format.Map(g);
+  const cString = rio.formatter.String(c);
+  const dFloat = rio.formatter.Float(d);
+  const eArray = rio.formatter.Array(e);
+  const fBool = rio.formatter.Boolean(f);
+  const gMap = rio.formatter.Map(g);
 
   let r = a + b;
   if (cString) {
@@ -82,10 +82,12 @@ rio.post(app, '/valids', [A, B, C, D, E, F, G, H, I], (req, res) => {
   res.status(200).send(result);
 });
 
-const port = 3000;
-server.listen(port, () => {
-  console.log(`Serving on port ${port}`);
-});
+if (rio.cli !== true) {
+  const port = 3000;
+  server.listen(port, () => {
+    console.log(`Serving on port ${port}`);
+  });
+}
 
 module.exports = {
   app,

@@ -88,85 +88,85 @@ describe('Using rio.get and rio.put', () => {
 
 describe('Type formatters', () => {
   test('String formatter', () => {
-    let formatted = rio.format.String(1.23);
+    let formatted = rio.formatter.String(1.23);
     expect(formatted).toBe('1.23');
 
-    formatted = rio.format.String(null);
+    formatted = rio.formatter.String(null);
     expect(formatted).toBe(null);
 
-    formatted = rio.format.String(undefined);
+    formatted = rio.formatter.String(undefined);
     expect(formatted).toBe(null);
   });
 
   test('Integer formatter', () => {
-    let formatted = rio.format.Int(1.23);
+    let formatted = rio.formatter.Int(1.23);
     expect(formatted).toBe(1);
 
-    formatted = rio.format.Int('5');
+    formatted = rio.formatter.Int('5');
     expect(formatted).toBe(5);
 
-    formatted = rio.format.Int(75);
+    formatted = rio.formatter.Int(75);
     expect(formatted).toBe(75);
 
-    formatted = rio.format.Int(false);
+    formatted = rio.formatter.Int(false);
     expect(formatted).toBe(null);
 
-    formatted = rio.format.Int('ABC');
+    formatted = rio.formatter.Int('ABC');
     expect(formatted).toBe(null);
   });
 
   test('Float formatter', () => {
-    let formatted = rio.format.Float(1.23);
+    let formatted = rio.formatter.Float(1.23);
     expect(formatted).toBe(1.23);
 
-    formatted = rio.format.Float('5');
+    formatted = rio.formatter.Float('5');
     expect(formatted).toBe(5);
 
-    formatted = rio.format.Float(75);
+    formatted = rio.formatter.Float(75);
     expect(formatted).toBe(75);
 
-    formatted = rio.format.Float(false);
+    formatted = rio.formatter.Float(false);
     expect(formatted).toBe(0);
 
-    formatted = rio.format.Float('ABC');
+    formatted = rio.formatter.Float('ABC');
     expect(formatted).toBe(0);
   });
 
   test('Array formatter', () => {
-    let formatted = rio.format.Array([]);
+    let formatted = rio.formatter.Array([]);
     expect(formatted).toEqual([]);
 
-    formatted = rio.format.Array([[[[]]]]);
+    formatted = rio.formatter.Array([[[[]]]]);
     expect(formatted).toEqual([[[[]]]]);
 
-    formatted = rio.format.Array('ABC');
+    formatted = rio.formatter.Array('ABC');
     expect(formatted).toEqual(null);
 
     const stringified = JSON.stringify(['1', '2', '3']);
-    formatted = rio.format.Array(stringified);
+    formatted = rio.formatter.Array(stringified);
     expect(formatted).toEqual(['1', '2', '3']);
   });
 
   test('Boolean formatter', () => {
-    let formatted = rio.format.Boolean(false);
+    let formatted = rio.formatter.Boolean(false);
     expect(formatted).toEqual(false);
 
-    formatted = rio.format.Boolean(true);
+    formatted = rio.formatter.Boolean(true);
     expect(formatted).toEqual(true);
 
-    formatted = rio.format.Boolean('true');
+    formatted = rio.formatter.Boolean('true');
     expect(formatted).toEqual(true);
 
-    formatted = rio.format.Boolean('True');
+    formatted = rio.formatter.Boolean('True');
     expect(formatted).toEqual(true);
 
-    formatted = rio.format.Boolean(55);
+    formatted = rio.formatter.Boolean(55);
     expect(formatted).toEqual(false);
 
-    formatted = rio.format.Boolean('ABC');
+    formatted = rio.formatter.Boolean('ABC');
     expect(formatted).toEqual(false);
 
-    formatted = rio.format.Boolean(null);
+    formatted = rio.formatter.Boolean(null);
     expect(formatted).toEqual(null);
   });
 });
