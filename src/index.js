@@ -65,4 +65,18 @@ rio.OptionalBoolean = (name, description = null) => new rio.Argument(name, rio.A
 rio.OptionalMap = (name, description = null) => new rio.Argument(name, rio.ArgumentType.Map, false, description);
 rio.OptionalArray = (name, description = null) => new rio.Argument(name, rio.ArgumentType.Array, false, description);
 
+rio.rInt = rio.RequiredInteger;
+rio.rStr = rio.RequiredString;
+rio.rFloat = rio.RequiredFloat;
+rio.rBool = rio.RequiredBoolean;
+rio.rMap = rio.RequiredMap;
+rio.rArray = rio.RequiredArray;
+
+rio.oInt = rio.OptionalInteger;
+rio.oStr = rio.OptionalString;
+rio.oFloat = rio.OptionalFloat;
+rio.oBool = rio.OptionalBoolean;
+rio.oMap = rio.OptionalMap;
+rio.oArray = rio.OptionalArray;
+
 module.exports = rio;
