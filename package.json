@@ -12,7 +12,8 @@
   "scripts": {
     "lint": "eslint .",
     "test": "jest",
-    "fix": "eslint . --fix"
+    "fix": "eslint . --fix",
+    "coverage": "codecov"
   },
   "dependencies": {
     "commander": "^8.2.0"
