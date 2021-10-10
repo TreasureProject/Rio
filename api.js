@@ -15,7 +15,10 @@ app.use(express.urlencoded({ limit, extended: true, parameterLimit: 50000 }));
 
 rio.get('/hi', (req, res) => {
   res.status(200).send('Hi!');
-});
+},
+[],
+'Returns Hi!',
+'Hi!');
 
 rio.get('/', (req, res) => {
   const result = JSON.stringify({ result: 'Hello, world' });

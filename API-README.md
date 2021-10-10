@@ -35,12 +35,20 @@ ___
 GET - /hi
 ```
 
+#### Description:
+- Returns Hi!
+
 _No parameters_
 
 
 Example Request:
 ```
 /hi
+```
+
+Example Response:
+```
+"Hi!"
 ```
 ___
 ###### endpt #3
