@@ -6,12 +6,27 @@ const rio = require('../src/index');
 const app = express();
 const server = http.createServer(app);
 
-rio.get(app, '/', (req, res) => {
-  res.status(200).send('Hello, world');
+const limit = '300KB';
+app.use(express.json({ limit }));
+app.use(express.urlencoded({ limit, extended: true, parameterLimit: 50000 }));
+
+const A = new rio.Argument('a', rio.ArgumentType.Integer, true);
+const B = new rio.Argument('b', rio.ArgumentType.Integer, true);
+
+rio.get(app, '/sum', [A, B], (req, res) => {
+  let { a, b } = req.query;
+  a = parseInt(a, 10);
+  b = parseInt(b, 10);
+  const result = JSON.stringify({ result: a + b });
+  res.status(200).send(result);
 });
 
-rio.post(app, '/', (req, res) => {
-  res.status(200).send('Hello, world');
+rio.post(app, '/add', [A, B], (req, res) => {
+  let { a, b } = req.body;
+  a = parseInt(a, 10);
+  b = parseInt(b, 10);
+  const result = JSON.stringify({ result: a + b });
+  res.status(200).send(result);
 });
 
 const port = 3000;
@@ -38,16 +53,35 @@ describe('Using rio.get and rio.put', () => {
 
   test('Get', async () => {
     const res = await request(app)
-      .get('/');
+      .get('/sum?a=1&b=2');
     expect(res.statusCode).toEqual(200);
-    expect(res.text).toEqual('Hello, world');
+    const { text } = res;
+    const { result } = JSON.parse(text);
+    expect(result).toEqual(3);
   });
 
-  test('Post', async () => {
+  test('Post, with arguments', async () => {
     const res = await request(app)
-      .post('/')
-      .send({});
+      .post('/add')
+      .send({
+        a: '1',
+        b: '2',
+      });
     expect(res.statusCode).toEqual(200);
-    expect(res.text).toEqual('Hello, world');
+    const { text } = res;
+    const { result } = JSON.parse(text);
+    expect(result).toEqual(3);
+  });
+
+  test('Post, without arguments', async () => {
+    const res = await request(app)
+      .post('/add')
+      .send({
+        a: '1',
+      });
+    expect(res.statusCode).toEqual(403);
+    const { text } = res;
+    const { error } = JSON.parse(text);
+    expect(error).toEqual('Missing integer argument b');
   });
 });
