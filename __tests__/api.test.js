@@ -171,3 +171,33 @@ describe('Using rio.get and rio.put', () => {
     expect(result).toEqual(8);
   });
 });
+
+describe('Type formatters', () => {
+  test('String formatter', () => {
+    let formatted = rio.format.String(1.23);
+    expect(formatted).toBe('1.23');
+
+    formatted = rio.format.String(null);
+    expect(formatted).toBe(null);
+
+    formatted = rio.format.String(undefined);
+    expect(formatted).toBe(null);
+  });
+
+  test('Integer formatter', () => {
+    let formatted = rio.format.Int(1.23);
+    expect(formatted).toBe(1);
+
+    formatted = rio.format.Int('5');
+    expect(formatted).toBe(5);
+
+    formatted = rio.format.Int(75);
+    expect(formatted).toBe(75);
+
+    formatted = rio.format.Int(false);
+    expect(formatted).toBe(null);
+
+    formatted = rio.format.Int('ABC');
+    expect(formatted).toBe(null);
+  });
+});

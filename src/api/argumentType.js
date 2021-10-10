@@ -24,7 +24,7 @@ format.Int = (data) => {
     if (data % 1 === 0) {
       return data;
     }
-    return 0;
+    return Math.round(data);
   }
   const num = parseInt(data, 10);
   if (num == null || Number.isNaN(num)) return null;
