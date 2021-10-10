@@ -18,7 +18,7 @@ const E = new rio.Argument('e', rio.ArgumentType.Array, true);
 const F = new rio.Argument('f', rio.ArgumentType.Boolean, true);
 const G = new rio.Argument('g', rio.ArgumentType.Map, true);
 const H = new rio.Argument('h', new rio.ArgumentType('nothing'), false);
-const I = new rio.Argument('i', new rio.ArgumentType('nothing2'), false);
+const I = new rio.Argument('i', new rio.ArgumentType('nothing2'));
 
 rio.get(app, '/sum', [A, B], (req, res) => {
   let { a, b } = req.query;
