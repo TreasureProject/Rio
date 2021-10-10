@@ -1,14 +1,15 @@
 class ArgumentType {
-  constructor(name) {
+  constructor(name, example = null) {
     this.name = name;
+    this.example = example;
   }
 }
-ArgumentType.String = new ArgumentType('string');
-ArgumentType.Integer = new ArgumentType('integer');
-ArgumentType.Float = new ArgumentType('float');
-ArgumentType.Array = new ArgumentType('array');
-ArgumentType.Boolean = new ArgumentType('boolean');
-ArgumentType.Map = new ArgumentType('map');
+ArgumentType.String = new ArgumentType('string', 'A');
+ArgumentType.Integer = new ArgumentType('integer', 1);
+ArgumentType.Float = new ArgumentType('float', 1.23);
+ArgumentType.Array = new ArgumentType('array', []);
+ArgumentType.Boolean = new ArgumentType('boolean', true);
+ArgumentType.Map = new ArgumentType('map', {});
 
 module.exports = {
   ArgumentType,

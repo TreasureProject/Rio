@@ -37,6 +37,19 @@ rio.get('/sum', (req, res) => {
 ],
 'Adds two numbers together');
 
+rio.post('/makeSum', (req, res) => {
+  let { a, b } = req.body;
+  a = parseInt(a, 10);
+  b = parseInt(b, 10);
+  const result = JSON.stringify({ result: a + b });
+  res.status(200).send(result);
+},
+[
+  rInt('a', 'A number to be added'),
+  rInt('b', 'Another number to be added'),
+],
+'Adds two numbers together');
+
 if (rio.cli !== true) {
   const port = 3000;
   server.listen(port, () => {

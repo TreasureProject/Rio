@@ -50,6 +50,32 @@ function writeREADME(rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndp
       content += '_No parameters_\n';
     }
     content += '\n';
+
+    content += '\nExample Request:\n';
+    content += '```\n';
+    if (type === 'GET') {
+      if (argumentCount > 0) {
+        for (let j = 0; j < argumentCount; j += 1) {
+          const argument = args[j];
+          if (j === 0) {
+            content += `${endpoint}?${argument.name}=${argument.type.example}`;
+          } else {
+            content += `&${argument.name}=1`;
+          }
+        }
+        content += '\n';
+      } else {
+        content += `${endpoint}\n`;
+      }
+    } else {
+      content += '{\n';
+      for (let j = 0; j < argumentCount; j += 1) {
+        const argument = args[j];
+        content += `  ${argument.name}: ${argument.type.example},\n`;
+      }
+      content += '}\n';
+    }
+    content += '```\n';
   }
 
   /* istanbul ignore next */

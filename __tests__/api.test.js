@@ -114,7 +114,7 @@ afterAll(async () => {
 describe('Using rio.get and rio.put', () => {
   test('Checking endpoints', async () => {
     const routes = rio.utils.getEndpoints(app);
-    expect(routes.length).toBe(6);
+    expect(routes.length).toBe(7);
   });
 
   test('Get sum', async () => {
@@ -137,6 +137,19 @@ describe('Using rio.get and rio.put', () => {
     const { text } = res;
     const { result } = JSON.parse(text);
     expect(result).toEqual(3);
+  });
+
+  test('Post, with arguments', async () => {
+    const res = await request(app)
+      .post('/makeSum')
+      .send({
+        a: 4,
+        b: 5,
+      });
+    expect(res.statusCode).toEqual(200);
+    const { text } = res;
+    const { result } = JSON.parse(text);
+    expect(result).toEqual(9);
   });
 
   test('Post, without arguments', async () => {

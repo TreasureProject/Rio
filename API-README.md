@@ -3,7 +3,8 @@
 ## Table of Contents
 - [/](#endpt-1)
 - [/hi](#endpt-2)
-- [/sum](#endpt-3)
+- [/makeSum](#endpt-3)
+- [/sum](#endpt-4)
 
 ___
 ###### endpt #1
@@ -16,6 +17,11 @@ GET - /
 
 _No parameters_
 
+
+Example Request:
+```
+/
+```
 ___
 ###### endpt #2
 ```
@@ -24,8 +30,37 @@ GET - /hi
 
 _No parameters_
 
+
+Example Request:
+```
+/hi
+```
 ___
 ###### endpt #3
+```
+POST - /makeSum
+```
+
+#### Description:
+- Adds two numbers together
+
+Params:
+
+| Name | Type | Description |
+|--|--|--|
+| **a** | `integer` | A number to be added (*Required)
+| **b** | `integer` | Another number to be added (*Required)
+
+
+Example Request:
+```
+{
+  a: 1,
+  b: 1,
+}
+```
+___
+###### endpt #4
 ```
 GET - /sum
 ```
@@ -40,3 +75,8 @@ Params:
 | **a** | `integer` | A number to be added (*Required)
 | **b** | `integer` | Another number to be added (*Required)
 
+
+Example Request:
+```
+/sum?a=1&b=1
+```
