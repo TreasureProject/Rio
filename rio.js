@@ -17,7 +17,7 @@ program
     // eslint-disable-next-line
     require(path);
 
-    console.log(rio.argsForEndpoint);
+    rio.writeREADME();
   });
 
 program
