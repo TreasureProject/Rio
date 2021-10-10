@@ -200,4 +200,21 @@ describe('Type formatters', () => {
     formatted = rio.format.Int('ABC');
     expect(formatted).toBe(null);
   });
+
+  test('Float formatter', () => {
+    let formatted = rio.format.Float(1.23);
+    expect(formatted).toBe(1.23);
+
+    formatted = rio.format.Float('5');
+    expect(formatted).toBe(5);
+
+    formatted = rio.format.Float(75);
+    expect(formatted).toBe(75);
+
+    formatted = rio.format.Float(false);
+    expect(formatted).toBe(0);
+
+    formatted = rio.format.Float('ABC');
+    expect(formatted).toBe(0);
+  });
 });
