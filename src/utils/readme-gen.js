@@ -11,10 +11,18 @@ function writeREADME(rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndp
     content += `# ${appName}\n\n`;
   }
 
-  for (let i = 0; i < endpointCount; i += 1) {
-    if (i !== 0) {
-      content += '___\n';
+  if (endpointCount > 0) {
+    content += '## Table of Contents\n';
+    for (let i = 0; i < endpointCount; i += 1) {
+      const endpoint = endpoints[i];
+      content += `- [${endpoint}](#endpt-${i + 1})\n`;
     }
+    content += '\n';
+  }
+
+  for (let i = 0; i < endpointCount; i += 1) {
+    content += '___\n';
+    content += `###### endpt #${i + 1}\n`;
 
     const endpoint = endpoints[i];
     const type = rioTypeOfEndpoint[endpoint];

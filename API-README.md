@@ -1,5 +1,11 @@
 # RIO Example API
 
+## Table of Contents
+- [/](#endpt-1)
+- [/sum](#endpt-2)
+
+___
+###### endpt #1
 ```
 GET - /
 ```
@@ -10,6 +16,7 @@ GET - /
 _No parameters_
 
 ___
+###### endpt #2
 ```
 GET - /sum
 ```
