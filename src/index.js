@@ -9,6 +9,7 @@ const {
 const rioArgsForEndpoint = {};
 const rioTypeOfEndpoint = {};
 const rioDescriptionOfEndpoint = {};
+const rioExampleResultOfEndpoint = {};
 
 const rio = {
   utils,
@@ -20,26 +21,28 @@ const rio = {
   appName: 'My API',
 };
 
-rio.post = (endpoint, callback, args, description) => {
+rio.post = (endpoint, callback, args = [], description = null, exampleResult = null) => {
   rioArgsForEndpoint[endpoint] = args;
   rioTypeOfEndpoint[endpoint] = 'POST';
   rioDescriptionOfEndpoint[endpoint] = description;
+  rioExampleResultOfEndpoint[endpoint] = exampleResult;
   rio.app.post(endpoint, ((req, res, next) => {
     handleHTTP(rioArgsForEndpoint, req, res, next, callback, true);
   }));
 };
 
-rio.get = (endpoint, callback, args = [], description = null) => {
+rio.get = (endpoint, callback, args = [], description = null, exampleResult = null) => {
   rioArgsForEndpoint[endpoint] = args;
   rioTypeOfEndpoint[endpoint] = 'GET';
   rioDescriptionOfEndpoint[endpoint] = description;
+  rioExampleResultOfEndpoint[endpoint] = exampleResult;
   rio.app.get(endpoint, ((req, res, next) => {
     handleHTTP(rioArgsForEndpoint, req, res, next, callback, false);
   }));
 };
 
 function writeREADME() {
-  utils.writeREADME(rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rio.appName);
+  utils.writeREADME(rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rio.appName);
 }
 
 rio.writeREADME = writeREADME;

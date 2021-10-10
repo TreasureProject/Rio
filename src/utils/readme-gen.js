@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-function writeREADME(rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, appName) {
+function writeREADME(rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, appName) {
   let content = '';
 
   const endpoints = Object.keys(rioArgsForEndpoint);
@@ -71,11 +71,21 @@ function writeREADME(rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndp
       content += '{\n';
       for (let j = 0; j < argumentCount; j += 1) {
         const argument = args[j];
-        content += `  ${argument.name}: ${argument.type.example},\n`;
+        const suffix = j === argumentCount - 1 ? '' : ',';
+        content += `  ${argument.name}: ${argument.type.example}${suffix}\n`;
       }
       content += '}\n';
     }
     content += '```\n';
+
+    const response = rioExampleResultOfEndpoint[endpoint];
+    if (response != null) {
+      content += '\nExample Response:\n';
+      content += '```\n';
+      const formatted = JSON.stringify(response, null, 2);
+      content += `${formatted}\n`;
+      content += '```\n';
+    }
   }
 
   /* istanbul ignore next */

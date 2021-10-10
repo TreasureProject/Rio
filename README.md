@@ -35,7 +35,8 @@ rio.get('/', (req, res) => {
   res.status(200).send('Hello, world');
 },
 [],
-'Hello, world endpoint. No functionality');
+'Hello, world endpoint. No functionality',
+'Hello, world');
 ```
 
 The key differences are:
@@ -43,6 +44,7 @@ The key differences are:
 - Changing `app` to `rio`
 - Adding an empty array for the expected arguments, after the callback
 - Adding an optional description string, after the arguments array
+- Adding an optional response example
 
 ### More complicated usage
 Here is an implementation of an API used to sum two integer values:
@@ -69,7 +71,8 @@ rio.get(app, '/sum', (req, res) => {
   A,
   B,
 ],
-'Adds two numbers together');
+'Adds two numbers together',
+{ result: 2 });
 ```
 
 Initialize arguments with:

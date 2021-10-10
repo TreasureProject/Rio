@@ -22,6 +22,11 @@ Example Request:
 ```
 /
 ```
+
+Example Response:
+```
+"Hello, world"
+```
 ___
 ###### endpt #2
 ```
@@ -56,7 +61,14 @@ Example Request:
 ```
 {
   a: 1,
-  b: 1,
+  b: 1
+}
+```
+
+Example Response:
+```
+{
+  "result": 2
 }
 ```
 ___
@@ -79,4 +91,11 @@ Params:
 Example Request:
 ```
 /sum?a=1&b=1
+```
+
+Example Response:
+```
+{
+  "result": 2
+}
 ```

@@ -22,7 +22,8 @@ rio.get('/', (req, res) => {
   res.status(200).send(result);
 },
 [],
-'Hello, world endpoint. No functionality');
+'Hello, world endpoint. No functionality',
+{ result: 'Hello, world' });
 
 rio.get('/sum', (req, res) => {
   let { a, b } = req.query;
@@ -35,7 +36,8 @@ rio.get('/sum', (req, res) => {
   rInt('a', 'A number to be added'),
   rInt('b', 'Another number to be added'),
 ],
-'Adds two numbers together');
+'Adds two numbers together',
+{ result: 2 });
 
 rio.post('/makeSum', (req, res) => {
   let { a, b } = req.body;
@@ -48,7 +50,8 @@ rio.post('/makeSum', (req, res) => {
   rInt('a', 'A number to be added'),
   rInt('b', 'Another number to be added'),
 ],
-'Adds two numbers together');
+'Adds two numbers together',
+{ result: 2 });
 
 if (rio.cli !== true) {
   const port = 3000;
