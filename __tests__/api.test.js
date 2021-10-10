@@ -2,6 +2,71 @@ const request = require('supertest');
 const rio = require('../src/index');
 const { app, server } = require('../api');
 
+const A = new rio.Argument('a', rio.ArgumentType.Integer, true, 'A number to be added');
+const B = new rio.Argument('b', rio.ArgumentType.Integer, true, 'Another number to be added');
+const C = new rio.Argument('c', rio.ArgumentType.String, true);
+const D = new rio.Argument('d', rio.ArgumentType.Float, true);
+const E = new rio.Argument('e', rio.ArgumentType.Array, true);
+const F = new rio.Argument('f', rio.ArgumentType.Boolean, true);
+const G = new rio.Argument('g', rio.ArgumentType.Map, true);
+const H = new rio.Argument('h', new rio.ArgumentType('nothing'), false);
+const I = new rio.Argument('i', new rio.ArgumentType('nothing2'));
+
+rio.post(app, '/add', [A, B], (req, res) => {
+  let { a, b } = req.body;
+  a = parseInt(a, 10);
+  b = parseInt(b, 10);
+  const result = JSON.stringify({ result: a + b });
+  res.status(200).send(result);
+});
+
+rio.post(app, '/valids', [A, B, C, D, E, F, G, H, I], (req, res) => {
+  let {
+    a,
+    b,
+  } = req.body;
+  a = parseInt(a, 10);
+  b = parseInt(b, 10);
+
+  const {
+    c,
+    d,
+    e,
+    f,
+    g,
+  } = req.body;
+
+  const cString = rio.formatter.String(c);
+  const dFloat = rio.formatter.Float(d);
+  const eArray = rio.formatter.Array(e);
+  const fBool = rio.formatter.Boolean(f);
+  const gMap = rio.formatter.Map(g);
+
+  let r = a + b;
+  if (cString) {
+    r += 1;
+  }
+
+  if (dFloat) {
+    r += 1;
+  }
+
+  if (eArray) {
+    r += 1;
+  }
+
+  if (fBool) {
+    r += 1;
+  }
+
+  if (gMap) {
+    r += 1;
+  }
+
+  const result = JSON.stringify({ result: r });
+  res.status(200).send(result);
+});
+
 afterEach(async () => {
   await server.close();
 });

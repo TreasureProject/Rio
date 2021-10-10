@@ -12,16 +12,12 @@ program
   .argument('[path]', 'path to api', './api.js')
   .description('Initialize')
   .action((path) => {
-    console.log('Initialize');
-    console.log(path);
-
     rio.cli = true;
 
-    const { api } = require(path);
+    // eslint-disable-next-line
+    require(path);
 
-    setTimeout(() => {
-      console.log(rio.argsForEndpoint);
-    }, 1000);
+    console.log(rio.argsForEndpoint);
   });
 
 program
