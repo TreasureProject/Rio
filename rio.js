@@ -9,7 +9,7 @@ program
 program
   .command('init')
   .description('Initialize')
-  .action( () => {
+  .action(() => {
     console.log('Initialize');
   });
 
