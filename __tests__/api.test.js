@@ -12,6 +12,11 @@ const G = new rio.Argument('g', rio.ArgumentType.Map, true);
 const H = new rio.Argument('h', new rio.ArgumentType('nothing'), false);
 const I = new rio.Argument('i', new rio.ArgumentType('nothing2'));
 
+rio.get(app, '/hello', [], (req, res) => {
+  const result = JSON.stringify({ result: 'Hello, world' });
+  res.status(200).send(result);
+});
+
 rio.post(app, '/add', [A, B], (req, res) => {
   let { a, b } = req.body;
   a = parseInt(a, 10);
@@ -81,7 +86,7 @@ afterAll(async () => {
 describe('Using rio.get and rio.put', () => {
   test('Checking endpoints', async () => {
     const routes = rio.utils.getEndpoints(app);
-    expect(routes.length).toBe(3);
+    expect(routes.length).toBe(5);
   });
 
   test('Get', async () => {
@@ -234,4 +239,8 @@ describe('Type formatters', () => {
     formatted = rio.formatter.Boolean(null);
     expect(formatted).toEqual(null);
   });
+});
+
+test('Write to README no crash', () => {
+  rio.writeREADME();
 });

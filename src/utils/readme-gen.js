@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-function writeREADME(rioArgsForEndpoint, rioTypeOfEndpoint) {
+function writeREADME(rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint) {
   let content = '';
 
   const endpoints = Object.keys(rioArgsForEndpoint);
@@ -12,6 +12,9 @@ function writeREADME(rioArgsForEndpoint, rioTypeOfEndpoint) {
     const type = rioTypeOfEndpoint[endpoint];
     const header = `${type} - ${endpoint}\n`;
     content += header;
+
+    const description = rioDescriptionOfEndpoint[endpoint];
+    content += `Description:\n- ${description}\n`;
 
     const args = rioArgsForEndpoint[endpoint];
     const argumentCount = args.length;
@@ -27,12 +30,15 @@ function writeREADME(rioArgsForEndpoint, rioTypeOfEndpoint) {
     content += '\n';
   }
 
-  fs.writeFile('./API-README.md', content, (err) => {
-    if (err) {
-      console.log(err);
-    }
-    console.log('The file was saved!');
-  });
+  /* istanbul ignore next */
+  if (process.env.JEST_WORKER_ID === undefined) {
+    fs.writeFile('./API-README.md', content, (err) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log('The file was saved!');
+    });
+  }
 }
 
 module.exports = {

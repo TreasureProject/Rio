@@ -3,7 +3,7 @@ const rio = require('../src/index');
 
 const app = express();
 
-app.get('/', (req, res) => {
+app.get('/utils', (req, res) => {
   res.status(200).send('Hello, world');
 });
 
