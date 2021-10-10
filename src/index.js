@@ -10,28 +10,8 @@ const rioArgsForEndpoint = {};
 const rioTypeOfEndpoint = {};
 const rioDescriptionOfEndpoint = {};
 
-function post(app, endpoint, args, callback, description) {
-  rioArgsForEndpoint[endpoint] = args;
-  rioTypeOfEndpoint[endpoint] = 'POST';
-  rioDescriptionOfEndpoint[endpoint] = description;
-  app.post(endpoint, ((req, res, next) => {
-    handleHTTP(rioArgsForEndpoint, req, res, next, callback, true);
-  }));
-}
-
-function get(app, endpoint, args, callback, description) {
-  rioArgsForEndpoint[endpoint] = args;
-  rioTypeOfEndpoint[endpoint] = 'GET';
-  rioDescriptionOfEndpoint[endpoint] = description;
-  app.get(endpoint, ((req, res, next) => {
-    handleHTTP(rioArgsForEndpoint, req, res, next, callback, false);
-  }));
-}
-
 const rio = {
   utils,
-  post,
-  get,
   Argument,
   ArgumentType,
   formatter,
@@ -40,10 +20,33 @@ const rio = {
   appName: 'My API',
 };
 
+rio.post = (endpoint, callback, args, description) => {
+  rioArgsForEndpoint[endpoint] = args;
+  rioTypeOfEndpoint[endpoint] = 'POST';
+  rioDescriptionOfEndpoint[endpoint] = description;
+  rio.app.post(endpoint, ((req, res, next) => {
+    handleHTTP(rioArgsForEndpoint, req, res, next, callback, true);
+  }));
+};
+
+rio.get = (endpoint, callback, args, description) => {
+  rioArgsForEndpoint[endpoint] = args;
+  rioTypeOfEndpoint[endpoint] = 'GET';
+  rioDescriptionOfEndpoint[endpoint] = description;
+  rio.app.get(endpoint, ((req, res, next) => {
+    handleHTTP(rioArgsForEndpoint, req, res, next, callback, false);
+  }));
+};
+
 function writeREADME() {
   utils.writeREADME(rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rio.appName);
 }
 
 rio.writeREADME = writeREADME;
+
+rio.init = (app, name) => {
+  rio.app = app;
+  rio.appName = name;
+};
 
 module.exports = rio;

@@ -2,30 +2,42 @@ const request = require('supertest');
 const rio = require('../src/index');
 const { app, server } = require('../api');
 
-const A = new rio.Argument('a', rio.ArgumentType.Integer, true, 'A number to be added');
-const B = new rio.Argument('b', rio.ArgumentType.Integer, true, 'Another number to be added');
-const C = new rio.Argument('c', rio.ArgumentType.String, true);
-const D = new rio.Argument('d', rio.ArgumentType.Float, true);
-const E = new rio.Argument('e', rio.ArgumentType.Array, true);
-const F = new rio.Argument('f', rio.ArgumentType.Boolean, true);
-const G = new rio.Argument('g', rio.ArgumentType.Map, true);
-const H = new rio.Argument('h', new rio.ArgumentType('nothing'), false);
-const I = new rio.Argument('i', new rio.ArgumentType('nothing2'));
+const { ArgumentType } = rio;
+const {
+  Integer,
+  String,
+  Float,
+  Array,
+  Boolean,
+  Map,
+} = ArgumentType;
 
-rio.get(app, '/hello', [], (req, res) => {
+const Nothing = new ArgumentType('nothing');
+
+const A = new rio.Argument('a', Integer, true, 'A number to be added');
+const B = new rio.Argument('b', Integer, true, 'Another number to be added');
+const C = new rio.Argument('c', String, true);
+const D = new rio.Argument('d', Float, true);
+const E = new rio.Argument('e', Array, true);
+const F = new rio.Argument('f', Boolean, true);
+const G = new rio.Argument('g', Map, true);
+const H = new rio.Argument('h', Nothing, false);
+const I = new rio.Argument('i', Nothing);
+
+rio.get('/hello', (req, res) => {
   const result = JSON.stringify({ result: 'Hello, world' });
   res.status(200).send(result);
-});
+}, []);
 
-rio.post(app, '/add', [A, B], (req, res) => {
+rio.post('/add', (req, res) => {
   let { a, b } = req.body;
   a = parseInt(a, 10);
   b = parseInt(b, 10);
   const result = JSON.stringify({ result: a + b });
   res.status(200).send(result);
-});
+}, [A, B]);
 
-rio.post(app, '/valids', [A, B, C, D, E, F, G, H, I], (req, res) => {
+rio.post('/valids', (req, res) => {
   let {
     a,
     b,
@@ -70,7 +82,7 @@ rio.post(app, '/valids', [A, B, C, D, E, F, G, H, I], (req, res) => {
 
   const result = JSON.stringify({ result: r });
   res.status(200).send(result);
-});
+}, [A, B, C, D, E, F, G, H, I]);
 
 afterEach(async () => {
   await server.close();

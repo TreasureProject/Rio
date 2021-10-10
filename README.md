@@ -23,31 +23,33 @@ app.get('/', (req, res) => {
 
 The corresponding Rio endpoint looks like this:
 ```javascript
-rio.get(app, '/', [], (req, res) => {
+rio.get('/', (req, res) => {
   res.status(200).send('Hello, world');
-}, 'Hello, world endpoint. No functionality');
+}, [], 'Hello, world endpoint. No functionality');
 ```
 
 The key differences are:
 - Changing `app` to `rio`
-- Adding the first argument `app`
-- Adding an empty array for the expected arguments, after the endpoint
-- After the callback, adding an optional description string
+- Adding an empty array for the expected arguments, after the callback
+- Adding an optional description string, after the arguments array
 
 ## More complicated usage
 Here is an implementation of an API used to sum two integer values:
 
 ```javascript
-const A = new rio.Argument('a', rio.ArgumentType.Integer, true, 'A number to be added');
-const B = new rio.Argument('b', rio.ArgumentType.Integer, true, 'Another number to be added');
+const { ArgumentType } = rio;
+const { Integer } = ArgumentType;
 
-rio.get(app, '/sum', [A, B], (req, res) => {
+const A = new rio.Argument('a', Integer, true, 'A number to be added');
+const B = new rio.Argument('b', Integer, true, 'Another number to be added');
+
+rio.get(app, '/sum', (req, res) => {
   let { a, b } = req.query;
   a = parseInt(a, 10);
   b = parseInt(b, 10);
   const result = JSON.stringify({ result: a + b });
   res.status(200).send(result);
-}, 'Adds two numbers together');
+}, [A, B], 'Adds two numbers together');
 ```
 
 Initialize arguments with:
