@@ -1,0 +1,18 @@
+codecov:
+  token: f45e3df4-8db6-40d6-9c6d-294be5807f82
+
+coverage:
+  precision: 2
+  round: down
+  range: 30...100
+
+  status:
+    patch: false
+    project:
+      default: off
+
+  ignore:
+    - .github
+    - "/__tests__/.*"
+    - "rio.js"
+    - coverage

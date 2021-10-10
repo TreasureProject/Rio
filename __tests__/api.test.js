@@ -89,7 +89,7 @@ describe('Using rio.get and rio.put', () => {
     expect(routes.length).toBe(5);
   });
 
-  test('Get', async () => {
+  test('Get sum', async () => {
     const res = await request(app)
       .get('/sum?a=1&b=2');
     expect(res.statusCode).toEqual(200);
@@ -153,6 +153,15 @@ describe('Using rio.get and rio.put', () => {
     const { text } = res;
     const { result } = JSON.parse(text);
     expect(result).toEqual(8);
+  });
+
+  test('Get /', async () => {
+    const res = await request(app)
+      .get('/');
+    expect(res.statusCode).toEqual(200);
+    const { text } = res;
+    const { result } = JSON.parse(text);
+    expect(result).toEqual('Hello, world');
   });
 });
 

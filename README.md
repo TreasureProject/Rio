@@ -1,6 +1,11 @@
 # Rio
 Automatic Express API README generator
 
+[![Actions Status](https://github.com/RyuGames/Rio/workflows/Tests/badge.svg)](https://github.com/RyuGames/Rio/actions)
+[![Actions Status](https://github.com/RyuGames/Rio/workflows/Linter/badge.svg)](https://github.com/RyuGames/Rio/actions)
+[![codecov](https://codecov.io/gh/RyuGames/Rio/branch/main/graph/badge.svg?token=V2HH92MN1A)](https://codecov.io/gh/RyuGames/Rio)
+[![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
+
 ## Installation Guide
 Install CLI with:
 ```bash

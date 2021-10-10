@@ -5,5 +5,5 @@ module.exports = {
   testRunner: 'jest-jasmine2',
   coverageDirectory: './coverage/',
   collectCoverage: true,
-  collectCoverageFrom: ['src/**/*.js'],
+  collectCoverageFrom: ['src/**/*.js', 'api.js'],
 };

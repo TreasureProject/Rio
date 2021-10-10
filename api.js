@@ -30,6 +30,7 @@ rio.get(app, '/sum', [A, B], (req, res) => {
 if (rio.cli !== true) {
   const port = 3000;
   server.listen(port, () => {
+    /* istanbul ignore next */
     console.log(`Serving on port ${port}`);
   });
 }
