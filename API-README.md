@@ -2,7 +2,8 @@
 
 ## Table of Contents
 - [/](#endpt-1)
-- [/sum](#endpt-2)
+- [/hi](#endpt-2)
+- [/sum](#endpt-3)
 
 ___
 ###### endpt #1
@@ -17,6 +18,14 @@ _No parameters_
 
 ___
 ###### endpt #2
+```
+GET - /hi
+```
+
+_No parameters_
+
+___
+###### endpt #3
 ```
 GET - /sum
 ```

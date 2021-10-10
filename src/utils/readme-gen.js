@@ -30,7 +30,9 @@ function writeREADME(rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndp
     content += header;
 
     const description = rioDescriptionOfEndpoint[endpoint];
-    content += `#### Description:\n- ${description}\n\n`;
+    if (description != null) {
+      content += `#### Description:\n- ${description}\n\n`;
+    }
 
     const args = rioArgsForEndpoint[endpoint];
     const argumentCount = args.length;

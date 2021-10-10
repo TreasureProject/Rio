@@ -13,6 +13,10 @@ const limit = '300KB';
 app.use(express.json({ limit }));
 app.use(express.urlencoded({ limit, extended: true, parameterLimit: 50000 }));
 
+rio.get('/hi', (req, res) => {
+  res.status(200).send('Hi!');
+});
+
 rio.get('/', (req, res) => {
   const result = JSON.stringify({ result: 'Hello, world' });
   res.status(200).send(result);

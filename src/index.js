@@ -29,7 +29,7 @@ rio.post = (endpoint, callback, args, description) => {
   }));
 };
 
-rio.get = (endpoint, callback, args, description) => {
+rio.get = (endpoint, callback, args = [], description = null) => {
   rioArgsForEndpoint[endpoint] = args;
   rioTypeOfEndpoint[endpoint] = 'GET';
   rioDescriptionOfEndpoint[endpoint] = description;
