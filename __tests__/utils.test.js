@@ -8,6 +8,10 @@ app.get('/utils', (req, res) => {
   res.status(200).send('Hello, world');
 });
 
+test('Write to README no crash', () => {
+  rio.writeREADME();
+});
+
 test('Getting endpoints', () => {
   const { routes } = rio.utils.getEndpoints(app);
   expect(routes.length).toBe(1);
