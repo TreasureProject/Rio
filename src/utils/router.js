@@ -6,22 +6,23 @@ function getEndpoints(app) {
   app._router.stack.forEach((middleware) => {
     const endpoint = middleware.route;
     if (endpoint) {
-      const parts = endpoint.path.split('/');
-      parts.shift();
-      if (parts.length > 1) {
-        parts.pop();
+      if (endpoint.path) {
+        const parts = endpoint.path.split('/');
+        parts.shift();
+        if (parts.length > 1) {
+          parts.pop();
 
-        if (parts.length > 0) {
-          let module = parts.join('/');
-          module = `/${module}`;
-          if (addedModule[module] == null) {
-            addedModule[module] = true;
-            modules.push(module);
+          if (parts.length > 0) {
+            let module = parts.join('/');
+            module = `/${module}`;
+            if (addedModule[module] == null) {
+              addedModule[module] = true;
+              modules.push(module);
+            }
           }
         }
+        routes.push(endpoint.path);
       }
-      // console.log(parts);
-      routes.push(endpoint.path);
     }
   });
   return { routes, modules };
