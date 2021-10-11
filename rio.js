@@ -17,7 +17,7 @@ program
     // eslint-disable-next-line
     require(path);
 
-    rio.writeREADME();
+    rio.writeREADME(__dirname);
   });
 
 program

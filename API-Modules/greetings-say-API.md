@@ -1,6 +1,6 @@
 # /greetings/say
 
-This is placeholder text for the description of this module. It will explain what this module does and why it exists
+_No description for this module_
 
 ## Table of Contents
 - [/greetings/say/hi](#endpt-1)

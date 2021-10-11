@@ -1,6 +1,6 @@
 # /math
 
-This is placeholder text for the description of this module. It will explain what this module does and why it exists
+All math related functionality
 
 ## Table of Contents
 - [/math/makeSum](#endpt-1)

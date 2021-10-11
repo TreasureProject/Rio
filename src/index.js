@@ -41,8 +41,8 @@ rio.get = (endpoint, callback, args = [], description = null, exampleResult = nu
   }));
 };
 
-function writeREADME() {
-  utils.writeREADME(rio.app, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rio.appName);
+function writeREADME(path) {
+  utils.writeREADME(path, rio.app, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rio.appName);
 }
 
 rio.writeREADME = writeREADME;

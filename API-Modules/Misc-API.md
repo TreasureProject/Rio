@@ -1,6 +1,6 @@
-# /Misc
+# Misc
 
-This is placeholder text for the description of this module. It will explain what this module does and why it exists
+All other endpoints
 
 ## Table of Contents
 - [/](#endpt-1)
