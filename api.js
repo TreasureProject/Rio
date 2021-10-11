@@ -13,7 +13,7 @@ const limit = '300KB';
 app.use(express.json({ limit }));
 app.use(express.urlencoded({ limit, extended: true, parameterLimit: 50000 }));
 
-rio.get('/hi', (req, res) => {
+rio.get('/greetings/say/hi', (req, res) => {
   res.status(200).send('Hi!');
 },
 [],
@@ -28,7 +28,7 @@ rio.get('/', (req, res) => {
 'Returns the string \'Hello, world\'',
 { result: 'Hello, world' });
 
-rio.get('/sum', (req, res) => {
+rio.get('/math/sum', (req, res) => {
   let { a, b } = req.query;
   a = parseInt(a, 10);
   b = parseInt(b, 10);
@@ -42,7 +42,7 @@ rio.get('/sum', (req, res) => {
 'Adds two numbers together',
 { result: 2 });
 
-rio.post('/makeSum', (req, res) => {
+rio.post('/math/makeSum', (req, res) => {
   let { a, b } = req.body;
   a = parseInt(a, 10);
   b = parseInt(b, 10);

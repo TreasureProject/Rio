@@ -42,7 +42,7 @@ rio.get = (endpoint, callback, args = [], description = null, exampleResult = nu
 };
 
 function writeREADME() {
-  utils.writeREADME(rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rio.appName);
+  utils.writeREADME(rio.app, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rio.appName);
 }
 
 rio.writeREADME = writeREADME;

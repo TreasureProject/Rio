@@ -9,7 +9,7 @@ app.get('/utils', (req, res) => {
 });
 
 test('Getting endpoints', () => {
-  const routes = rio.utils.getEndpoints(app);
+  const { routes } = rio.utils.getEndpoints(app);
   expect(routes.length).toBe(1);
 });
 
