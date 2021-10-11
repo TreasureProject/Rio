@@ -19,6 +19,7 @@ const rio = {
   argsForEndpoint: rioArgsForEndpoint,
   cli: false,
   appName: 'My API',
+  paths: {},
 };
 
 rio.post = (endpoint, callback, args = [], description = null, exampleResult = null) => {
@@ -48,6 +49,7 @@ rio.router.get = (expressRouter, endpoint, callback, args = [], description = nu
   rioTypeOfEndpoint[`GET${endpoint}`] = 'GET';
   rioDescriptionOfEndpoint[`GET${endpoint}`] = description;
   rioExampleResultOfEndpoint[`GET${endpoint}`] = exampleResult;
+
   expressRouter.get(endpoint, ((req, res, next) => {
     handleHTTP(rioArgsForEndpoint, req, res, next, callback, false);
   }));
@@ -63,8 +65,20 @@ rio.router.post = (expressRouter, endpoint, callback, args = [], description = n
   }));
 };
 
+rio.router.init = (expressRouter) => {
+  const routes = expressRouter.stack;
+  const routesCount = routes.length;
+  for (let i = 0; i < routesCount; i += 1) {
+    const route = routes[i];
+    const endpoint = route.route;
+    if (endpoint && endpoint.path && !Array.isArray(endpoint.path)) {
+      rio.paths[endpoint.path] = endpoint;
+    }
+  }
+};
+
 function writeREADME(path) {
-  utils.writeREADME(path, rio.app, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rio.appName);
+  utils.writeREADME(path, rio.paths, rio.app, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rio.appName);
 }
 
 rio.writeREADME = writeREADME;

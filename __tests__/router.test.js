@@ -4,6 +4,8 @@ const http = require('http');
 const rio = require('../src/index');
 
 const app = express();
+rio.init(app);
+
 const server = http.createServer(app);
 app.use(express.json());
 
@@ -16,6 +18,8 @@ rio.router.get(router, '/test', (req, res) => {
 rio.router.post(router, '/test', (req, res) => {
   res.status(200).send('Hi');
 }, [rio.rInt('a', 'a number')]);
+
+rio.router.init(router);
 
 app.use('/v2', router);
 
@@ -88,4 +92,8 @@ describe('Router tests - POST', () => {
       .send({ a: 'A' });
     expect(res.statusCode).toEqual(403);
   });
+});
+
+test('Generate README', () => {
+  rio.writeREADME('../..');
 });

@@ -13,7 +13,7 @@ test('Write to README no crash', () => {
 });
 
 test('Getting endpoints', () => {
-  const { routes } = rio.utils.getEndpoints(app);
+  const { routes } = rio.utils.getEndpoints(app, rio.paths);
   expect(routes.length).toBe(1);
 });
 

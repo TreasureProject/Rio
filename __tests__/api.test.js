@@ -113,7 +113,7 @@ afterAll(async () => {
 
 describe('Using rio.get and rio.put', () => {
   test('Checking endpoints', async () => {
-    const { routes } = rio.utils.getEndpoints(app);
+    const { routes } = rio.utils.getEndpoints(app, rio.paths);
     expect(routes.length).toBe(8);
   });
 
