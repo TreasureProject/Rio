@@ -300,5 +300,5 @@ describe('Type formatters', () => {
 });
 
 test('Write to README no crash', () => {
-  rio.writeREADME();
+  rio.writeREADME('../..');
 });
