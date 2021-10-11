@@ -84,7 +84,8 @@ function getContentForRoutes(endpoints, rioTypeOfEndpoint, rioDescriptionOfEndpo
         content += `${endpoint}\n`;
       }
     } else {
-      content += '{\n';
+      const lbSuffix = argumentCount > 0 ? '\n' : '';
+      content += `{${lbSuffix}`;
       for (let j = 0; j < argumentCount; j += 1) {
         const argument = args[j];
         const suffix = j === argumentCount - 1 ? '' : ',';

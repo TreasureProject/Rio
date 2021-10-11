@@ -15,9 +15,12 @@ program
     rio.cli = true;
 
     // eslint-disable-next-line
-    require(path);
+    const { server } = require(path);
 
     rio.writeREADME(__dirname);
+    if (server) {
+      server.close();
+    }
   });
 
 program

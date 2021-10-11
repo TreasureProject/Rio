@@ -6,7 +6,7 @@ function getEndpoints(app) {
   app._router.stack.forEach((middleware) => {
     const endpoint = middleware.route;
     if (endpoint) {
-      if (endpoint.path) {
+      if (endpoint.path && !Array.isArray(endpoint.path)) {
         const parts = endpoint.path.split('/');
         parts.shift();
         if (parts.length > 1) {
