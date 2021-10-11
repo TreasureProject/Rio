@@ -4,7 +4,7 @@
   "description": "Automatic Express API README generator",
   "author": "Ryu Games",
   "repository": "https://github.com/RyuGames/Rio",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "preferGlobal": true,
   "bin": {
     "rio": "./rio.js"
