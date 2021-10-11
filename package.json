@@ -14,7 +14,8 @@
     "lint": "eslint .",
     "test": "jest",
     "fix": "eslint . --fix",
-    "coverage": "codecov"
+    "coverage": "codecov",
+    "pub": "npm version patch --force && npm publish"
   },
   "dependencies": {
     "commander": "^8.2.0"
