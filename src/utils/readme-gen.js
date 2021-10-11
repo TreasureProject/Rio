@@ -93,7 +93,7 @@ function getContentForRoutes(endpoints, rioTypeOfEndpoint, rioDescriptionOfEndpo
           if (j === 0) {
             content += `${formatEndpoint(endpoint)}?${argument.name}=${argument.type.example}`;
           } else {
-            content += `&${argument.name}=1`;
+            content += `&${argument.name}=${argument.type.example}`;
           }
         }
         content += '\n';
