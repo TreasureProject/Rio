@@ -33,6 +33,16 @@ function formatEndpoint(route) {
 function getContentForRoutes(endpoints, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioArgsForEndpoint, rioExampleResultOfEndpoint) {
   let content = '';
   const endpointCount = endpoints.length;
+  endpoints.sort((a, b) => {
+    if (formatEndpoint(a) < formatEndpoint(b)) {
+      return -1;
+    }
+
+    if (formatEndpoint(a) > formatEndpoint(b)) {
+      return 1;
+    }
+    return 0;
+  });
 
   if (endpointCount > 0) {
     content += '## Table of Contents\n';
