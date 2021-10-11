@@ -11,17 +11,19 @@ app.use(express.json());
 
 const router = express.Router();
 
-rio.router.get(router, '/test', (req, res) => {
+const routerName = '/v2';
+
+rio.router.init(router, routerName);
+
+rio.router.get(routerName, '/test', (req, res) => {
   res.status(200).send('Hi');
 }, [rio.rInt('a', 'a number')]);
 
-rio.router.post(router, '/test', (req, res) => {
+rio.router.post(routerName, '/test', (req, res) => {
   res.status(200).send('Hi');
 }, [rio.rInt('a', 'a number')]);
 
-rio.router.init(router);
-
-app.use('/v2', router);
+app.use(routerName, router);
 
 afterEach(async () => {
   await server.close();

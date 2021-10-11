@@ -42,39 +42,48 @@ rio.get = (endpoint, callback, args = [], description = null, exampleResult = nu
   }));
 };
 
+rio.routers = {};
 rio.router = {};
 
-rio.router.get = (expressRouter, endpoint, callback, args = [], description = null, exampleResult = null) => {
-  rioArgsForEndpoint[`GET${endpoint}`] = args;
-  rioTypeOfEndpoint[`GET${endpoint}`] = 'GET';
-  rioDescriptionOfEndpoint[`GET${endpoint}`] = description;
-  rioExampleResultOfEndpoint[`GET${endpoint}`] = exampleResult;
-
-  expressRouter.get(endpoint, ((req, res, next) => {
-    handleHTTP(rioArgsForEndpoint, req, res, next, callback, false);
-  }));
+rio.router.init = (expressRouter, routerName) => {
+  rio.routers[routerName] = expressRouter;
 };
 
-rio.router.post = (expressRouter, endpoint, callback, args = [], description = null, exampleResult = null) => {
-  rioArgsForEndpoint[`POST${endpoint}`] = args;
-  rioTypeOfEndpoint[`POST${endpoint}`] = 'POST';
-  rioDescriptionOfEndpoint[`POST${endpoint}`] = description;
-  rioExampleResultOfEndpoint[`POST${endpoint}`] = exampleResult;
-  expressRouter.post(endpoint, ((req, res, next) => {
-    handleHTTP(rioArgsForEndpoint, req, res, next, callback, true);
-  }));
-};
+rio.router.get = (routerName, endpoint, callback, args = [], description = null, exampleResult = null) => {
+  const expressRouter = rio.routers[routerName];
+  if (expressRouter) {
+    rioArgsForEndpoint[`GET${routerName}${endpoint}`] = args;
+    rioTypeOfEndpoint[`GET${routerName}${endpoint}`] = 'GET';
+    rioDescriptionOfEndpoint[`GET${routerName}${endpoint}`] = description;
+    rioExampleResultOfEndpoint[`GET${routerName}${endpoint}`] = exampleResult;
 
-rio.router.init = (expressRouter) => {
-  const routes = expressRouter.stack;
-  const routesCount = routes.length;
-  for (let i = 0; i < routesCount; i += 1) {
-    const route = routes[i];
-    const endpoint = route.route;
-    if (endpoint && endpoint.path && !Array.isArray(endpoint.path)) {
-      rio.paths[endpoint.path] = endpoint;
-    }
+    expressRouter.get(endpoint, ((req, res, next) => {
+      handleHTTP(rioArgsForEndpoint, req, res, next, callback, false);
+    }));
   }
+
+  rio.paths[`GET${routerName}${endpoint}`] = {
+    methods: { get: true },
+    path: `${routerName}${endpoint}`,
+  };
+};
+
+rio.router.post = (routerName, endpoint, callback, args = [], description = null, exampleResult = null) => {
+  const expressRouter = rio.routers[routerName];
+  if (expressRouter) {
+    rioArgsForEndpoint[`POST${routerName}${endpoint}`] = args;
+    rioTypeOfEndpoint[`POST${routerName}${endpoint}`] = 'POST';
+    rioDescriptionOfEndpoint[`POST${routerName}${endpoint}`] = description;
+    rioExampleResultOfEndpoint[`POST${routerName}${endpoint}`] = exampleResult;
+    expressRouter.post(endpoint, ((req, res, next) => {
+      handleHTTP(rioArgsForEndpoint, req, res, next, callback, true);
+    }));
+  }
+
+  rio.paths[`POST${routerName}${endpoint}`] = {
+    methods: { post: true },
+    path: `${routerName}${endpoint}`,
+  };
 };
 
 function writeREADME(path) {

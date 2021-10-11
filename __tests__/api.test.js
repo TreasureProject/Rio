@@ -114,7 +114,7 @@ afterAll(async () => {
 describe('Using rio.get and rio.put', () => {
   test('Checking endpoints', async () => {
     const { routes } = rio.utils.getEndpoints(app, rio.paths);
-    expect(routes.length).toBe(8);
+    expect(routes.length).toBe(10);
   });
 
   test('Get sum', async () => {
@@ -306,6 +306,67 @@ describe('Type formatters', () => {
 
     formatted = rio.formatter.Boolean(null);
     expect(formatted).toEqual(null);
+  });
+});
+
+describe('Router tests - GET', () => {
+  test('Get correctly', async () => {
+    const res = await request(app)
+      .get('/v2/sum?a=1&b=1');
+    expect(res.statusCode).toEqual(200);
+    const { text } = res;
+    const { result } = JSON.parse(text);
+    expect(result).toEqual(2);
+  });
+
+  test('Get missing module', async () => {
+    const res = await request(app)
+      .get('/v1/sum?a=1&b=1');
+    expect(res.statusCode).toEqual(404);
+  });
+
+  test('Get missing arg', async () => {
+    const res = await request(app)
+      .get('/v2/sum');
+    expect(res.statusCode).toEqual(403);
+  });
+
+  test('Get bad arg', async () => {
+    const res = await request(app)
+      .get('/v2/sum?a=A');
+    expect(res.statusCode).toEqual(403);
+  });
+});
+
+describe('Router tests - POST', () => {
+  test('Post correctly', async () => {
+    const res = await request(app)
+      .post('/v2/sum')
+      .send({ a: 1, b: 1 });
+    const { text } = res;
+    const { result } = JSON.parse(text);
+    expect(result).toEqual(2);
+  });
+
+  test('Get missing module', async () => {
+    const res = await request(app)
+      .post('/v1/sum')
+      .send({ a: 1, b: 1 });
+    expect(res.statusCode).toEqual(404);
+  });
+
+  test('Get missing arg', async () => {
+    const res = await request(app)
+      .post('/v2/sum')
+      .send({});
+    expect(res.statusCode).toEqual(403);
+  });
+
+  test('Get bad arg', async () => {
+    const res = await request(app)
+      .post('/v2/sum')
+      .send({ a: 'A' });
+    expect(res.statusCode).toEqual(403);
   });
 });
 
