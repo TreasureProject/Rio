@@ -21,7 +21,9 @@ function getEndpoints(app) {
             }
           }
         }
-        routes.push(endpoint.path);
+
+        const formatted = `${Object.keys(endpoint.methods)[0].toUpperCase()}${endpoint.path}`;
+        routes.push(formatted);
       }
     }
   });

@@ -7,8 +7,9 @@ function invalidType(providedArg, res) {
 }
 
 function handleHTTP(rioArgsForEndpoint, req, res, next, callback, isPost) {
-  const { path } = req.route;
-  const providedArgs = rioArgsForEndpoint[path];
+  const { path, methods } = req.route;
+  const m = Object.keys(methods)[0].toUpperCase();
+  const providedArgs = rioArgsForEndpoint[`${m}${path}`];
   const providedArgsCount = providedArgs.length;
   for (let i = 0; i < providedArgsCount; i += 1) {
     const providedArg = providedArgs[i];

@@ -23,6 +23,13 @@ function pathForModule(module) {
   return `API-Modules${parsed}`;
 }
 
+function formatEndpoint(route) {
+  let parts = route.split('/');
+  parts.shift();
+  parts = `/${parts.join('/')}`;
+  return parts;
+}
+
 function getContentForRoutes(endpoints, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioArgsForEndpoint, rioExampleResultOfEndpoint) {
   let content = '';
   const endpointCount = endpoints.length;
@@ -31,7 +38,7 @@ function getContentForRoutes(endpoints, rioTypeOfEndpoint, rioDescriptionOfEndpo
     content += '## Table of Contents\n';
     for (let i = 0; i < endpointCount; i += 1) {
       const endpoint = endpoints[i];
-      content += `- [${endpoint}](#endpt-${i + 1})\n`;
+      content += `- [${formatEndpoint(endpoint)}](#endpt-${i + 1})\n`;
     }
     content += '\n';
   }
@@ -42,7 +49,7 @@ function getContentForRoutes(endpoints, rioTypeOfEndpoint, rioDescriptionOfEndpo
 
     const endpoint = endpoints[i];
     const type = rioTypeOfEndpoint[endpoint];
-    const header = `\`\`\`\n${type} - ${endpoint}\n\`\`\`\n\n`;
+    const header = `\`\`\`\n${type} - ${formatEndpoint(endpoint)}\n\`\`\`\n\n`;
     content += header;
 
     const description = rioDescriptionOfEndpoint[endpoint];
@@ -74,14 +81,14 @@ function getContentForRoutes(endpoints, rioTypeOfEndpoint, rioDescriptionOfEndpo
         for (let j = 0; j < argumentCount; j += 1) {
           const argument = args[j];
           if (j === 0) {
-            content += `${endpoint}?${argument.name}=${argument.type.example}`;
+            content += `${formatEndpoint(endpoint)}?${argument.name}=${argument.type.example}`;
           } else {
             content += `&${argument.name}=1`;
           }
         }
         content += '\n';
       } else {
-        content += `${endpoint}\n`;
+        content += `${formatEndpoint(endpoint)}\n`;
       }
     } else {
       const lbSuffix = argumentCount > 0 ? '\n' : '';
@@ -139,6 +146,17 @@ function getRioRC(path) {
   return {};
 }
 
+function isInModule(route, module) {
+  let parts = route.split('/');
+  parts.shift();
+  parts = `/${parts.join('/')}`;
+  return parts.startsWith(module);
+}
+
+function isInMiscModule(route) {
+  return route.split('/').length === 2;
+}
+
 function writeREADME(path, app, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, appName) {
   const { modules, routes } = router.getEndpoints(app);
   routes.sort();
@@ -165,10 +183,10 @@ function writeREADME(path, app, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescri
 
         for (let i = 0; i < modules.length; i += 1) {
           const module = modules[i];
-          const moduleRoutes = routes.filter((route) => route.startsWith(module));
+          const moduleRoutes = routes.filter((route) => isInModule(route, module));
           writeModule(module, rc, moduleRoutes, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioArgsForEndpoint, rioExampleResultOfEndpoint);
         }
-        writeModule('Misc', rc, routes.filter((route) => route.split('/').length === 2), rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioArgsForEndpoint, rioExampleResultOfEndpoint);
+        writeModule('Misc', rc, routes.filter((route) => isInMiscModule(route)), rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioArgsForEndpoint, rioExampleResultOfEndpoint);
       }
     });
   } else {

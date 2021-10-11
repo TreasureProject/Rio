@@ -28,6 +28,14 @@ rio.get('/', (req, res) => {
 'Returns the string \'Hello, world\'',
 { result: 'Hello, world' });
 
+rio.post('/', (req, res) => {
+  const result = JSON.stringify({ result: 'Hello, world' });
+  res.status(200).send(result);
+},
+[],
+'Returns the string \'Hello, world\'',
+{ result: 'Hello, world' });
+
 rio.get('/math/sum', (req, res) => {
   let { a, b } = req.query;
   a = parseInt(a, 10);

@@ -22,20 +22,20 @@ const rio = {
 };
 
 rio.post = (endpoint, callback, args = [], description = null, exampleResult = null) => {
-  rioArgsForEndpoint[endpoint] = args;
-  rioTypeOfEndpoint[endpoint] = 'POST';
-  rioDescriptionOfEndpoint[endpoint] = description;
-  rioExampleResultOfEndpoint[endpoint] = exampleResult;
+  rioArgsForEndpoint[`POST${endpoint}`] = args;
+  rioTypeOfEndpoint[`POST${endpoint}`] = 'POST';
+  rioDescriptionOfEndpoint[`POST${endpoint}`] = description;
+  rioExampleResultOfEndpoint[`POST${endpoint}`] = exampleResult;
   rio.app.post(endpoint, ((req, res, next) => {
     handleHTTP(rioArgsForEndpoint, req, res, next, callback, true);
   }));
 };
 
 rio.get = (endpoint, callback, args = [], description = null, exampleResult = null) => {
-  rioArgsForEndpoint[endpoint] = args;
-  rioTypeOfEndpoint[endpoint] = 'GET';
-  rioDescriptionOfEndpoint[endpoint] = description;
-  rioExampleResultOfEndpoint[endpoint] = exampleResult;
+  rioArgsForEndpoint[`GET${endpoint}`] = args;
+  rioTypeOfEndpoint[`GET${endpoint}`] = 'GET';
+  rioDescriptionOfEndpoint[`GET${endpoint}`] = description;
+  rioExampleResultOfEndpoint[`GET${endpoint}`] = exampleResult;
   rio.app.get(endpoint, ((req, res, next) => {
     handleHTTP(rioArgsForEndpoint, req, res, next, callback, false);
   }));
