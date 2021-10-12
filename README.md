@@ -11,9 +11,6 @@ Rio has two main purposes:
 1. It allows you to specify arguments for an endpoint and automatically checks for them calling the endpoint.
 2. Automatically generates an API README of those endpoints.
 
-### TODOs
-1. Break up documentation into multiple sections when there are modules
-
 ## Usage
 Checkout the [usage README](Rio-Usage.md) to see how to add Rio to an existing Express API. 
 
