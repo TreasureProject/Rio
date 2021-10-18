@@ -13,6 +13,7 @@ GET - /
 ```
 
 **Status**: LIVE
+
 **Availability**: PUBLIC
 
 #### Description:
@@ -43,6 +44,7 @@ POST - /
 ```
 
 **Status**: LIVE
+
 **Availability**: PUBLIC
 
 #### Description:

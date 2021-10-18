@@ -12,6 +12,7 @@ GET - /greetings/say/hi
 ```
 
 **Status**: LIVE
+
 **Availability**: PUBLIC
 
 #### Description:

@@ -12,6 +12,7 @@ GET - /math/sum
 ```
 
 **Status**: LIVE
+
 **Availability**: PUBLIC
 
 #### Description:

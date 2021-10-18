@@ -13,6 +13,7 @@ GET - /v2/sum
 ```
 
 **Status**: LIVE
+
 **Availability**: PUBLIC
 
 #### Description:
@@ -45,6 +46,7 @@ POST - /v2/sum
 ```
 
 **Status**: LIVE
+
 **Availability**: PUBLIC
 
 #### Description:

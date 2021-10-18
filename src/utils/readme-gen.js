@@ -65,7 +65,7 @@ function getContentForRoutes(endpoints, globalArgs, rioTypeOfEndpoint, rioDescri
     content += header;
 
     const status = rioStatusOfEndpoint[endpoint].name.toUpperCase();
-    content += `**Status**: ${status}\n`;
+    content += `**Status**: ${status}\n\n`;
 
     const availability = rioAvailabilityOfEndpoint[endpoint].name.toUpperCase();
     content += `**Availability**: ${availability}\n\n`;

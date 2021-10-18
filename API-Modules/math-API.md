@@ -13,6 +13,7 @@ POST - /math/makeSum
 ```
 
 **Status**: PREVIEW
+
 **Availability**: PRIVATE
 
 #### Description:
@@ -49,6 +50,7 @@ GET - /math/sum
 ```
 
 **Status**: LIVE
+
 **Availability**: PUBLIC
 
 #### Description:
