@@ -12,8 +12,8 @@ ___
 POST - /math/makeSum
 ```
 
-**Status**: LIVE
-**Availability**: PUBLIC
+**Status**: PREVIEW
+**Availability**: PRIVATE
 
 #### Description:
 - Adds two numbers together

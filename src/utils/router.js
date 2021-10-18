@@ -26,7 +26,10 @@ function getEndpoints(app, paths, rioStatusOfEndpoint = {}, rioAvailabilityOfEnd
       const availability = rioAvailabilityOfEndpoint[formatted] ? rioAvailabilityOfEndpoint[formatted].name : 'public';
       if (status !== 'live' || availability !== 'public') {
         canAdd = false;
-        console.log(`Cannot add ${formatted} because the status was ${status} and the availability was ${availability}`);
+        if (process.env.JEST_WORKER_ID === undefined) {
+          /* istanbul ignore next */
+          console.log(`Cannot add ${formatted} because the status was ${status} and the availability was ${availability}`);
+        }
       }
     }
 

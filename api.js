@@ -85,7 +85,9 @@ rio.post('/math/makeSum', (req, res) => {
   rInt('b', 'Another number to be added'),
 ],
 'Adds two numbers together',
-{ result: 2 });
+{ result: 2 },
+rio.preview,
+rio.private);
 
 if (rio.cli !== true) {
   const port = 3000;
