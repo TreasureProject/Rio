@@ -14,12 +14,16 @@ GET - /greetings/say/hi
 #### Description:
 - Returns Hi!
 
-_No parameters_
+Params:
+
+| Name | Type | Description |
+|--|--|--|
+| **version** | `integer` | A version number (*Required)
 
 
 Example Request:
 ```
-/greetings/say/hi
+/greetings/say/hi?version=1
 ```
 
 Example Response:

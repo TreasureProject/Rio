@@ -21,13 +21,15 @@ Params:
 |--|--|--|
 | **a** | `integer` | A number to be added (*Required)
 | **b** | `integer` | Another number to be added (*Required)
+| **version** | `integer` | A version number (*Required)
 
 
 Example Request:
 ```
 {
   a: 1,
-  b: 1
+  b: 1,
+  version: 1
 }
 ```
 
@@ -52,11 +54,12 @@ Params:
 |--|--|--|
 | **a** | `integer` | A number to be added (*Required)
 | **b** | `integer` | Another number to be added (*Required)
+| **version** | `integer` | A version number (*Required)
 
 
 Example Request:
 ```
-/math/sum?a=1&b=1
+/math/sum?a=1&b=1&version=1
 ```
 
 Example Response:

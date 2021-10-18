@@ -88,7 +88,7 @@ rio.router.post = (routerName, endpoint, callback, args = [], description = null
 };
 
 function writeREADME(path) {
-  utils.writeREADME(path, rio.paths, rio.app, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rio.appName);
+  utils.writeREADME(path, rio.paths, rio.app, rio.globalArgs, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rio.appName);
 }
 
 rio.writeREADME = writeREADME;

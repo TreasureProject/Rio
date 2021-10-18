@@ -15,12 +15,16 @@ GET - /
 #### Description:
 - Returns the string 'Hello, world'
 
-_No parameters_
+Params:
+
+| Name | Type | Description |
+|--|--|--|
+| **version** | `integer` | A version number (*Required)
 
 
 Example Request:
 ```
-/
+/?version=1
 ```
 
 Example Response:
@@ -38,12 +42,18 @@ POST - /
 #### Description:
 - Returns the string 'Hello, world'
 
-_No parameters_
+Params:
+
+| Name | Type | Description |
+|--|--|--|
+| **version** | `integer` | A version number (*Required)
 
 
 Example Request:
 ```
-{}
+{
+  version: 1
+}
 ```
 
 Example Response:
