@@ -81,19 +81,19 @@ rio.init = (app, name = null, globalArgs = []) => {
   }
 };
 
-rio.RequiredInteger = (name, description = null) => new rio.Argument(name, rio.ArgumentType.Integer, true, description);
-rio.RequiredString = (name, description = null) => new rio.Argument(name, rio.ArgumentType.String, true, description);
-rio.RequiredFloat = (name, description = null) => new rio.Argument(name, rio.ArgumentType.Float, true, description);
-rio.RequiredBoolean = (name, description = null) => new rio.Argument(name, rio.ArgumentType.Boolean, true, description);
-rio.RequiredMap = (name, description = null) => new rio.Argument(name, rio.ArgumentType.Map, true, description);
-rio.RequiredArray = (name, description = null) => new rio.Argument(name, rio.ArgumentType.Array, true, description);
+rio.RequiredInteger = (name, description = null, exampleValue = null) => new rio.Argument(name, rio.ArgumentType.Integer, true, description, exampleValue);
+rio.RequiredString = (name, description = null, exampleValue = null) => new rio.Argument(name, rio.ArgumentType.String, true, description, exampleValue);
+rio.RequiredFloat = (name, description = null, exampleValue = null) => new rio.Argument(name, rio.ArgumentType.Float, true, description, exampleValue);
+rio.RequiredBoolean = (name, description = null, exampleValue = null) => new rio.Argument(name, rio.ArgumentType.Boolean, true, description, exampleValue);
+rio.RequiredMap = (name, description = null, exampleValue = null) => new rio.Argument(name, rio.ArgumentType.Map, true, description, exampleValue);
+rio.RequiredArray = (name, description = null, exampleValue = null) => new rio.Argument(name, rio.ArgumentType.Array, true, description, exampleValue);
 
-rio.OptionalInteger = (name, description = null) => new rio.Argument(name, rio.ArgumentType.Integer, false, description);
-rio.OptionalString = (name, description = null) => new rio.Argument(name, rio.ArgumentType.String, false, description);
-rio.OptionalFloat = (name, description = null) => new rio.Argument(name, rio.ArgumentType.Float, false, description);
-rio.OptionalBoolean = (name, description = null) => new rio.Argument(name, rio.ArgumentType.Boolean, false, description);
-rio.OptionalMap = (name, description = null) => new rio.Argument(name, rio.ArgumentType.Map, false, description);
-rio.OptionalArray = (name, description = null) => new rio.Argument(name, rio.ArgumentType.Array, false, description);
+rio.OptionalInteger = (name, description = null, exampleValue = null) => new rio.Argument(name, rio.ArgumentType.Integer, false, description, exampleValue);
+rio.OptionalString = (name, description = null, exampleValue = null) => new rio.Argument(name, rio.ArgumentType.String, false, description, exampleValue);
+rio.OptionalFloat = (name, description = null, exampleValue = null) => new rio.Argument(name, rio.ArgumentType.Float, false, description, exampleValue);
+rio.OptionalBoolean = (name, description = null, exampleValue = null) => new rio.Argument(name, rio.ArgumentType.Boolean, false, description, exampleValue);
+rio.OptionalMap = (name, description = null, exampleValue = null) => new rio.Argument(name, rio.ArgumentType.Map, false, description, exampleValue);
+rio.OptionalArray = (name, description = null, exampleValue = null) => new rio.Argument(name, rio.ArgumentType.Array, false, description, exampleValue);
 
 rio.rInt = rio.RequiredInteger;
 rio.rStr = rio.RequiredString;

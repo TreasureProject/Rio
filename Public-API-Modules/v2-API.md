@@ -30,13 +30,13 @@ Params:
 
 Example Request:
 ```
-/v2/sum?a=1&b=1&version=1
+/v2/sum?a=3&b=4&version=1
 ```
 
 Example Response:
 ```
 {
-  "result": 2
+  "result": 7
 }
 ```
 ___
@@ -64,8 +64,8 @@ Params:
 Example Request:
 ```
 {
-  a: 1,
-  b: 1,
+  a: 10,
+  b: 25,
   version: 1
 }
 ```
@@ -73,6 +73,6 @@ Example Request:
 Example Response:
 ```
 {
-  "result": 2
+  "result": 35
 }
 ```

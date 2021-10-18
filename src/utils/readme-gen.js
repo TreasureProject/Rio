@@ -103,9 +103,9 @@ function getContentForRoutes(endpoints, globalArgs, rioIgnoreGlobalsForEndpoint,
         for (let j = 0; j < argumentCount; j += 1) {
           const argument = args[j];
           if (j === 0) {
-            content += `${formatEndpoint(endpoint)}?${argument.name}=${argument.type.example}`;
+            content += `${formatEndpoint(endpoint)}?${argument.name}=${argument.exampleValue}`;
           } else {
-            content += `&${argument.name}=${argument.type.example}`;
+            content += `&${argument.name}=${argument.exampleValue}`;
           }
         }
         content += '\n';
@@ -118,7 +118,7 @@ function getContentForRoutes(endpoints, globalArgs, rioIgnoreGlobalsForEndpoint,
       for (let j = 0; j < argumentCount; j += 1) {
         const argument = args[j];
         const suffix = j === argumentCount - 1 ? '' : ',';
-        content += `  ${argument.name}: ${argument.type.example}${suffix}\n`;
+        content += `  ${argument.name}: ${argument.exampleValue}${suffix}\n`;
       }
       content += '}\n';
     }

@@ -25,14 +25,14 @@ rio.router.get(routerName, '/sum', (req, res) => {
   a = rio.formatter.Int(a);
   b = rio.formatter.Int(b);
   res.status(200).send(JSON.stringify({ result: a + b }));
-}, [rio.rInt('a', 'a number'), rio.rInt('b', 'a number')], 'Adds numbers', { result: 2 });
+}, [rio.rInt('a', 'a number', 3), rio.rInt('b', 'a number', 4)], 'Adds numbers', { result: 7 });
 
 rio.router.post(routerName, '/sum', (req, res) => {
   let { a, b } = req.body;
   a = rio.formatter.Int(a);
   b = rio.formatter.Int(b);
   res.status(200).send(JSON.stringify({ result: a + b }));
-}, [rio.rInt('a', 'a number'), rio.rInt('b', 'a number')], 'Adds numbers', { result: 2 });
+}, [rio.rInt('a', 'a number', 10), rio.rInt('b', 'a number', 25)], 'Adds numbers', { result: 35 });
 
 app.use(routerName, router);
 
