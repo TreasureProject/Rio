@@ -15,6 +15,7 @@
     "test": "jest",
     "fix": "eslint . --fix",
     "coverage": "codecov",
+    "readme": "rio init && rio init --private",
     "pub": "npm version patch --force && npm publish"
   },
   "dependencies": {

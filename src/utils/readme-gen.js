@@ -202,12 +202,16 @@ function writeREADME(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
           const moduleRoutes = routes.filter((route) => isInModule(route, module));
           routesForModule[module] = moduleRoutes;
           const moduleRoutesCount = moduleRoutes.length;
-          content += `- [${module}](${pathForModule(module, isPublic)}-API.md) (${moduleRoutesCount} total endpoint${moduleRoutesCount === 1 ? '' : 's'})\n`;
+          if (moduleRoutesCount > 0) {
+            content += `- [${module}](${pathForModule(module, isPublic)}-API.md) (${moduleRoutesCount} total endpoint${moduleRoutesCount === 1 ? '' : 's'})\n`;
+          }
           totalEndpoints += moduleRoutesCount;
         }
         const miscRoutes = routes.filter((route) => isInMiscModule(route));
         const miscRoutesCount = miscRoutes.length;
-        content += `- [Misc](${apiModuleDirectory}/Misc-API.md) (${miscRoutesCount} total endpoint${miscRoutesCount === 1 ? '' : 's'})\n`;
+        if (miscRoutesCount > 0) {
+          content += `- [Misc](${apiModuleDirectory}/Misc-API.md) (${miscRoutesCount} total endpoint${miscRoutesCount === 1 ? '' : 's'})\n`;
+        }
         content += '\n';
 
         for (let i = 0; i < modules.length; i += 1) {
