@@ -20,6 +20,7 @@ const rio = {
   cli: false,
   appName: 'My API',
   paths: {},
+  globalArgs: [],
 };
 
 rio.post = (endpoint, callback, args = [], description = null, exampleResult = null) => {
@@ -92,11 +93,12 @@ function writeREADME(path) {
 
 rio.writeREADME = writeREADME;
 
-rio.init = (app, name = null) => {
+rio.init = (app, name = null, globalArgs = []) => {
   rio.app = app;
   if (name != null) {
     rio.appName = name;
   }
+  rio.globalArgs = globalArgs;
 };
 
 rio.RequiredInteger = (name, description = null) => new rio.Argument(name, rio.ArgumentType.Integer, true, description);
