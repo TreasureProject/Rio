@@ -12,6 +12,9 @@ ___
 GET - /
 ```
 
+**Status**: LIVE
+**Availability**: PUBLIC
+
 #### Description:
 - Returns the string 'Hello, world'
 
@@ -38,6 +41,9 @@ ___
 ```
 POST - /
 ```
+
+**Status**: LIVE
+**Availability**: PUBLIC
 
 #### Description:
 - Returns the string 'Hello, world'

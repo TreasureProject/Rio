@@ -12,6 +12,9 @@ ___
 POST - /math/makeSum
 ```
 
+**Status**: LIVE
+**Availability**: PUBLIC
+
 #### Description:
 - Adds two numbers together
 
@@ -44,6 +47,9 @@ ___
 ```
 GET - /math/sum
 ```
+
+**Status**: LIVE
+**Availability**: PUBLIC
 
 #### Description:
 - Adds two numbers together

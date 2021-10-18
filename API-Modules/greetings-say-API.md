@@ -11,8 +11,8 @@ ___
 GET - /greetings/say/hi
 ```
 
-*Status*: Live
-#####
+**Status**: LIVE
+**Availability**: PUBLIC
 
 #### Description:
 - Returns Hi!
