@@ -1,14 +1,14 @@
-# /greetings/say
+# /math
 
-_No description for this module_
+All math related functionality
 
 ## Table of Contents
-- [/greetings/say/hi](#endpt-1)
+- [/math/sum](#endpt-1)
 
 ___
 ###### endpt #1
 ```
-GET - /greetings/say/hi
+GET - /math/sum
 ```
 
 **Status**: LIVE
@@ -16,21 +16,25 @@ GET - /greetings/say/hi
 **Availability**: PUBLIC
 
 #### Description:
-- Returns Hi!
+- Adds two numbers together
 
 Params:
 
 | Name | Type | Description |
 |--|--|--|
+| **a** | `integer` | A number to be added (*Required)
+| **b** | `integer` | Another number to be added (*Required)
 | **version** | `integer` | A version number (*Required)
 
 
 Example Request:
 ```
-/greetings/say/hi?version=1
+/math/sum?a=1&b=1&version=1
 ```
 
 Example Response:
 ```
-"Hi!"
+{
+  "result": 2
+}
 ```

@@ -1,4 +1,4 @@
-function getEndpoints(app, paths) {
+function getEndpoints(app, paths, rioStatusOfEndpoint = {}, rioAvailabilityOfEndpoint = {}, isPublic = true) {
   const routes = [];
   const addedModule = {};
   const modules = [];
@@ -20,7 +20,22 @@ function getEndpoints(app, paths) {
     }
 
     const formatted = `${Object.keys(endpoint.methods)[0].toUpperCase()}${endpoint.path}`;
-    routes.push(formatted);
+    let canAdd = true;
+    if (isPublic) {
+      const status = rioStatusOfEndpoint[formatted] ? rioStatusOfEndpoint[formatted].name : 'live';
+      const availability = rioAvailabilityOfEndpoint[formatted] ? rioAvailabilityOfEndpoint[formatted].name : 'public';
+      if (status !== 'live' || availability !== 'public') {
+        canAdd = false;
+        if (process.env.JEST_WORKER_ID === undefined) {
+          /* istanbul ignore next */
+          console.log(`Cannot add ${formatted} because the status was ${status} and the availability was ${availability}`);
+        }
+      }
+    }
+
+    if (canAdd) {
+      routes.push(formatted);
+    }
   }
 
   app._router.stack.forEach((middleware) => {

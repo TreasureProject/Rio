@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const process = require('child_process');
+const childProcess = require('child_process');
 const { Command } = require('commander');
 const rio = require('./src/index');
 
@@ -10,18 +10,25 @@ program
 program
   .command('init')
   .argument('[path]', 'path to api', './api.js')
+  .option('--private', 'Whether to make it public or not')
   .description('Initialize')
-  .action((path) => {
+  .action((path, options) => {
     rio.cli = true;
+
+    let isPrivate = options.private;
+    if (isPrivate == null) {
+      isPrivate = false;
+    }
+    const isPublic = !isPrivate;
 
     // eslint-disable-next-line
     const { server } = require(path);
 
-    rio.writeREADME(__dirname);
+    rio.writeREADME(process.cwd(), isPublic);
     if (server) {
       server.close();
     }
   });
 
 program
-  .parse(process.argv);
+  .parse(childProcess.argv);

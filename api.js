@@ -7,7 +7,9 @@ const server = http.createServer(app);
 
 const { rInt } = rio;
 
-rio.init(app, 'RIO Example API');
+const globalArgs = [rInt('version', 'A version number')];
+
+rio.init(app, 'RIO Example API', globalArgs);
 
 const limit = '300KB';
 app.use(express.json({ limit }));
@@ -83,7 +85,9 @@ rio.post('/math/makeSum', (req, res) => {
   rInt('b', 'Another number to be added'),
 ],
 'Adds two numbers together',
-{ result: 2 });
+{ result: 2 },
+rio.preview,
+rio.private);
 
 if (rio.cli !== true) {
   const port = 3000;

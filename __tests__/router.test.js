@@ -4,7 +4,7 @@ const http = require('http');
 const rio = require('../src/index');
 
 const app = express();
-rio.init(app);
+rio.init(app, null, null);
 
 const server = http.createServer(app);
 app.use(express.json());
@@ -21,7 +21,11 @@ rio.router.get(routerName, '/test', (req, res) => {
 
 rio.router.post(routerName, '/test', (req, res) => {
   res.status(200).send('Hi');
-}, [rio.rInt('a', 'a number')]);
+}, [rio.rInt('a', 'a number')], 'Another test with arguments', 'Hi', rio.preview, rio.private);
+
+rio.router.get(routerName, '/testB', (req, res) => {
+  res.status(200).send('Hi');
+});
 
 app.use(routerName, router);
 
@@ -61,6 +65,14 @@ describe('Router tests - GET', () => {
     const res = await request(app)
       .get('/v2/test?a=A');
     expect(res.statusCode).toEqual(403);
+  });
+
+  test('Get correctly, no args', async () => {
+    const res = await request(app)
+      .get('/v2/testB');
+    expect(res.statusCode).toEqual(200);
+    const { text } = res;
+    expect(text).toEqual('Hi');
   });
 });
 
