@@ -14,6 +14,8 @@ const {
   rioTypeOfEndpoint,
   rioDescriptionOfEndpoint,
   rioExampleResultOfEndpoint,
+  rioStatusOfEndpoint,
+  rioAvailabilityOfEndpoint,
 } = http;
 
 const rio = {
@@ -56,7 +58,7 @@ function writeREADME(path) {
   if (pathToUse == null) {
     pathToUse = process.cwd();
   }
-  utils.writeREADME(pathToUse, rio.paths, rio.app, rio.globalArgs, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rio.appName);
+  utils.writeREADME(pathToUse, rio.paths, rio.app, rio.appName, rio.globalArgs, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint);
 }
 
 rio.writeREADME = writeREADME;

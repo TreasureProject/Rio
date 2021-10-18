@@ -77,7 +77,7 @@ function addHTTPListener(rio, endpoint, callback, args, description, exampleResu
   rioDescriptionOfEndpoint[key] = description;
   rioExampleResultOfEndpoint[key] = exampleResult;
   rioStatusOfEndpoint[key] = status;
-  rioAvailabilityOfEndpoint[key] = status;
+  rioAvailabilityOfEndpoint[key] = availability;
 
   let handler = rio.app;
 
@@ -104,4 +104,6 @@ module.exports = {
   rioTypeOfEndpoint,
   rioDescriptionOfEndpoint,
   rioExampleResultOfEndpoint,
+  rioStatusOfEndpoint,
+  rioAvailabilityOfEndpoint,
 };

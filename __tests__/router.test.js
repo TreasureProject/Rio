@@ -21,7 +21,7 @@ rio.router.get(routerName, '/test', (req, res) => {
 
 rio.router.post(routerName, '/test', (req, res) => {
   res.status(200).send('Hi');
-}, [rio.rInt('a', 'a number')]);
+}, [rio.rInt('a', 'a number')], 'Another test with arguments', 'Hi', rio.preview, rio.private);
 
 rio.router.get(routerName, '/testB', (req, res) => {
   res.status(200).send('Hi');

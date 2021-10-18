@@ -168,8 +168,8 @@ function isInMiscModule(route) {
   return route.split('/').length === 2;
 }
 
-function writeREADME(path, paths, app, globalArgs, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, appName) {
-  const { modules, routes } = router.getEndpoints(app, paths);
+function writeREADME(path, paths, app, appName, globalArgs, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint) {
+  const { modules, routes } = router.getEndpoints(app, paths, rioStatusOfEndpoint, rioAvailabilityOfEndpoint, true);
   routes.sort();
   const rc = getRioRC(path);
 
