@@ -2,7 +2,7 @@ const express = require('express');
 const rio = require('../src/index');
 
 const app = express();
-rio.init(app);
+rio.init(app, null, null);
 
 app.get('/utils', (req, res) => {
   res.status(200).send('Hello, world');

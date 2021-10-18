@@ -4,7 +4,7 @@ const http = require('http');
 const rio = require('../src/index');
 
 const app = express();
-rio.init(app, null, null);
+rio.init(app, null, [rio.rInt('X', 'Example')]);
 
 const server = http.createServer(app);
 app.use(express.json());
@@ -17,15 +17,15 @@ rio.router.init(router, routerName);
 
 rio.router.get(routerName, '/test', (req, res) => {
   res.status(200).send('Hi');
-}, [rio.rInt('a', 'a number')]);
+}, [rio.rInt('a', 'a number')], null, null, rio.live, rio.public, true);
 
 rio.router.post(routerName, '/test', (req, res) => {
   res.status(200).send('Hi');
-}, [rio.rInt('a', 'a number')], 'Another test with arguments', 'Hi', rio.preview, rio.private);
+}, [rio.rInt('a', 'a number')], 'Another test with arguments', 'Hi', rio.preview, rio.private, false);
 
 rio.router.get(routerName, '/testB', (req, res) => {
   res.status(200).send('Hi');
-});
+}, [], null, null, rio.live, rio.public, true);
 
 app.use(routerName, router);
 
@@ -80,7 +80,7 @@ describe('Router tests - POST', () => {
   test('Post correctly', async () => {
     const res = await request(app)
       .post('/v2/test')
-      .send({ a: 1 });
+      .send({ a: 1, X: 5 });
     expect(res.statusCode).toEqual(200);
     const { text } = res;
     expect(text).toEqual('Hi');
@@ -89,21 +89,21 @@ describe('Router tests - POST', () => {
   test('Get missing module', async () => {
     const res = await request(app)
       .post('/test')
-      .send({ a: 1 });
+      .send({ a: 1, X: 5 });
     expect(res.statusCode).toEqual(404);
   });
 
   test('Get missing arg', async () => {
     const res = await request(app)
       .post('/v2/test')
-      .send({});
+      .send({ X: 5 });
     expect(res.statusCode).toEqual(403);
   });
 
   test('Get bad arg', async () => {
     const res = await request(app)
       .post('/v2/test')
-      .send({ a: 'A' });
+      .send({ a: 'A', X: 5 });
     expect(res.statusCode).toEqual(403);
   });
 });

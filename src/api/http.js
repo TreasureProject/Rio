@@ -7,6 +7,7 @@ const rioDescriptionOfEndpoint = {};
 const rioExampleResultOfEndpoint = {};
 const rioStatusOfEndpoint = {};
 const rioAvailabilityOfEndpoint = {};
+const rioIgnoreGlobalsForEndpoint = {};
 
 function invalidType(providedArg, res) {
   const result = JSON.stringify({ error: `Argument ${providedArg.name} was not of the specified type ${providedArg.type.name}` });
@@ -69,7 +70,7 @@ function handleListener(handler, isPost, endpoint, callback) {
   }
 }
 
-function addHTTPListener(rio, endpoint, callback, args, description, exampleResult, isPost, status, availability, routerName = '') {
+function addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, description, exampleResult, isPost, status, availability, routerName = '') {
   const method = isPost ? 'POST' : 'GET';
   const key = `${method}${routerName}${endpoint}`;
   rioArgsForEndpoint[key] = args;
@@ -78,6 +79,7 @@ function addHTTPListener(rio, endpoint, callback, args, description, exampleResu
   rioExampleResultOfEndpoint[key] = exampleResult;
   rioStatusOfEndpoint[key] = status;
   rioAvailabilityOfEndpoint[key] = availability;
+  rioIgnoreGlobalsForEndpoint[key] = ignoreGlobals;
 
   let handler = rio.app;
 
@@ -93,8 +95,10 @@ function addHTTPListener(rio, endpoint, callback, args, description, exampleResu
     };
   }
 
+  const globals = ignoreGlobals ? [] : rio.globalArgs;
+
   handleListener(handler, isPost, endpoint, ((req, res, next) => {
-    handleHTTP(rio.globalArgs, req, res, next, callback, isPost);
+    handleHTTP(globals, req, res, next, callback, isPost);
   }));
 }
 
@@ -106,4 +110,5 @@ module.exports = {
   rioExampleResultOfEndpoint,
   rioStatusOfEndpoint,
   rioAvailabilityOfEndpoint,
+  rioIgnoreGlobalsForEndpoint,
 };

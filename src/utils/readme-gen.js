@@ -32,7 +32,7 @@ function formatEndpoint(route) {
   return parts;
 }
 
-function getContentForRoutes(endpoints, globalArgs, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioArgsForEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint) {
+function getContentForRoutes(endpoints, globalArgs, rioIgnoreGlobalsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioArgsForEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint) {
   let content = '';
   const endpointCount = endpoints.length;
   endpoints.sort((a, b) => {
@@ -76,7 +76,10 @@ function getContentForRoutes(endpoints, globalArgs, rioTypeOfEndpoint, rioDescri
     }
 
     let args = rioArgsForEndpoint[endpoint];
-    args = args.concat(globalArgs);
+    const ignoreGlobalArgs = rioIgnoreGlobalsForEndpoint[endpoint];
+    if (!ignoreGlobalArgs) {
+      args = args.concat(globalArgs);
+    }
     const argumentCount = args.length;
 
     if (argumentCount > 0) {
@@ -133,7 +136,7 @@ function getContentForRoutes(endpoints, globalArgs, rioTypeOfEndpoint, rioDescri
   return content;
 }
 
-function writeModule(module, isPublic, rc, globalArgs, moduleRoutes, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioArgsForEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint) {
+function writeModule(module, isPublic, rc, globalArgs, rioIgnoreGlobalsForEndpoint, moduleRoutes, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioArgsForEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint) {
   let content = `# ${module}\n\n`;
 
   let moduleDescription = '_No description for this module_';
@@ -142,17 +145,17 @@ function writeModule(module, isPublic, rc, globalArgs, moduleRoutes, rioTypeOfEn
   }
   content += `${moduleDescription}\n\n`;
 
-  content += getContentForRoutes(moduleRoutes, globalArgs, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioArgsForEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint);
+  content += getContentForRoutes(moduleRoutes, globalArgs, rioIgnoreGlobalsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioArgsForEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint);
   const fileName = `${pathForModule(module, isPublic)}-API.md`;
   writeToFile(fileName, content);
 }
 
-function writeNoModules(apiREADME, cnt, globalArgs, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint) {
+function writeNoModules(apiREADME, cnt, globalArgs, rioIgnoreGlobalsForEndpoint, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint) {
   let content = cnt;
   const endpoints = Object.keys(rioArgsForEndpoint);
   endpoints.sort();
 
-  content += getContentForRoutes(endpoints, globalArgs, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioArgsForEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint);
+  content += getContentForRoutes(endpoints, globalArgs, rioIgnoreGlobalsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioArgsForEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint);
   writeToFile(apiREADME, content);
 }
 
@@ -176,7 +179,7 @@ function isInMiscModule(route) {
   return route.split('/').length === 2;
 }
 
-function writeREADME(path, isPublic, paths, app, appName, globalArgs, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint) {
+function writeREADME(path, isPublic, paths, app, appName, globalArgs, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint, rioIgnoreGlobalsForEndpoint) {
   const { modules, routes } = router.getEndpoints(app, paths, rioStatusOfEndpoint, rioAvailabilityOfEndpoint, isPublic);
   routes.sort();
   const rc = getRioRC(path);
@@ -217,9 +220,9 @@ function writeREADME(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
         for (let i = 0; i < modules.length; i += 1) {
           const module = modules[i];
           const moduleRoutes = routesForModule[module];
-          writeModule(module, isPublic, rc, globalArgs, moduleRoutes, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioArgsForEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint);
+          writeModule(module, isPublic, rc, globalArgs, rioIgnoreGlobalsForEndpoint, moduleRoutes, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioArgsForEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint);
         }
-        writeModule('Misc', isPublic, rc, globalArgs, miscRoutes, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioArgsForEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint);
+        writeModule('Misc', isPublic, rc, globalArgs, rioIgnoreGlobalsForEndpoint, miscRoutes, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioArgsForEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint);
         totalEndpoints += miscRoutesCount;
 
         content += `Total Endpoints: ${totalEndpoints}\n`;
@@ -227,7 +230,7 @@ function writeREADME(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
       }
     });
   } else {
-    writeNoModules(apiREADME, content, globalArgs, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint);
+    writeNoModules(apiREADME, content, globalArgs, rioIgnoreGlobalsForEndpoint, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint);
   }
 }
 

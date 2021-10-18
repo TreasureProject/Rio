@@ -16,6 +16,7 @@ const {
   rioExampleResultOfEndpoint,
   rioStatusOfEndpoint,
   rioAvailabilityOfEndpoint,
+  rioIgnoreGlobalsForEndpoint,
 } = http;
 
 const rio = {
@@ -37,20 +38,20 @@ rio.router.init = (expressRouter, routerName) => {
   rio.routers[routerName] = expressRouter;
 };
 
-rio.post = (endpoint, callback, args = [], description = null, exampleResult = null, status = Status.live, availability = Availability.public) => {
-  addHTTPListener(rio, endpoint, callback, args, description, exampleResult, true, status, availability);
+rio.post = (endpoint, callback, args = [], description = null, exampleResult = null, status = Status.live, availability = Availability.public, ignoreGlobals = false) => {
+  addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, description, exampleResult, true, status, availability);
 };
 
-rio.get = (endpoint, callback, args = [], description = null, exampleResult = null, status = Status.live, availability = Availability.public) => {
-  addHTTPListener(rio, endpoint, callback, args, description, exampleResult, false, status, availability);
+rio.get = (endpoint, callback, args = [], description = null, exampleResult = null, status = Status.live, availability = Availability.public, ignoreGlobals = false) => {
+  addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, description, exampleResult, false, status, availability);
 };
 
-rio.router.get = (routerName, endpoint, callback, args = [], description = null, exampleResult = null, status = Status.live, availability = Availability.public) => {
-  addHTTPListener(rio, endpoint, callback, args, description, exampleResult, false, status, availability, routerName);
+rio.router.get = (routerName, endpoint, callback, args = [], description = null, exampleResult = null, status = Status.live, availability = Availability.public, ignoreGlobals = false) => {
+  addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, description, exampleResult, false, status, availability, routerName);
 };
 
-rio.router.post = (routerName, endpoint, callback, args = [], description = null, exampleResult = null, status = Status.live, availability = Availability.public) => {
-  addHTTPListener(rio, endpoint, callback, args, description, exampleResult, true, status, availability, routerName);
+rio.router.post = (routerName, endpoint, callback, args = [], description = null, exampleResult = null, status = Status.live, availability = Availability.public, ignoreGlobals = false) => {
+  addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, description, exampleResult, true, status, availability, routerName);
 };
 
 function writeREADME(path, isPublic = true) {
@@ -58,7 +59,7 @@ function writeREADME(path, isPublic = true) {
   if (pathToUse == null) {
     pathToUse = process.cwd();
   }
-  utils.writeREADME(pathToUse, isPublic, rio.paths, rio.app, rio.appName, rio.globalArgs, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint);
+  utils.writeREADME(pathToUse, isPublic, rio.paths, rio.app, rio.appName, rio.globalArgs, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint, rioIgnoreGlobalsForEndpoint);
 }
 
 rio.writeREADME = writeREADME;
