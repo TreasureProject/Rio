@@ -29,7 +29,7 @@ rio.post = (endpoint, callback, args = [], description = null, exampleResult = n
   rioDescriptionOfEndpoint[`POST${endpoint}`] = description;
   rioExampleResultOfEndpoint[`POST${endpoint}`] = exampleResult;
   rio.app.post(endpoint, ((req, res, next) => {
-    handleHTTP(rioArgsForEndpoint, req, res, next, callback, true);
+    handleHTTP(rio.globalArgs, rioArgsForEndpoint, req, res, next, callback, true);
   }));
 };
 
@@ -39,7 +39,7 @@ rio.get = (endpoint, callback, args = [], description = null, exampleResult = nu
   rioDescriptionOfEndpoint[`GET${endpoint}`] = description;
   rioExampleResultOfEndpoint[`GET${endpoint}`] = exampleResult;
   rio.app.get(endpoint, ((req, res, next) => {
-    handleHTTP(rioArgsForEndpoint, req, res, next, callback, false);
+    handleHTTP(rio.globalArgs, rioArgsForEndpoint, req, res, next, callback, false);
   }));
 };
 
@@ -59,7 +59,7 @@ rio.router.get = (routerName, endpoint, callback, args = [], description = null,
     rioExampleResultOfEndpoint[`GET${routerName}${endpoint}`] = exampleResult;
 
     expressRouter.get(endpoint, ((req, res, next) => {
-      handleHTTP(rioArgsForEndpoint, req, res, next, callback, false);
+      handleHTTP(rio.globalArgs, rioArgsForEndpoint, req, res, next, callback, false);
     }));
   }
 
@@ -77,7 +77,7 @@ rio.router.post = (routerName, endpoint, callback, args = [], description = null
     rioDescriptionOfEndpoint[`POST${routerName}${endpoint}`] = description;
     rioExampleResultOfEndpoint[`POST${routerName}${endpoint}`] = exampleResult;
     expressRouter.post(endpoint, ((req, res, next) => {
-      handleHTTP(rioArgsForEndpoint, req, res, next, callback, true);
+      handleHTTP(rio.globalArgs, rioArgsForEndpoint, req, res, next, callback, true);
     }));
   }
 

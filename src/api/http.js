@@ -6,10 +6,11 @@ function invalidType(providedArg, res) {
   res.status(403).send(result);
 }
 
-function handleHTTP(rioArgsForEndpoint, req, res, next, callback, isPost) {
+function handleHTTP(globalArgs, rioArgsForEndpoint, req, res, next, callback, isPost) {
   const { path, methods } = req.route;
   const m = Object.keys(methods)[0].toUpperCase();
-  const providedArgs = rioArgsForEndpoint[`${m}${req.baseUrl}${path}`];
+  let providedArgs = rioArgsForEndpoint[`${m}${req.baseUrl}${path}`];
+  providedArgs = providedArgs.concat(globalArgs);
   const providedArgsCount = providedArgs.length;
   for (let i = 0; i < providedArgsCount; i += 1) {
     const providedArg = providedArgs[i];
