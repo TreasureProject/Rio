@@ -10,14 +10,21 @@ program
 program
   .command('init')
   .argument('[path]', 'path to api', './api.js')
+  .option('--private', 'Whether to make it public or not')
   .description('Initialize')
-  .action((path) => {
+  .action((path, options) => {
     rio.cli = true;
+
+    let isPrivate = options.private;
+    if (isPrivate == null) {
+      isPrivate = false;
+    }
+    const isPublic = !isPrivate;
 
     // eslint-disable-next-line
     const { server } = require(path);
 
-    rio.writeREADME(process.cwd());
+    rio.writeREADME(process.cwd(), isPublic);
     if (server) {
       server.close();
     }

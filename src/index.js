@@ -53,12 +53,12 @@ rio.router.post = (routerName, endpoint, callback, args = [], description = null
   addHTTPListener(rio, endpoint, callback, args, description, exampleResult, true, status, availability, routerName);
 };
 
-function writeREADME(path) {
+function writeREADME(path, isPublic = true) {
   let pathToUse = path;
   if (pathToUse == null) {
     pathToUse = process.cwd();
   }
-  utils.writeREADME(pathToUse, rio.paths, rio.app, rio.appName, rio.globalArgs, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint);
+  utils.writeREADME(pathToUse, isPublic, rio.paths, rio.app, rio.appName, rio.globalArgs, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint);
 }
 
 rio.writeREADME = writeREADME;
