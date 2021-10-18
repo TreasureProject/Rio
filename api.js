@@ -7,7 +7,9 @@ const server = http.createServer(app);
 
 const { rInt } = rio;
 
-rio.init(app, 'RIO Example API');
+const globalArgs = [rInt('version', 'A version number')];
+
+rio.init(app, 'RIO Example API', globalArgs);
 
 const limit = '300KB';
 app.use(express.json({ limit }));

@@ -4,7 +4,7 @@ const http = require('http');
 const rio = require('../src/index');
 
 const app = express();
-rio.init(app);
+rio.init(app, null, null);
 
 const server = http.createServer(app);
 app.use(express.json());

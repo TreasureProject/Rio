@@ -96,9 +96,15 @@ rio.writeREADME = writeREADME;
 rio.init = (app, name = null, globalArgs = []) => {
   rio.app = app;
   if (name != null) {
-    rio.appName = name;
+    rio.appName = name.toString();
   }
-  rio.globalArgs = globalArgs;
+
+  if (Array.isArray(globalArgs)) {
+    rio.globalArgs = globalArgs;
+  } else if (process.env.JEST_WORKER_ID === undefined) {
+    /* istanbul ignore next */
+    console.log('Invalid argument for globalArgs is not an array');
+  }
 };
 
 rio.RequiredInteger = (name, description = null) => new rio.Argument(name, rio.ArgumentType.Integer, true, description);
