@@ -22,6 +22,7 @@ module.exports = {
     'no-underscore-dangle': 'off',
     'no-throw-literal': 'off',
     'no-case-declarations': 'off',
+    'no-param-reassign': ['error', { props: false }],
   },
   env: {
     jest: true,

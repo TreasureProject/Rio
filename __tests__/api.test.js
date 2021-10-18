@@ -379,5 +379,5 @@ describe('Router tests - POST', () => {
 });
 
 test('Write to README no crash', () => {
-  rio.writeREADME('../..');
+  rio.writeREADME();
 });

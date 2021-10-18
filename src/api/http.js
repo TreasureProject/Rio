@@ -1,12 +1,19 @@
 const { ArgumentType } = require('./argumentType');
 const { formatter } = require('./formatter');
 
+const rioArgsForEndpoint = {};
+const rioTypeOfEndpoint = {};
+const rioDescriptionOfEndpoint = {};
+const rioExampleResultOfEndpoint = {};
+const rioStatusOfEndpoint = {};
+const rioAvailabilityOfEndpoint = {};
+
 function invalidType(providedArg, res) {
   const result = JSON.stringify({ error: `Argument ${providedArg.name} was not of the specified type ${providedArg.type.name}` });
   res.status(403).send(result);
 }
 
-function handleHTTP(globalArgs, rioArgsForEndpoint, req, res, next, callback, isPost) {
+function handleHTTP(globalArgs, req, res, next, callback, isPost) {
   const { path, methods } = req.route;
   const m = Object.keys(methods)[0].toUpperCase();
   let providedArgs = rioArgsForEndpoint[`${m}${req.baseUrl}${path}`];
@@ -54,6 +61,47 @@ function handleHTTP(globalArgs, rioArgsForEndpoint, req, res, next, callback, is
   callback(req, res, next);
 }
 
+function handleListener(handler, isPost, endpoint, callback) {
+  if (isPost) {
+    handler.post(endpoint, callback);
+  } else {
+    handler.get(endpoint, callback);
+  }
+}
+
+function addHTTPListener(rio, endpoint, callback, args, description, exampleResult, isPost, status, availability, routerName = '') {
+  const method = isPost ? 'POST' : 'GET';
+  const key = `${method}${routerName}${endpoint}`;
+  rioArgsForEndpoint[key] = args;
+  rioTypeOfEndpoint[key] = method;
+  rioDescriptionOfEndpoint[key] = description;
+  rioExampleResultOfEndpoint[key] = exampleResult;
+  rioStatusOfEndpoint[key] = status;
+  rioAvailabilityOfEndpoint[key] = status;
+
+  let handler = rio.app;
+
+  if (routerName !== '') {
+    const expressRouter = rio.routers[routerName];
+    if (expressRouter) {
+      handler = expressRouter;
+    }
+
+    rio.paths[key] = {
+      methods: isPost ? { post: true } : { get: true },
+      path: `${routerName}${endpoint}`,
+    };
+  }
+
+  handleListener(handler, isPost, endpoint, ((req, res, next) => {
+    handleHTTP(rio.globalArgs, req, res, next, callback, isPost);
+  }));
+}
+
 module.exports = {
-  handleHTTP,
+  addHTTPListener,
+  rioArgsForEndpoint,
+  rioTypeOfEndpoint,
+  rioDescriptionOfEndpoint,
+  rioExampleResultOfEndpoint,
 };

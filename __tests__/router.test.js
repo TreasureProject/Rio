@@ -23,6 +23,10 @@ rio.router.post(routerName, '/test', (req, res) => {
   res.status(200).send('Hi');
 }, [rio.rInt('a', 'a number')]);
 
+rio.router.get(routerName, '/testB', (req, res) => {
+  res.status(200).send('Hi');
+});
+
 app.use(routerName, router);
 
 afterEach(async () => {
@@ -61,6 +65,14 @@ describe('Router tests - GET', () => {
     const res = await request(app)
       .get('/v2/test?a=A');
     expect(res.statusCode).toEqual(403);
+  });
+
+  test('Get correctly, no args', async () => {
+    const res = await request(app)
+      .get('/v2/testB');
+    expect(res.statusCode).toEqual(200);
+    const { text } = res;
+    expect(text).toEqual('Hi');
   });
 });
 
