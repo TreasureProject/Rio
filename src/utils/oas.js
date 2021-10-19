@@ -25,6 +25,25 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
   routes.sort();
   const rc = getRioRC(path);
 
+  let errorModel = {
+    error: {
+      type: 'string',
+    },
+  };
+
+  if (rc.errorModel) {
+    errorModel = rc.errorModel;
+  }
+
+  oas.components = {
+    schemas: {
+      GeneralError: {
+        type: 'object',
+        properties: errorModel,
+      },
+    },
+  };
+
   const endpointCount = routes.length;
   routes.sort((a, b) => {
     if (formatEndpoint(a) < formatEndpoint(b)) {
@@ -43,6 +62,9 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
     const method = rioTypeOfEndpoint[endpoint].toLowerCase();
     const description = rioDescriptionOfEndpoint[endpoint];
 
+    const availability = rioAvailabilityOfEndpoint[endpoint];
+    const status = rioStatusOfEndpoint[endpoint];
+
     if (oas.paths[route] == null) {
       oas.paths[route] = {};
     }
@@ -54,50 +76,71 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
     }
     const argumentCount = args.length;
 
-    let parameters = null;
-    if (method === 'get') {
-      parameters = [];
-      for (let j = 0; j < argumentCount; j += 1) {
-        const argument = args[j];
-        const param = {
-          name: argument.name,
-          in: 'query',
-          description: argument.description,
-          required: argument.required,
-          schema: {
-            type: argument.type.oasType,
-            format: argument.type.oasFormat,
-          },
-        };
-        parameters.push(param);
-      }
-    }
-
-    let requestBody = null;
-    if (method === 'post') {
-      requestBody = {
-        required: true,
-        content: {
-          'application/json': {
-            schema: {
-
-            },
-          },
+    const parameters = [];
+    const properties = {};
+    for (let j = 0; j < argumentCount; j += 1) {
+      const argument = args[j];
+      const param = {
+        name: argument.name,
+        in: 'query',
+        description: argument.description,
+        required: argument.required,
+        schema: {
+          type: argument.type.oasType,
+          format: argument.type.oasFormat,
         },
       };
+      parameters.push(param);
+
+      properties[argument.name] = {
+        type: argument.type.oasType,
+        format: argument.type.oasFormat,
+        description: argument.description,
+      };
     }
+
+    const requestBody = {
+      required: true,
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties,
+          },
+        },
+      },
+    };
 
     oas.paths[route][method] = {
       summary: description,
     };
 
-    if (parameters) {
+    oas.paths[route][method].deprecated = status.name === 'deprecated';
+    oas.paths[route][method].tags = [availability.name.toLowerCase(), status.name.toLowerCase()];
+
+    if (method === 'get') {
       oas.paths[route][method].parameters = parameters;
     }
 
-    if (parameters) {
+    if (method === 'post') {
       oas.paths[route][method].requestBody = requestBody;
     }
+
+    oas.paths[route][method].responses = {
+      200: {
+        description: 'Ok',
+      },
+      default: {
+        description: 'Error',
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/components/schemas/GeneralError',
+            },
+          },
+        },
+      },
+    };
   }
 
   console.log(JSON.stringify(oas));
