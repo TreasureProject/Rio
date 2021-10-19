@@ -78,6 +78,8 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
 
     const parameters = [];
     const properties = {};
+    const examplePost = {};
+
     for (let j = 0; j < argumentCount; j += 1) {
       const argument = args[j];
       const param = {
@@ -88,6 +90,7 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
         schema: {
           type: argument.type.oasType,
           format: argument.type.oasFormat,
+          example: argument.exampleValue,
         },
       };
       parameters.push(param);
@@ -97,6 +100,8 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
         format: argument.type.oasFormat,
         description: argument.description,
       };
+
+      examplePost[argument.name] = argument.exampleValue;
     }
 
     const requestBody = {
@@ -106,6 +111,7 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
           schema: {
             type: 'object',
             properties,
+            example: examplePost,
           },
         },
       },
