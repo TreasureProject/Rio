@@ -1,5 +1,9 @@
 const fs = require('fs');
 const router = require('./router');
+const {
+  getRioRC,
+  formatEndpoint,
+} = require('./rc');
 
 function writeToFile(fileName, content) {
   /* istanbul ignore next */
@@ -23,13 +27,6 @@ function pathForModule(module, isPublic) {
     parsed = `/${parsed}`;
   }
   return `${apiModuleDirectory}${parsed}`;
-}
-
-function formatEndpoint(route) {
-  let parts = route.split('/');
-  parts.shift();
-  parts = `/${parts.join('/')}`;
-  return parts;
 }
 
 function getContentForRoutes(endpoints, globalArgs, rioIgnoreGlobalsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioArgsForEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint) {
@@ -156,15 +153,6 @@ function writeNoModules(apiREADME, cnt, globalArgs, rioIgnoreGlobalsForEndpoint,
 
   content += getContentForRoutes(endpoints, globalArgs, rioIgnoreGlobalsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioArgsForEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint);
   writeToFile(apiREADME, content);
-}
-
-function getRioRC(path) {
-  if (path) {
-    // eslint-disable-next-line
-    const rc = require(`${path}/.riorc.js`);
-    return rc;
-  }
-  return {};
 }
 
 function isInModule(route, module) {

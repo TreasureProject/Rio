@@ -16,7 +16,8 @@
     "fix": "eslint . --fix",
     "coverage": "codecov",
     "readme": "rio init && rio init --private",
-    "pub": "npm version patch --force && npm publish"
+    "pub": "npm version patch --force && npm publish",
+    "oas": "rio oas --private"
   },
   "dependencies": {
     "commander": "^8.2.0"
