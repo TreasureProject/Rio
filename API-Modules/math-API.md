@@ -31,9 +31,9 @@ Params:
 Example Request:
 ```
 {
-  a: 1,
-  b: 1,
-  version: 1
+  "a": 1,
+  "b": 1,
+  "version": 1
 }
 ```
 

@@ -64,9 +64,9 @@ Params:
 Example Request:
 ```
 {
-  a: 10,
-  b: 25,
-  version: 1
+  "a": 10,
+  "b": 25,
+  "version": 1
 }
 ```
 

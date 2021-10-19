@@ -113,14 +113,13 @@ function getContentForRoutes(endpoints, globalArgs, rioIgnoreGlobalsForEndpoint,
         content += `${formatEndpoint(endpoint)}\n`;
       }
     } else {
-      const lbSuffix = argumentCount > 0 ? '\n' : '';
-      content += `{${lbSuffix}`;
+      const argDct = {};
       for (let j = 0; j < argumentCount; j += 1) {
         const argument = args[j];
-        const suffix = j === argumentCount - 1 ? '' : ',';
-        content += `  ${argument.name}: ${argument.exampleValue}${suffix}\n`;
+        argDct[argument.name] = argument.exampleValue;
       }
-      content += '}\n';
+      const formatted = JSON.stringify(argDct, null, 2);
+      content += `${formatted}\n`;
     }
     content += '```\n';
 

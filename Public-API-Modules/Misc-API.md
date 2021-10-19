@@ -60,7 +60,7 @@ Params:
 Example Request:
 ```
 {
-  version: 1
+  "version": 1
 }
 ```
 
