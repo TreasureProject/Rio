@@ -17,4 +17,7 @@ module.exports = {
   servers: [
     'https://dev-api.com',
   ],
+  errorExample: {
+    errorText: 'Error!',
+  },
 };

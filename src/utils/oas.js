@@ -13,7 +13,7 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
   const oas = {};
   oas.openapi = '3.0.3';
 
-  let license = 'UNLICENSED'
+  let license = 'UNLICENSED';
   const rcLicense = rc.license;
   if (rcLicense != null) {
     license = rcLicense;
@@ -49,8 +49,16 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
     },
   };
 
+  let errorExample = {
+    error: 'There was an error!!!',
+  };
+
   if (rc.errorModel) {
     errorModel = rc.errorModel;
+  }
+
+  if (rc.errorExample) {
+    errorExample = rc.errorExample;
   }
 
   let securitySchemes = null;
@@ -233,11 +241,11 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
           if (isObject && !isArray) {
             schema.properties = responseProperties;
           }
-          schema.example = response;
 
           goodStatusContent = {
             'application/json': {
               schema,
+              example: response,
             },
           };
         }
@@ -256,6 +264,7 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
               schema: {
                 $ref: '#/components/schemas/GeneralError',
               },
+              example: errorExample,
             },
           },
         },

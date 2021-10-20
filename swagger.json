@@ -40,9 +40,9 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "number",
-                  "example": 77
-                }
+                  "type": "number"
+                },
+                "example": 77
               }
             }
           },
@@ -52,6 +52,9 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GeneralError"
+                },
+                "example": {
+                  "errorText": "Error!"
                 }
               }
             }
@@ -96,10 +99,10 @@
                     "result": {
                       "type": "string"
                     }
-                  },
-                  "example": {
-                    "result": "Hello, world"
                   }
+                },
+                "example": {
+                  "result": "Hello, world"
                 }
               }
             }
@@ -110,6 +113,9 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GeneralError"
+                },
+                "example": {
+                  "errorText": "Error!"
                 }
               }
             }
@@ -144,9 +150,9 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string",
-                  "example": "Hi!"
-                }
+                  "type": "string"
+                },
+                "example": "Hi!"
               }
             }
           },
@@ -156,6 +162,9 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GeneralError"
+                },
+                "example": {
+                  "errorText": "Error!"
                 }
               }
             }
@@ -214,10 +223,10 @@
                     "result": {
                       "type": "number"
                     }
-                  },
-                  "example": {
-                    "result": 2
                   }
+                },
+                "example": {
+                  "result": 2
                 }
               }
             }
@@ -228,6 +237,9 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GeneralError"
+                },
+                "example": {
+                  "errorText": "Error!"
                 }
               }
             }
@@ -289,10 +301,10 @@
                     "result": {
                       "type": "number"
                     }
-                  },
-                  "example": {
-                    "result": 2
                   }
+                },
+                "example": {
+                  "result": 2
                 }
               }
             }
@@ -303,6 +315,9 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GeneralError"
+                },
+                "example": {
+                  "errorText": "Error!"
                 }
               }
             }
@@ -367,14 +382,14 @@
                     "other": {
                       "type": "object"
                     }
-                  },
-                  "example": {
-                    "result": [
-                      7
-                    ],
-                    "other": {
-                      "A": "A"
-                    }
+                  }
+                },
+                "example": {
+                  "result": [
+                    7
+                  ],
+                  "other": {
+                    "A": "A"
                   }
                 }
               }
@@ -386,6 +401,9 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GeneralError"
+                },
+                "example": {
+                  "errorText": "Error!"
                 }
               }
             }
@@ -437,11 +455,11 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "example": [
-                    35
-                  ]
-                }
+                  "type": "array"
+                },
+                "example": [
+                  35
+                ]
               }
             }
           },
@@ -451,6 +469,9 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GeneralError"
+                },
+                "example": {
+                  "errorText": "Error!"
                 }
               }
             }
