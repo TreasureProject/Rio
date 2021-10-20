@@ -139,6 +139,7 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
     let goodStatusContent = null;
     const response = rioExampleResultOfEndpoint[endpoint];
     if (response != null) {
+      const isArray = Array.isArray(response);
       const isObject = typeof response === 'object';
       const isString = typeof response === 'string';
       const isNumber = typeof response === 'number';
@@ -146,7 +147,9 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
       let type = null;
       const responseProperties = {};
 
-      if (isObject) {
+      if (isArray) {
+        type = 'array';
+      } else if (isObject) {
         type = 'object';
         const keys = Object.keys(response);
         for (let j = 0; j < keys.length; j += 1) {
@@ -186,7 +189,9 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
         };
 
         if (isObject) {
-          schema.properties = responseProperties;
+          if (!isArray) {
+            schema.properties = responseProperties;
+          }
           schema.example = response;
         }
 
