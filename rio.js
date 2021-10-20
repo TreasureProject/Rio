@@ -7,27 +7,45 @@ const program = new Command();
 program
   .version('0.0.1');
 
+function callCommand(path, options, callback) {
+  rio.cli = true;
+
+  let isPrivate = options.private;
+  if (isPrivate == null) {
+    isPrivate = false;
+  }
+
+  // eslint-disable-next-line
+  const { server } = require(path);
+
+  const isPublic = !isPrivate;
+  callback(isPublic);
+
+  if (server) {
+    server.close();
+  }
+}
+
 program
   .command('init')
   .argument('[path]', 'path to api', './api.js')
   .option('--private', 'Whether to make it public or not')
   .description('Initialize')
   .action((path, options) => {
-    rio.cli = true;
+    callCommand(path, options, (isPublic) => {
+      rio.writeREADME(process.cwd(), isPublic);
+    });
+  });
 
-    let isPrivate = options.private;
-    if (isPrivate == null) {
-      isPrivate = false;
-    }
-    const isPublic = !isPrivate;
-
-    // eslint-disable-next-line
-    const { server } = require(path);
-
-    rio.writeREADME(process.cwd(), isPublic);
-    if (server) {
-      server.close();
-    }
+program
+  .command('oas')
+  .argument('[path]', 'path to api', './api.js')
+  .option('--private', 'Whether to make it public or not')
+  .description('Create OAS')
+  .action((path, options) => {
+    callCommand(path, options, (isPublic) => {
+      rio.oasGenerate(process.cwd(), isPublic);
+    });
   });
 
 program

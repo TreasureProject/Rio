@@ -12,6 +12,10 @@ test('Write to README no crash', () => {
   rio.writeREADME();
 });
 
+test('Write to OAS no crash', () => {
+  rio.oasGenerate();
+});
+
 test('Getting endpoints', () => {
   const { routes } = rio.utils.getEndpoints(app, rio.paths);
   expect(routes.length).toBe(1);

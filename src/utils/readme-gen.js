@@ -1,18 +1,12 @@
 const fs = require('fs');
 const router = require('./router');
-
-function writeToFile(fileName, content) {
-  /* istanbul ignore next */
-  if (process.env.JEST_WORKER_ID === undefined) {
-    fs.writeFile(fileName, content, (err) => {
-      if (err) {
-        console.log(`Failed to write ${fileName} due to error ${err}`);
-        return;
-      }
-      console.log(`${fileName} was written successfully`);
-    });
-  }
-}
+const {
+  getRioRC,
+  formatEndpoint,
+  writeToFile,
+  isInModule,
+  isInMiscModule,
+} = require('./rc');
 
 function pathForModule(module, isPublic) {
   const apiModuleDirectory = `${isPublic ? 'Public-' : ''}API-Modules`;
@@ -23,13 +17,6 @@ function pathForModule(module, isPublic) {
     parsed = `/${parsed}`;
   }
   return `${apiModuleDirectory}${parsed}`;
-}
-
-function formatEndpoint(route) {
-  let parts = route.split('/');
-  parts.shift();
-  parts = `/${parts.join('/')}`;
-  return parts;
 }
 
 function getContentForRoutes(endpoints, globalArgs, rioIgnoreGlobalsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioArgsForEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint) {
@@ -156,26 +143,6 @@ function writeNoModules(apiREADME, cnt, globalArgs, rioIgnoreGlobalsForEndpoint,
 
   content += getContentForRoutes(endpoints, globalArgs, rioIgnoreGlobalsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioArgsForEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint);
   writeToFile(apiREADME, content);
-}
-
-function getRioRC(path) {
-  if (path) {
-    // eslint-disable-next-line
-    const rc = require(`${path}/.riorc.js`);
-    return rc;
-  }
-  return {};
-}
-
-function isInModule(route, module) {
-  let parts = route.split('/');
-  parts.shift();
-  parts = `/${parts.join('/')}`;
-  return parts.startsWith(module);
-}
-
-function isInMiscModule(route) {
-  return route.split('/').length === 2;
 }
 
 function writeREADME(path, isPublic, paths, app, appName, globalArgs, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint, rioIgnoreGlobalsForEndpoint) {

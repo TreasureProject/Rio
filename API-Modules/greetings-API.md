@@ -1,15 +1,15 @@
-# Misc
+# /greetings
 
-All other endpoints
+_No description for this module_
 
 ## Table of Contents
-- [/](#endpt-1)
-- [/](#endpt-2)
+- [/greetings/get](#endpt-1)
+- [/greetings/say/hi](#endpt-2)
 
 ___
 ###### endpt #1
 ```
-GET - /
+GET - /greetings/get
 ```
 
 **Status**: LIVE
@@ -17,7 +17,7 @@ GET - /
 **Availability**: PUBLIC
 
 #### Description:
-- Returns the string 'Hello, world'
+- Returns Hi!
 
 Params:
 
@@ -28,17 +28,17 @@ Params:
 
 Example Request:
 ```
-/?version=1
+/greetings/get?version=1
 ```
 
 Example Response:
 ```
-77
+[]
 ```
 ___
 ###### endpt #2
 ```
-POST - /
+GET - /greetings/say/hi
 ```
 
 **Status**: LIVE
@@ -46,7 +46,7 @@ POST - /
 **Availability**: PUBLIC
 
 #### Description:
-- Returns the string 'Hello, world'
+- Returns Hi!
 
 Params:
 
@@ -57,14 +57,10 @@ Params:
 
 Example Request:
 ```
-{
-  "version": 1
-}
+/greetings/say/hi?version=1
 ```
 
 Example Response:
 ```
-{
-  "result": "Hello, world"
-}
+"Hi!"
 ```

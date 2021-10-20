@@ -36,7 +36,13 @@ Example Request:
 Example Response:
 ```
 {
-  "result": 7
+  "result": [
+    7
+  ],
+  "other": {
+    "A": "A"
+  },
+  "b": []
 }
 ```
 ___
@@ -72,7 +78,7 @@ Example Request:
 
 Example Response:
 ```
-{
-  "result": 35
-}
+[
+  35
+]
 ```

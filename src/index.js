@@ -54,15 +54,21 @@ rio.router.post = (routerName, endpoint, callback, args = [], description = null
   addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, description, exampleResult, true, status, availability, routerName);
 };
 
-function writeREADME(path, isPublic = true) {
+rio.writeREADME = (path, isPublic = true) => {
   let pathToUse = path;
   if (pathToUse == null) {
     pathToUse = process.cwd();
   }
   utils.writeREADME(pathToUse, isPublic, rio.paths, rio.app, rio.appName, rio.globalArgs, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint, rioIgnoreGlobalsForEndpoint);
-}
+};
 
-rio.writeREADME = writeREADME;
+rio.oasGenerate = (path, isPublic = true) => {
+  let pathToUse = path;
+  if (pathToUse == null) {
+    pathToUse = process.cwd();
+  }
+  utils.oasGenerate(pathToUse, isPublic, rio.paths, rio.app, rio.appName, rio.globalArgs, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint, rioIgnoreGlobalsForEndpoint);
+};
 
 rio.init = (app, name = null, globalArgs = []) => {
   rio.app = app;
