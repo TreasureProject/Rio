@@ -2,10 +2,12 @@ function getEndpoints(app, paths, rioStatusOfEndpoint = {}, rioAvailabilityOfEnd
   const routes = [];
   const addedModule = {};
   const modules = [];
+  const moduleForEndpoints = {};
 
   function addPath(endpoint) {
     const parts = endpoint.path.split('/');
     parts.shift();
+    const formatted = `${Object.keys(endpoint.methods)[0].toUpperCase()}${endpoint.path}`;
     if (parts.length > 1) {
       parts.pop();
 
@@ -16,10 +18,10 @@ function getEndpoints(app, paths, rioStatusOfEndpoint = {}, rioAvailabilityOfEnd
           addedModule[module] = true;
           modules.push(module);
         }
+        moduleForEndpoints[formatted] = module;
       }
     }
 
-    const formatted = `${Object.keys(endpoint.methods)[0].toUpperCase()}${endpoint.path}`;
     let canAdd = true;
     if (isPublic) {
       const status = rioStatusOfEndpoint[formatted] ? rioStatusOfEndpoint[formatted].name : 'live';
@@ -52,7 +54,7 @@ function getEndpoints(app, paths, rioStatusOfEndpoint = {}, rioAvailabilityOfEnd
     const endpoint = paths[endpointPath];
     addPath(endpoint);
   }
-  return { routes, modules };
+  return { routes, modules, moduleForEndpoints };
 }
 
 module.exports = {

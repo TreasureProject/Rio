@@ -18,6 +18,7 @@
         "summary": "Returns the string 'Hello, world'",
         "deprecated": false,
         "tags": [
+          "Misc",
           "public",
           "live"
         ],
@@ -65,6 +66,7 @@
         "summary": "Returns the string 'Hello, world'",
         "deprecated": false,
         "tags": [
+          "Misc",
           "public",
           "live"
         ],
@@ -128,6 +130,7 @@
         "summary": "Returns Hi!",
         "deprecated": false,
         "tags": [
+          "/greetings/say",
           "public",
           "live"
         ],
@@ -177,6 +180,7 @@
         "summary": "Adds two numbers together",
         "deprecated": false,
         "tags": [
+          "/math",
           "public",
           "live"
         ],
@@ -255,6 +259,7 @@
         "summary": "Adds numbers",
         "deprecated": false,
         "tags": [
+          "/v2",
           "public",
           "live"
         ],
@@ -339,6 +344,7 @@
         "summary": "Adds numbers",
         "deprecated": false,
         "tags": [
+          "/v2",
           "public",
           "live"
         ],

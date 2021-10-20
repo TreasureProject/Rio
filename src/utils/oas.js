@@ -6,7 +6,7 @@ const {
 } = require('./rc');
 
 function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint, rioIgnoreGlobalsForEndpoint) {
-  const { routes } = router.getEndpoints(app, paths, rioStatusOfEndpoint, rioAvailabilityOfEndpoint, isPublic);
+  const { moduleForEndpoints, routes } = router.getEndpoints(app, paths, rioStatusOfEndpoint, rioAvailabilityOfEndpoint, isPublic);
   routes.sort();
   const rc = getRioRC(path);
 
@@ -172,7 +172,11 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
       };
 
       oas.paths[route][method].deprecated = status.name === 'deprecated';
-      oas.paths[route][method].tags = [availability.name.toLowerCase(), status.name.toLowerCase()];
+      let module = moduleForEndpoints[endpoint];
+      if (module == null) {
+        module = 'Misc';
+      }
+      oas.paths[route][method].tags = [module, availability.name.toLowerCase(), status.name.toLowerCase()];
 
       if (method === 'get') {
         oas.paths[route][method].parameters = parameters;
