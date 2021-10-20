@@ -29,8 +29,8 @@
             "required": true,
             "schema": {
               "type": "integer",
-              "format": "int64",
-              "example": 1
+              "example": 1,
+              "format": "int64"
             }
           }
         ],
@@ -78,8 +78,8 @@
             "required": true,
             "schema": {
               "type": "integer",
-              "format": "int64",
-              "example": 1
+              "example": 1,
+              "format": "int64"
             }
           }
         ],
@@ -130,8 +130,8 @@
             "required": true,
             "schema": {
               "type": "integer",
-              "format": "int64",
-              "example": 1
+              "example": 1,
+              "format": "int64"
             }
           },
           {
@@ -141,8 +141,8 @@
             "required": true,
             "schema": {
               "type": "integer",
-              "format": "int64",
-              "example": 1
+              "example": 1,
+              "format": "int64"
             }
           },
           {
@@ -152,8 +152,8 @@
             "required": true,
             "schema": {
               "type": "integer",
-              "format": "int64",
-              "example": 1
+              "example": 1,
+              "format": "int64"
             }
           }
         ],
@@ -208,8 +208,8 @@
             "required": true,
             "schema": {
               "type": "integer",
-              "format": "int64",
-              "example": 3
+              "example": 3,
+              "format": "int64"
             }
           },
           {
@@ -219,8 +219,8 @@
             "required": true,
             "schema": {
               "type": "integer",
-              "format": "int64",
-              "example": 4
+              "example": 4,
+              "format": "int64"
             }
           },
           {
@@ -230,8 +230,8 @@
             "required": true,
             "schema": {
               "type": "integer",
-              "format": "int64",
-              "example": 1
+              "example": 1,
+              "format": "int64"
             }
           }
         ],
@@ -301,18 +301,18 @@
                 "properties": {
                   "a": {
                     "type": "integer",
-                    "format": "int64",
-                    "description": "a number"
+                    "description": "a number",
+                    "format": "int64"
                   },
                   "b": {
                     "type": "integer",
-                    "format": "int64",
-                    "description": "a number"
+                    "description": "a number",
+                    "format": "int64"
                   },
                   "version": {
                     "type": "integer",
-                    "format": "int64",
-                    "description": "A version number"
+                    "description": "A version number",
+                    "format": "int64"
                   }
                 },
                 "example": {
@@ -373,8 +373,8 @@
             "required": true,
             "schema": {
               "type": "integer",
-              "format": "int64",
-              "example": 1
+              "example": 1,
+              "format": "int64"
             }
           }
         ],
@@ -421,8 +421,8 @@
                 "properties": {
                   "version": {
                     "type": "integer",
-                    "format": "int64",
-                    "description": "A version number"
+                    "description": "A version number",
+                    "format": "int64"
                   }
                 },
                 "example": {

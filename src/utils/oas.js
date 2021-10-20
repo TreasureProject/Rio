@@ -54,17 +54,24 @@ function writeRoutes(oas, routes, globalArgs, moduleForEndpoints, rioExampleResu
           required: argument.required,
           schema: {
             type: argument.type.oasType,
-            format: argument.type.oasFormat,
             example: argument.exampleValue,
           },
         };
+
+        if (argument.type.oasFormat) {
+          param.schema.format = argument.type.oasFormat;
+        }
+
         parameters.push(param);
 
         properties[argument.name] = {
           type: argument.type.oasType,
-          format: argument.type.oasFormat,
           description: argument.description,
         };
+
+        if (argument.type.oasFormat) {
+          properties[argument.name].format = argument.type.oasFormat;
+        }
 
         examplePost[argument.name] = argument.exampleValue;
       }
