@@ -188,12 +188,10 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
           type,
         };
 
-        if (isObject) {
-          if (!isArray) {
-            schema.properties = responseProperties;
-          }
-          schema.example = response;
+        if (isObject && !isArray) {
+          schema.properties = responseProperties;
         }
+        schema.example = response;
 
         goodStatusContent = {
           'application/json': {
