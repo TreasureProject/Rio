@@ -5,25 +5,40 @@ const {
 } = require('./rc');
 
 function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint, rioIgnoreGlobalsForEndpoint) {
+  const { modules, routes } = router.getEndpoints(app, paths, rioStatusOfEndpoint, rioAvailabilityOfEndpoint, isPublic);
+  routes.sort();
+  const rc = getRioRC(path);
+
   const oas = {};
   oas.openapi = '3.0.0';
+
+  let { license } = rc;
+  if (license == null) {
+    license = 'UNLICENSED';
+  }
+
   oas.info = {
     version: '1.0.0',
     title: appName,
     license: {
-      name: 'UNLICENSED',
+      name: license,
     },
   };
-  oas.servers = [
-    {
-      url: 'https://dev.api.com',
-    },
-  ];
-  oas.paths = {};
 
-  const { modules, routes } = router.getEndpoints(app, paths, rioStatusOfEndpoint, rioAvailabilityOfEndpoint, isPublic);
-  routes.sort();
-  const rc = getRioRC(path);
+  let { servers } = rc;
+  if (servers == null) {
+    servers = ['NONE'];
+  }
+
+  oas.servers = [];
+  for (let i = 0; i < servers.length; i += 1) {
+    const server = servers[i];
+    const serverObj = {
+      url: server,
+    };
+    oas.servers.push(serverObj);
+  }
+  oas.paths = {};
 
   let errorModel = {
     error: {
@@ -35,6 +50,25 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
     errorModel = rc.errorModel;
   }
 
+  let securitySchemes = null;
+  if (rc.apiKeys && Array.isArray(rc.apiKeys)) {
+    let { apiKeyLocation } = rc;
+    if (apiKeyLocation == null) {
+      apiKeyLocation = 'query';
+    }
+
+    securitySchemes = {};
+    const apiKeyCount = rc.apiKeys.length;
+    for (let i = 0; i < apiKeyCount; i += 1) {
+      const apiKey = rc.apiKeys[i];
+      securitySchemes[apiKey] = {
+        type: 'apiKey',
+        name: apiKey,
+        in: apiKeyLocation,
+      };
+    }
+  }
+
   oas.components = {
     schemas: {
       GeneralError: {
@@ -43,6 +77,10 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
       },
     },
   };
+
+  if (securitySchemes) {
+    oas.components.securitySchemes = securitySchemes;
+  }
 
   const endpointCount = routes.length;
   routes.sort((a, b) => {

@@ -9,4 +9,12 @@ module.exports = {
       type: 'string',
     },
   },
+  apiKeys: [
+    'key1',
+    'key2',
+  ],
+  license: 'MIT',
+  servers: [
+    'https://dev-api.com',
+  ],
 };
