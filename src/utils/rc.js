@@ -35,9 +35,22 @@ function removeModule(route, module) {
   return withoutModule;
 }
 
+function isInModule(route, module) {
+  let parts = route.split('/');
+  parts.shift();
+  parts = `/${parts.join('/')}`;
+  return parts.startsWith(module);
+}
+
+function isInMiscModule(route) {
+  return route.split('/').length === 2;
+}
+
 module.exports = {
   getRioRC,
   formatEndpoint,
   writeToFile,
   removeModule,
+  isInModule,
+  isInMiscModule,
 };

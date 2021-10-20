@@ -13,116 +13,6 @@
     }
   ],
   "paths": {
-    "/": {
-      "get": {
-        "summary": "/",
-        "description": "Returns the string 'Hello, world'",
-        "deprecated": false,
-        "tags": [
-          "Misc"
-        ],
-        "parameters": [
-          {
-            "name": "version",
-            "in": "query",
-            "description": "A version number",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64",
-              "example": 1
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "number"
-                },
-                "example": 77
-              }
-            }
-          },
-          "default": {
-            "description": "Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GeneralError"
-                },
-                "example": {
-                  "errorText": "Error!"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "summary": "/",
-        "description": "Returns the string 'Hello, world'",
-        "deprecated": false,
-        "tags": [
-          "Misc"
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "version": {
-                    "type": "integer",
-                    "format": "int64",
-                    "description": "A version number"
-                  }
-                },
-                "example": {
-                  "version": 1
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "result": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "result": "Hello, world"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GeneralError"
-                },
-                "example": {
-                  "errorText": "Error!"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/greetings/say/hi": {
       "get": {
         "summary": "/hi",
@@ -465,6 +355,116 @@
                 "example": [
                   35
                 ]
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralError"
+                },
+                "example": {
+                  "errorText": "Error!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "/",
+        "description": "Returns the string 'Hello, world'",
+        "deprecated": false,
+        "tags": [
+          "Misc"
+        ],
+        "parameters": [
+          {
+            "name": "version",
+            "in": "query",
+            "description": "A version number",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "number"
+                },
+                "example": 77
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralError"
+                },
+                "example": {
+                  "errorText": "Error!"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "/",
+        "description": "Returns the string 'Hello, world'",
+        "deprecated": false,
+        "tags": [
+          "Misc"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "version": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "A version number"
+                  }
+                },
+                "example": {
+                  "version": 1
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "result": "Hello, world"
+                }
               }
             }
           },

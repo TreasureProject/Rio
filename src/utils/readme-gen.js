@@ -4,6 +4,8 @@ const {
   getRioRC,
   formatEndpoint,
   writeToFile,
+  isInModule,
+  isInMiscModule,
 } = require('./rc');
 
 function pathForModule(module, isPublic) {
@@ -141,17 +143,6 @@ function writeNoModules(apiREADME, cnt, globalArgs, rioIgnoreGlobalsForEndpoint,
 
   content += getContentForRoutes(endpoints, globalArgs, rioIgnoreGlobalsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioArgsForEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint);
   writeToFile(apiREADME, content);
-}
-
-function isInModule(route, module) {
-  let parts = route.split('/');
-  parts.shift();
-  parts = `/${parts.join('/')}`;
-  return parts.startsWith(module);
-}
-
-function isInMiscModule(route) {
-  return route.split('/').length === 2;
 }
 
 function writeREADME(path, isPublic, paths, app, appName, globalArgs, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint, rioIgnoreGlobalsForEndpoint) {
