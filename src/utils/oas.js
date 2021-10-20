@@ -3,6 +3,7 @@ const {
   getRioRC,
   formatEndpoint,
   writeToFile,
+  removeModule,
 } = require('./rc');
 
 function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint, rioIgnoreGlobalsForEndpoint) {
@@ -112,7 +113,6 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
       const method = rioTypeOfEndpoint[endpoint].toLowerCase();
       const description = rioDescriptionOfEndpoint[endpoint];
 
-      const availability = rioAvailabilityOfEndpoint[endpoint];
       const status = rioStatusOfEndpoint[endpoint];
 
       if (oas.paths[route] == null) {
@@ -167,16 +167,19 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
         },
       };
 
-      oas.paths[route][method] = {
-        summary: description,
-      };
-
-      oas.paths[route][method].deprecated = status.name === 'deprecated';
       let module = moduleForEndpoints[endpoint];
       if (module == null) {
         module = 'Misc';
       }
-      oas.paths[route][method].tags = [module, availability.name.toLowerCase(), status.name.toLowerCase()];
+
+      oas.paths[route][method] = {
+        summary: removeModule(route, module),
+        description,
+      };
+
+      oas.paths[route][method].deprecated = status.name === 'deprecated';
+
+      oas.paths[route][method].tags = [module];
 
       if (method === 'get') {
         oas.paths[route][method].parameters = parameters;
@@ -199,10 +202,20 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
         const isNumber = typeof response === 'number';
 
         let type = null;
+        let items = null;
         const responseProperties = {};
 
         if (isArray) {
           type = 'array';
+          if (response.length > 0) {
+            items = {
+              type: typeof response[0],
+            };
+          } else {
+            items = {
+              type: 'object',
+            };
+          }
         } else if (isObject) {
           type = 'object';
           const keys = Object.keys(response);
@@ -214,9 +227,19 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
             const pIsNumber = typeof value === 'number';
             const pIsArray = Array.isArray(value);
             let valueType = null;
+            let valueItems = null;
 
             if (pIsArray) {
               valueType = 'array';
+              if (value.length > 0) {
+                valueItems = {
+                  type: typeof value[0],
+                };
+              } else {
+                valueItems = {
+                  type: 'object',
+                };
+              }
             } else if (pIsObject) {
               valueType = 'object';
             } else if (pIsString) {
@@ -228,6 +251,12 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
             if (valueType != null) {
               responseProperties[key] = {
                 type: valueType,
+              };
+            }
+
+            if (valueItems != null) {
+              responseProperties[key] = {
+                items: valueItems,
               };
             }
           }
@@ -244,6 +273,10 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
 
           if (isObject && !isArray) {
             schema.properties = responseProperties;
+          }
+
+          if (isArray) {
+            schema.items = items;
           }
 
           goodStatusContent = {

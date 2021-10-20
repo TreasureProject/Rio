@@ -15,12 +15,11 @@
   "paths": {
     "/": {
       "get": {
-        "summary": "Returns the string 'Hello, world'",
+        "summary": "/",
+        "description": "Returns the string 'Hello, world'",
         "deprecated": false,
         "tags": [
-          "Misc",
-          "public",
-          "live"
+          "Misc"
         ],
         "parameters": [
           {
@@ -63,12 +62,11 @@
         }
       },
       "post": {
-        "summary": "Returns the string 'Hello, world'",
+        "summary": "/",
+        "description": "Returns the string 'Hello, world'",
         "deprecated": false,
         "tags": [
-          "Misc",
-          "public",
-          "live"
+          "Misc"
         ],
         "requestBody": {
           "required": true,
@@ -127,12 +125,11 @@
     },
     "/greetings/say/hi": {
       "get": {
-        "summary": "Returns Hi!",
+        "summary": "/hi",
+        "description": "Returns Hi!",
         "deprecated": false,
         "tags": [
-          "/greetings/say",
-          "public",
-          "live"
+          "/greetings/say"
         ],
         "parameters": [
           {
@@ -177,12 +174,11 @@
     },
     "/math/sum": {
       "get": {
-        "summary": "Adds two numbers together",
+        "summary": "/sum",
+        "description": "Adds two numbers together",
         "deprecated": false,
         "tags": [
-          "/math",
-          "public",
-          "live"
+          "/math"
         ],
         "parameters": [
           {
@@ -256,12 +252,11 @@
     },
     "/v2/sum": {
       "get": {
-        "summary": "Adds numbers",
+        "summary": "/sum",
+        "description": "Adds numbers",
         "deprecated": false,
         "tags": [
-          "/v2",
-          "public",
-          "live"
+          "/v2"
         ],
         "parameters": [
           {
@@ -307,7 +302,9 @@
                   "type": "object",
                   "properties": {
                     "result": {
-                      "type": "array"
+                      "items": {
+                        "type": "number"
+                      }
                     },
                     "other": {
                       "type": "object"
@@ -341,12 +338,11 @@
         }
       },
       "post": {
-        "summary": "Adds numbers",
+        "summary": "/sum",
+        "description": "Adds numbers",
         "deprecated": false,
         "tags": [
-          "/v2",
-          "public",
-          "live"
+          "/v2"
         ],
         "requestBody": {
           "required": true,
@@ -386,7 +382,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array"
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
                 },
                 "example": [
                   35

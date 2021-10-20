@@ -29,8 +29,15 @@ function writeToFile(fileName, content) {
   }
 }
 
+function removeModule(route, module) {
+  const parts = route.split(module);
+  const withoutModule = parts.length === 1 ? parts[0] : parts[1];
+  return withoutModule;
+}
+
 module.exports = {
   getRioRC,
   formatEndpoint,
   writeToFile,
+  removeModule,
 };
