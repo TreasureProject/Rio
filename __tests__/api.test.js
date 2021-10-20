@@ -381,3 +381,7 @@ describe('Router tests - POST', () => {
 test('Write to README no crash', () => {
   rio.writeREADME();
 });
+
+test('Write to OAS no crash', () => {
+  rio.oasGenerate();
+});
