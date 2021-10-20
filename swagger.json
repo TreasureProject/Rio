@@ -40,15 +40,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "result": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "result": "Hello, world"
-                  }
+                  "type": "number",
+                  "example": 77
                 }
               }
             }
@@ -369,11 +362,19 @@
                   "type": "object",
                   "properties": {
                     "result": {
-                      "type": "number"
+                      "type": "array"
+                    },
+                    "other": {
+                      "type": "object"
                     }
                   },
                   "example": {
-                    "result": 7
+                    "result": [
+                      7
+                    ],
+                    "other": {
+                      "A": "A"
+                    }
                   }
                 }
               }
@@ -436,15 +437,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "result": {
-                      "type": "number"
-                    }
-                  },
-                  "example": {
-                    "result": 35
-                  }
+                  "type": "array",
+                  "example": [
+                    35
+                  ]
                 }
               }
             }

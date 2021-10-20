@@ -33,9 +33,7 @@ Example Request:
 
 Example Response:
 ```
-{
-  "result": "Hello, world"
-}
+77
 ```
 ___
 ###### endpt #2
