@@ -1,0 +1,418 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "version": "1.0.0",
+    "title": "RIO Example API",
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://dev-api.com"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Returns the string 'Hello, world'",
+        "deprecated": false,
+        "tags": [
+          "public",
+          "live"
+        ],
+        "parameters": [
+          {
+            "name": "version",
+            "in": "query",
+            "description": "A version number",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "result": "Hello, world"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Returns the string 'Hello, world'",
+        "deprecated": false,
+        "tags": [
+          "public",
+          "live"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "version": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "A version number"
+                  }
+                },
+                "example": {
+                  "version": 1
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "result": "Hello, world"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/greetings/say/hi": {
+      "get": {
+        "summary": "Returns Hi!",
+        "deprecated": false,
+        "tags": [
+          "public",
+          "live"
+        ],
+        "parameters": [
+          {
+            "name": "version",
+            "in": "query",
+            "description": "A version number",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "Hi!"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/math/sum": {
+      "get": {
+        "summary": "Adds two numbers together",
+        "deprecated": false,
+        "tags": [
+          "public",
+          "live"
+        ],
+        "parameters": [
+          {
+            "name": "a",
+            "in": "query",
+            "description": "A number to be added",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": 1
+            }
+          },
+          {
+            "name": "b",
+            "in": "query",
+            "description": "Another number to be added",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": 1
+            }
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "description": "A version number",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "number"
+                    }
+                  },
+                  "example": {
+                    "result": 2
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/sum": {
+      "get": {
+        "summary": "Adds numbers",
+        "deprecated": false,
+        "tags": [
+          "public",
+          "live"
+        ],
+        "parameters": [
+          {
+            "name": "a",
+            "in": "query",
+            "description": "a number",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": 3
+            }
+          },
+          {
+            "name": "b",
+            "in": "query",
+            "description": "a number",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": 4
+            }
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "description": "A version number",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "number"
+                    }
+                  },
+                  "example": {
+                    "result": 7
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Adds numbers",
+        "deprecated": false,
+        "tags": [
+          "public",
+          "live"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "a": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "a number"
+                  },
+                  "b": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "a number"
+                  },
+                  "version": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "A version number"
+                  }
+                },
+                "example": {
+                  "a": 10,
+                  "b": 25,
+                  "version": 1
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "number"
+                    }
+                  },
+                  "example": {
+                    "result": 35
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "GeneralError": {
+        "type": "object",
+        "properties": {
+          "errorText": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "key1": {
+        "type": "apiKey",
+        "name": "key1",
+        "in": "query"
+      },
+      "key2": {
+        "type": "apiKey",
+        "name": "key2",
+        "in": "query"
+      }
+    }
+  }
+}

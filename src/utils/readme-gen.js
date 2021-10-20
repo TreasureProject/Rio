@@ -3,20 +3,8 @@ const router = require('./router');
 const {
   getRioRC,
   formatEndpoint,
+  writeToFile,
 } = require('./rc');
-
-function writeToFile(fileName, content) {
-  /* istanbul ignore next */
-  if (process.env.JEST_WORKER_ID === undefined) {
-    fs.writeFile(fileName, content, (err) => {
-      if (err) {
-        console.log(`Failed to write ${fileName} due to error ${err}`);
-        return;
-      }
-      console.log(`${fileName} was written successfully`);
-    });
-  }
-}
 
 function pathForModule(module, isPublic) {
   const apiModuleDirectory = `${isPublic ? 'Public-' : ''}API-Modules`;

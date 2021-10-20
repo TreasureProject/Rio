@@ -2,15 +2,16 @@ const router = require('./router');
 const {
   getRioRC,
   formatEndpoint,
+  writeToFile,
 } = require('./rc');
 
 function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint, rioIgnoreGlobalsForEndpoint) {
-  const { modules, routes } = router.getEndpoints(app, paths, rioStatusOfEndpoint, rioAvailabilityOfEndpoint, isPublic);
+  const { routes } = router.getEndpoints(app, paths, rioStatusOfEndpoint, rioAvailabilityOfEndpoint, isPublic);
   routes.sort();
   const rc = getRioRC(path);
 
   const oas = {};
-  oas.openapi = '3.0.0';
+  oas.openapi = '3.0.3';
 
   let { license } = rc;
   if (license == null) {
@@ -258,7 +259,9 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
     };
   }
 
-  console.log(JSON.stringify(oas));
+  const fileName = `${isPublic ? 'public-' : ''}swagger.json`;
+  const formatted = JSON.stringify(oas, null, 2);
+  writeToFile(fileName, formatted);
 }
 
 module.exports = {
