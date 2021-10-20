@@ -132,10 +132,78 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
       oas.paths[route][method].requestBody = requestBody;
     }
 
+    const goodStatusResponse = {
+      description: 'OK',
+    };
+
+    let goodStatusContent = null;
+    const response = rioExampleResultOfEndpoint[endpoint];
+    if (response != null) {
+      const isObject = typeof response === 'object';
+      const isString = typeof response === 'string';
+      const isNumber = typeof response === 'number';
+
+      let type = null;
+      const responseProperties = {};
+
+      if (isObject) {
+        type = 'object';
+        const keys = Object.keys(response);
+        for (let j = 0; j < keys.length; j += 1) {
+          const key = keys[j];
+          const value = response[key];
+          const pIsObject = typeof value === 'object';
+          const pIsString = typeof value === 'string';
+          const pIsNumber = typeof value === 'number';
+          const pIsArray = Array.isArray(value);
+          let valueType = null;
+
+          if (pIsArray) {
+            valueType = 'array';
+          } else if (pIsObject) {
+            valueType = 'object';
+          } else if (pIsString) {
+            valueType = 'string';
+          } else if (pIsNumber) {
+            valueType = 'number';
+          }
+
+          if (valueType != null) {
+            responseProperties[key] = {
+              type: valueType,
+            };
+          }
+        }
+      } else if (isString) {
+        type = 'string';
+      } else if (isNumber) {
+        type = 'number';
+      }
+
+      if (type != null) {
+        const schema = {
+          type,
+        };
+
+        if (isObject) {
+          schema.properties = responseProperties;
+          schema.example = response;
+        }
+
+        goodStatusContent = {
+          'application/json': {
+            schema,
+          },
+        };
+      }
+    }
+
+    if (goodStatusContent != null) {
+      goodStatusResponse.content = goodStatusContent;
+    }
+
     oas.paths[route][method].responses = {
-      200: {
-        description: 'Ok',
-      },
+      200: goodStatusResponse,
       default: {
         description: 'Error',
         content: {
