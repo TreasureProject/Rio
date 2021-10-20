@@ -25,7 +25,7 @@ rio.router.get(routerName, '/sum', (req, res) => {
   a = rio.formatter.Int(a);
   b = rio.formatter.Int(b);
   res.status(200).send(JSON.stringify({ result: a + b }));
-}, [rio.rInt('a', 'a number', 3), rio.rInt('b', 'a number', 4)], 'Adds numbers', { result: [7], other: { A: 'A' } });
+}, [rio.rInt('a', 'a number', 3), rio.rInt('b', 'a number', 4)], 'Adds numbers', { result: [7], other: { A: 'A' }, b: [] });
 
 rio.router.post(routerName, '/sum', (req, res) => {
   let { a, b } = req.body;
@@ -42,6 +42,13 @@ rio.get('/greetings/say/hi', (req, res) => {
 [],
 'Returns Hi!',
 'Hi!');
+
+rio.get('/greetings/get', (req, res) => {
+  res.status(200).send('Hi!');
+},
+[],
+'Returns Hi!',
+[]);
 
 rio.get('/', (req, res) => {
   const result = JSON.stringify({ result: 'Hello, world' });

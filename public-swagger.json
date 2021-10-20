@@ -62,6 +62,58 @@
         }
       }
     },
+    "/greetings/get": {
+      "get": {
+        "summary": "/get",
+        "description": "Returns Hi!",
+        "deprecated": false,
+        "tags": [
+          "/greetings"
+        ],
+        "parameters": [
+          {
+            "name": "version",
+            "in": "query",
+            "description": "A version number",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "example": []
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralError"
+                },
+                "example": {
+                  "errorText": "Error!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/math/sum": {
       "get": {
         "summary": "/sum",
@@ -198,6 +250,11 @@
                     },
                     "other": {
                       "type": "object"
+                    },
+                    "b": {
+                      "items": {
+                        "type": "object"
+                      }
                     }
                   }
                 },
@@ -207,7 +264,8 @@
                   ],
                   "other": {
                     "A": "A"
-                  }
+                  },
+                  "b": []
                 }
               }
             }

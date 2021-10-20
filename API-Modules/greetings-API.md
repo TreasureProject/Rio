@@ -1,15 +1,15 @@
-# /v2
+# /greetings
 
-V2 API documentation
+_No description for this module_
 
 ## Table of Contents
-- [/v2/sum](#endpt-1)
-- [/v2/sum](#endpt-2)
+- [/greetings/get](#endpt-1)
+- [/greetings/say/hi](#endpt-2)
 
 ___
 ###### endpt #1
 ```
-GET - /v2/sum
+GET - /greetings/get
 ```
 
 **Status**: LIVE
@@ -17,38 +17,28 @@ GET - /v2/sum
 **Availability**: PUBLIC
 
 #### Description:
-- Adds numbers
+- Returns Hi!
 
 Params:
 
 | Name | Type | Description |
 |--|--|--|
-| **a** | `integer` | a number (*Required)
-| **b** | `integer` | a number (*Required)
 | **version** | `integer` | A version number (*Required)
 
 
 Example Request:
 ```
-/v2/sum?a=3&b=4&version=1
+/greetings/get?version=1
 ```
 
 Example Response:
 ```
-{
-  "result": [
-    7
-  ],
-  "other": {
-    "A": "A"
-  },
-  "b": []
-}
+[]
 ```
 ___
 ###### endpt #2
 ```
-POST - /v2/sum
+GET - /greetings/say/hi
 ```
 
 **Status**: LIVE
@@ -56,29 +46,21 @@ POST - /v2/sum
 **Availability**: PUBLIC
 
 #### Description:
-- Adds numbers
+- Returns Hi!
 
 Params:
 
 | Name | Type | Description |
 |--|--|--|
-| **a** | `integer` | a number (*Required)
-| **b** | `integer` | a number (*Required)
 | **version** | `integer` | A version number (*Required)
 
 
 Example Request:
 ```
-{
-  "a": 10,
-  "b": 25,
-  "version": 1
-}
+/greetings/say/hi?version=1
 ```
 
 Example Response:
 ```
-[
-  35
-]
+"Hi!"
 ```

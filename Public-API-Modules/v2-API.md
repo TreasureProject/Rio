@@ -41,7 +41,8 @@ Example Response:
   ],
   "other": {
     "A": "A"
-  }
+  },
+  "b": []
 }
 ```
 ___

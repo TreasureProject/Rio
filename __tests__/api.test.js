@@ -114,7 +114,7 @@ afterAll(async () => {
 describe('Using rio.get and rio.put', () => {
   test('Checking endpoints', async () => {
     const { routes } = rio.utils.getEndpoints(app, rio.paths);
-    expect(routes.length).toBe(10);
+    expect(routes.length).toBe(11);
   });
 
   test('Get sum', async () => {
@@ -225,6 +225,14 @@ describe('Using rio.get and rio.put', () => {
   test('Get /greetings/say/hi', async () => {
     const res = await request(app)
       .get('/greetings/say/hi?version=1');
+    expect(res.statusCode).toEqual(200);
+    const { text } = res;
+    expect(text).toEqual('Hi!');
+  });
+
+  test('Get /greetings/get', async () => {
+    const res = await request(app)
+      .get('/greetings/get?version=1');
     expect(res.statusCode).toEqual(200);
     const { text } = res;
     expect(text).toEqual('Hi!');
