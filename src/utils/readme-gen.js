@@ -162,6 +162,7 @@ function writeREADME(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
     content += '## API Modules\n';
     fs.mkdir(apiModuleDirectory, { recursive: true }, (err) => {
       if (err) {
+        /* istanbul ignore next */
         console.log(`Failed to make directory API-Modules due to error ${err}`);
       } else {
         const routesForModule = {};

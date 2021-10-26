@@ -1,5 +1,6 @@
 const express = require('express');
 const rio = require('../src/index');
+const utils = require('../src/utils/index');
 
 const app = express();
 rio.init(app, null, null);
@@ -291,4 +292,8 @@ describe('Optional Argument initializers - shorthand', () => {
     expect(a.required).toBe(false);
     expect(a.description).toBe('Hi!');
   });
+});
+
+test('No rc path', () => {
+  expect(utils.getRioRC(null)).toEqual({});
 });
