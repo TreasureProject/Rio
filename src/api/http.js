@@ -24,7 +24,7 @@ function handleHTTP(globalArgs, req, res, next, callback, isPost) {
     const providedArg = providedArgs[i];
     const value = (isPost ? req.body : req.query)[providedArg.name];
     if (value != null) {
-      let validType = true;
+      let validType = null;
 
       switch (providedArg.type) {
         case ArgumentType.String:
@@ -46,10 +46,11 @@ function handleHTTP(globalArgs, req, res, next, callback, isPost) {
           validType = formatter.Map(value);
           break;
         default:
+          validType = true;
           break;
       }
 
-      if (!validType) {
+      if (validType == null) {
         invalidType(providedArg, res);
         return;
       }
