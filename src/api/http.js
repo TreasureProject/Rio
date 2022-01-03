@@ -18,6 +18,9 @@ function handleHTTP(globalArgs, req, res, next, callback, isPost) {
   const { path, methods } = req.route;
   const m = Object.keys(methods)[0].toUpperCase();
   let providedArgs = rioArgsForEndpoint[`${m}${req.baseUrl}${path}`];
+  if (providedArgs == null) {
+    providedArgs = [];
+  }
   providedArgs = providedArgs.concat(globalArgs);
   const providedArgsCount = providedArgs.length;
   for (let i = 0; i < providedArgsCount; i += 1) {
