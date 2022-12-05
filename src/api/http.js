@@ -25,7 +25,7 @@ function handleHTTP(globalArgs, req, res, next, callback, isPost) {
   const providedArgsCount = providedArgs.length;
   for (let i = 0; i < providedArgsCount; i += 1) {
     const providedArg = providedArgs[i];
-    const argValues = {...req.headers, ...(isPost ? req.body : req.query)};
+    const argValues = { ...req.headers, ...(isPost ? req.body : req.query) };
     const value = argValues[providedArg.name] || argValues[providedArg.name.toLowerCase()];
     if (value != null) {
       let validType = null;
