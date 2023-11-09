@@ -14,7 +14,7 @@ function invalidType(providedArg, res) {
   res.status(403).send(result);
 }
 
-function handleHTTP(globalArgs, req, res, next, callback, isPost) {
+function handleHTTP(globalArgs, req, res, next, callback, useBody) {
   const { path, methods } = req.route;
   const m = Object.keys(methods)[0].toUpperCase();
   let providedArgs = rioArgsForEndpoint[`${m}${req.baseUrl}${path}`];
@@ -25,7 +25,7 @@ function handleHTTP(globalArgs, req, res, next, callback, isPost) {
   const providedArgsCount = providedArgs.length;
   for (let i = 0; i < providedArgsCount; i += 1) {
     const providedArg = providedArgs[i];
-    const argValues = { ...req.headers, ...(isPost ? req.body : req.query) };
+    const argValues = { ...req.headers, ...(useBody ? req.body : req.query) };
     const value = argValues[providedArg.name] || argValues[providedArg.name.toLowerCase()];
     if (value != null) {
       let validType = null;
@@ -67,16 +67,28 @@ function handleHTTP(globalArgs, req, res, next, callback, isPost) {
   callback(req, res, next);
 }
 
-function handleListener(handler, isPost, endpoint, callback) {
-  if (isPost) {
-    handler.post(endpoint, callback);
-  } else {
-    handler.get(endpoint, callback);
+function handleListener(handler, method, endpoint, callback) {
+  switch (method) {
+    case 'POST':
+      handler.post(endpoint, callback);
+      break;
+    case 'PUT':
+      handler.put(endpoint, callback);
+      break;
+    case 'PATCH':
+      handler.patch(endpoint, callback);
+      break;
+    case 'DELETE':
+      handler.delete(endpoint, callback);
+      break;
+    case 'GET':
+    default:
+      handler.get(endpoint, callback);
+      break;
   }
 }
 
-function addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, description, exampleResult, isPost, status, availability, routerName = '') {
-  const method = isPost ? 'POST' : 'GET';
+function addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, description, exampleResult, method, status, availability, routerName = '') {
   const key = `${method}${routerName}${endpoint}`;
   rioArgsForEndpoint[key] = args;
   rioTypeOfEndpoint[key] = method;
@@ -95,16 +107,18 @@ function addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, descripti
     }
 
     rio.paths[key] = {
-      methods: isPost ? { post: true } : { get: true },
+      methods: {
+        [method.toLowerCase()]: true,
+      },
       path: `${routerName}${endpoint}`,
     };
   }
 
   const globals = ignoreGlobals ? [] : rio.globalArgs;
 
-  handleListener(handler, isPost, endpoint, ((req, res, next) => {
-    handleHTTP(globals, req, res, next, callback, isPost);
-  }));
+  handleListener(handler, method, endpoint, (req, res, next) => {
+    handleHTTP(globals, req, res, next, callback, ['POST', 'PUT', 'PATCH'].includes(method));
+  });
 }
 
 module.exports = {

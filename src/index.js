@@ -38,20 +38,44 @@ rio.router.init = (expressRouter, routerName) => {
   rio.routers[routerName] = expressRouter;
 };
 
-rio.post = (endpoint, callback, args = [], description = null, exampleResult = null, status = Status.live, availability = Availability.public, ignoreGlobals = false) => {
-  addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, description, exampleResult, true, status, availability);
+rio.get = (endpoint, callback, args = [], description = null, exampleResult = null, status = Status.live, availability = Availability.public, ignoreGlobals = false) => {
+  addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, description, exampleResult, 'GET', status, availability);
 };
 
-rio.get = (endpoint, callback, args = [], description = null, exampleResult = null, status = Status.live, availability = Availability.public, ignoreGlobals = false) => {
-  addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, description, exampleResult, false, status, availability);
+rio.post = (endpoint, callback, args = [], description = null, exampleResult = null, status = Status.live, availability = Availability.public, ignoreGlobals = false) => {
+  addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, description, exampleResult, 'POST', status, availability);
+};
+
+rio.put = (endpoint, callback, args = [], description = null, exampleResult = null, status = Status.live, availability = Availability.public, ignoreGlobals = false) => {
+  addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, description, exampleResult, 'PUT', status, availability);
+};
+
+rio.patch = (endpoint, callback, args = [], description = null, exampleResult = null, status = Status.live, availability = Availability.public, ignoreGlobals = false) => {
+  addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, description, exampleResult, 'PATCH', status, availability);
+};
+
+rio.delete = (endpoint, callback, args = [], description = null, exampleResult = null, status = Status.live, availability = Availability.public, ignoreGlobals = false) => {
+  addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, description, exampleResult, 'DELETE', status, availability);
 };
 
 rio.router.get = (routerName, endpoint, callback, args = [], description = null, exampleResult = null, status = Status.live, availability = Availability.public, ignoreGlobals = false) => {
-  addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, description, exampleResult, false, status, availability, routerName);
+  addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, description, exampleResult, 'GET', status, availability, routerName);
 };
 
 rio.router.post = (routerName, endpoint, callback, args = [], description = null, exampleResult = null, status = Status.live, availability = Availability.public, ignoreGlobals = false) => {
-  addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, description, exampleResult, true, status, availability, routerName);
+  addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, description, exampleResult, 'POST', status, availability, routerName);
+};
+
+rio.router.put = (routerName, endpoint, callback, args = [], description = null, exampleResult = null, status = Status.live, availability = Availability.public, ignoreGlobals = false) => {
+  addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, description, exampleResult, 'PUT', status, availability, routerName);
+};
+
+rio.router.patch = (routerName, endpoint, callback, args = [], description = null, exampleResult = null, status = Status.live, availability = Availability.public, ignoreGlobals = false) => {
+  addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, description, exampleResult, 'PATCH', status, availability, routerName);
+};
+
+rio.router.delete = (routerName, endpoint, callback, args = [], description = null, exampleResult = null, status = Status.live, availability = Availability.public, ignoreGlobals = false) => {
+  addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, description, exampleResult, 'DELETE', status, availability, routerName);
 };
 
 rio.writeREADME = (path, isPublic = true) => {

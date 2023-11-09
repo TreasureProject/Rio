@@ -24,81 +24,103 @@ const G = RequiredMap('g', true);
 const H = new rio.Argument('h', Nothing, false);
 const I = new rio.Argument('i', Nothing);
 
-rio.get('/hello', (req, res) => {
-  const result = JSON.stringify({ result: 'Hello, world' });
-  res.status(200).send(result);
-},
-[]);
+rio.get(
+  '/hello',
+  (req, res) => {
+    const result = JSON.stringify({ result: 'Hello, world' });
+    res.status(200).send(result);
+  },
+  [],
+);
 
-rio.post('/add', (req, res) => {
-  let { a, b } = req.body;
-  a = parseInt(a, 10);
-  b = parseInt(b, 10);
-  const result = JSON.stringify({ result: a + b });
-  res.status(200).send(result);
-},
-[
-  A,
-  B,
-]);
+rio.post(
+  '/data',
+  (req, res) => {
+    let { a, b } = req.body;
+    a = parseInt(a, 10);
+    b = parseInt(b, 10);
+    const result = JSON.stringify({ result: a + b });
+    res.status(200).send(result);
+  },
+  [A, B],
+);
 
-rio.post('/valids', (req, res) => {
-  let {
-    a,
-    b,
-  } = req.body;
-  a = parseInt(a, 10);
-  b = parseInt(b, 10);
+rio.put(
+  '/data',
+  (req, res) => {
+    let { a, b } = req.body;
+    a = parseInt(a, 10);
+    b = parseInt(b, 10);
+    const result = JSON.stringify({ result: a + b });
+    res.status(200).send(result);
+  },
+  [A, B],
+);
 
-  const {
-    c,
-    d,
-    e,
-    f,
-    g,
-  } = req.body;
+rio.patch(
+  '/data',
+  (req, res) => {
+    let { a, b } = req.body;
+    a = parseInt(a, 10);
+    b = parseInt(b, 10);
+    const result = JSON.stringify({ result: a + b });
+    res.status(200).send(result);
+  },
+  [A, B],
+);
 
-  const cString = rio.formatter.String(c);
-  const dFloat = rio.formatter.Float(d);
-  const eArray = rio.formatter.Array(e);
-  const fBool = rio.formatter.Boolean(f);
-  const gMap = rio.formatter.Map(g);
+rio.delete(
+  '/data',
+  (req, res) => {
+    const { version } = req.query;
+    res.status(200).send(JSON.stringify({ result: version }));
+  },
+  [],
+);
 
-  let r = a + b;
-  if (cString) {
-    r += 1;
-  }
+rio.post(
+  '/valids',
+  (req, res) => {
+    let { a, b } = req.body;
+    a = parseInt(a, 10);
+    b = parseInt(b, 10);
 
-  if (dFloat) {
-    r += 1;
-  }
+    const {
+      c, d, e, f, g,
+    } = req.body;
 
-  if (eArray) {
-    r += 1;
-  }
+    const cString = rio.formatter.String(c);
+    const dFloat = rio.formatter.Float(d);
+    const eArray = rio.formatter.Array(e);
+    const fBool = rio.formatter.Boolean(f);
+    const gMap = rio.formatter.Map(g);
 
-  if (fBool) {
-    r += 1;
-  }
+    let r = a + b;
+    if (cString) {
+      r += 1;
+    }
 
-  if (gMap) {
-    r += 1;
-  }
+    if (dFloat) {
+      r += 1;
+    }
 
-  const result = JSON.stringify({ result: r });
-  res.status(200).send(result);
-},
-[
-  A,
-  B,
-  C,
-  D,
-  E,
-  F,
-  G,
-  H,
-  I,
-]);
+    if (eArray) {
+      r += 1;
+    }
+
+    if (fBool) {
+      r += 1;
+    }
+
+    if (gMap) {
+      r += 1;
+    }
+
+    const result = JSON.stringify({ result: r });
+    res.status(200).send(result);
+  },
+  [A, B, C, D, E, F, G, H, I],
+);
 
 afterEach(async () => {
   await server.close();
@@ -111,15 +133,14 @@ afterAll(async () => {
   }, 500));
 });
 
-describe('Using rio.get and rio.put', () => {
+describe('Using rio.get, rio.put, rio.post, rio.patch, and rio.delete', () => {
   test('Checking endpoints', async () => {
     const { routes } = rio.utils.getEndpoints(app, rio.paths);
-    expect(routes.length).toBe(11);
+    expect(routes.length).toBe(17);
   });
 
   test('Get sum', async () => {
-    const res = await request(app)
-      .get('/math/sum?a=1&b=2&version=1');
+    const res = await request(app).get('/math/sum?a=1&b=2&version=1');
     expect(res.statusCode).toEqual(200);
     const { text } = res;
     const { result } = JSON.parse(text);
@@ -127,27 +148,55 @@ describe('Using rio.get and rio.put', () => {
   });
 
   test('Post, with arguments', async () => {
-    const res = await request(app)
-      .post('/add')
-      .send({
-        a: 1,
-        b: 2,
-        version: 1,
-      });
+    const res = await request(app).post('/data').send({
+      a: 1,
+      b: 2,
+      version: 1,
+    });
     expect(res.statusCode).toEqual(200);
     const { text } = res;
     const { result } = JSON.parse(text);
     expect(result).toEqual(3);
   });
 
+  test('Put, with arguments', async () => {
+    const res = await request(app).put('/data').send({
+      a: 1,
+      b: 2,
+      version: 1,
+    });
+    expect(res.statusCode).toEqual(200);
+    const { text } = res;
+    const { result } = JSON.parse(text);
+    expect(result).toEqual(3);
+  });
+
+  test('Patch, with arguments', async () => {
+    const res = await request(app).patch('/data').send({
+      a: 1,
+      b: 2,
+      version: 1,
+    });
+    expect(res.statusCode).toEqual(200);
+    const { text } = res;
+    const { result } = JSON.parse(text);
+    expect(result).toEqual(3);
+  });
+
+  test('Delete data', async () => {
+    const res = await request(app).delete('/data?version=1');
+    expect(res.statusCode).toEqual(200);
+    const { text } = res;
+    const { result } = JSON.parse(text);
+    expect(result).toEqual('1');
+  });
+
   test('Post, with arguments', async () => {
-    const res = await request(app)
-      .post('/math/makeSum')
-      .send({
-        a: 4,
-        b: 5,
-        version: 1,
-      });
+    const res = await request(app).post('/math/makeSum').send({
+      a: 4,
+      b: 5,
+      version: 1,
+    });
     expect(res.statusCode).toEqual(200);
     const { text } = res;
     const { result } = JSON.parse(text);
@@ -155,12 +204,10 @@ describe('Using rio.get and rio.put', () => {
   });
 
   test('Post, without arguments', async () => {
-    const res = await request(app)
-      .post('/add')
-      .send({
-        a: 1,
-        version: 1,
-      });
+    const res = await request(app).post('/data').send({
+      a: 1,
+      version: 1,
+    });
     expect(res.statusCode).toEqual(403);
     const { text } = res;
     const { error } = JSON.parse(text);
@@ -168,13 +215,11 @@ describe('Using rio.get and rio.put', () => {
   });
 
   test('Post, with wrong type arguments', async () => {
-    const res = await request(app)
-      .post('/add')
-      .send({
-        a: 1,
-        b: 'A',
-        version: 1,
-      });
+    const res = await request(app).post('/data').send({
+      a: 1,
+      b: 'A',
+      version: 1,
+    });
     expect(res.statusCode).toEqual(403);
     const { text } = res;
     const { error } = JSON.parse(text);
@@ -182,19 +227,17 @@ describe('Using rio.get and rio.put', () => {
   });
 
   test('Validating all types', async () => {
-    const res = await request(app)
-      .post('/valids')
-      .send({
-        a: 1,
-        b: 2,
-        c: 'A',
-        d: 1.2,
-        e: [],
-        f: true,
-        g: {},
-        h: '123',
-        version: 1,
-      });
+    const res = await request(app).post('/valids').send({
+      a: 1,
+      b: 2,
+      c: 'A',
+      d: 1.2,
+      e: [],
+      f: true,
+      g: {},
+      h: '123',
+      version: 1,
+    });
     expect(res.statusCode).toEqual(200);
     const { text } = res;
     const { result } = JSON.parse(text);
@@ -202,8 +245,7 @@ describe('Using rio.get and rio.put', () => {
   });
 
   test('Get /', async () => {
-    const res = await request(app)
-      .get('/?version=1');
+    const res = await request(app).get('/?version=1');
     expect(res.statusCode).toEqual(200);
     const { text } = res;
     const { result } = JSON.parse(text);
@@ -211,11 +253,9 @@ describe('Using rio.get and rio.put', () => {
   });
 
   test('Post /', async () => {
-    const res = await request(app)
-      .post('/')
-      .send({
-        version: 1,
-      });
+    const res = await request(app).post('/').send({
+      version: 1,
+    });
     expect(res.statusCode).toEqual(200);
     const { text } = res;
     const { result } = JSON.parse(text);
@@ -223,16 +263,14 @@ describe('Using rio.get and rio.put', () => {
   });
 
   test('Get /greetings/say/hi', async () => {
-    const res = await request(app)
-      .get('/greetings/say/hi?version=1');
+    const res = await request(app).get('/greetings/say/hi?version=1');
     expect(res.statusCode).toEqual(200);
     const { text } = res;
     expect(text).toEqual('Hi!');
   });
 
   test('Get /greetings/get', async () => {
-    const res = await request(app)
-      .get('/greetings/get?version=1');
+    const res = await request(app).get('/greetings/get?version=1');
     expect(res.statusCode).toEqual(200);
     const { text } = res;
     expect(text).toEqual('Hi!');
@@ -326,8 +364,7 @@ describe('Type formatters', () => {
 
 describe('Router tests - GET', () => {
   test('Get correctly', async () => {
-    const res = await request(app)
-      .get('/v2/sum?a=1&b=1&version=1');
+    const res = await request(app).get('/v2/sum?a=1&b=1&version=1');
     expect(res.statusCode).toEqual(200);
     const { text } = res;
     const { result } = JSON.parse(text);
@@ -335,20 +372,17 @@ describe('Router tests - GET', () => {
   });
 
   test('Get missing module', async () => {
-    const res = await request(app)
-      .get('/v1/sum?a=1&b=1&version=1');
+    const res = await request(app).get('/v1/sum?a=1&b=1&version=1');
     expect(res.statusCode).toEqual(404);
   });
 
   test('Get missing arg', async () => {
-    const res = await request(app)
-      .get('/v2/sum?version=1');
+    const res = await request(app).get('/v2/sum?version=1');
     expect(res.statusCode).toEqual(403);
   });
 
   test('Get bad arg', async () => {
-    const res = await request(app)
-      .get('/v2/sum?a=A&version=1');
+    const res = await request(app).get('/v2/sum?a=A&version=1');
     expect(res.statusCode).toEqual(403);
   });
 });
@@ -372,16 +406,12 @@ describe('Router tests - POST', () => {
   });
 
   test('Get missing arg', async () => {
-    const res = await request(app)
-      .post('/v2/sum?version=1')
-      .send({});
+    const res = await request(app).post('/v2/sum?version=1').send({});
     expect(res.statusCode).toEqual(403);
   });
 
   test('Get bad arg', async () => {
-    const res = await request(app)
-      .post('/v2/sum?version=1')
-      .send({ a: 'A' });
+    const res = await request(app).post('/v2/sum?version=1').send({ a: 'A' });
     expect(res.statusCode).toEqual(403);
   });
 });
