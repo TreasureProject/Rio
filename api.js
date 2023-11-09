@@ -34,6 +34,24 @@ rio.router.post(routerName, '/sum', (req, res) => {
   res.status(200).send(JSON.stringify({ result: a + b }));
 }, [rio.rInt('a', 'a number', 10), rio.rInt('b', 'a number', 25)], 'Adds numbers', [35]);
 
+rio.router.put(routerName, '/data', (req, res) => {
+  let { a, b } = req.body;
+  a = rio.formatter.Int(a);
+  b = rio.formatter.Int(b);
+  res.status(200).send(JSON.stringify({ result: {a: a, b: b} }));
+}, [rio.rInt('a', 'a number', 10), rio.rInt('b', 'a number', 25)], 'stores numbers', [{a: 10, b: 25}]);
+
+rio.router.patch(routerName, '/data', (req, res) => {
+  let { a, b } = req.body;
+  a = rio.formatter.Int(a);
+  b = rio.formatter.Int(b);
+  res.status(200).send(JSON.stringify({ result: {a: a, b: b} }));
+}, [rio.oInt('a', 'a number', 10), rio.oInt('b', 'a number', 25)], 'updates stored numbers', [{a: 10, b: 25}]);
+
+rio.router.delete(routerName, '/data', (req, res) => {
+  res.status(200).send(JSON.stringify({ result: true }));
+}, [], 'updates stored numbers', [true]);
+
 app.use(routerName, router);
 
 rio.get('/greetings/say/hi', (req, res) => {

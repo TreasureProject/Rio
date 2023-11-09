@@ -3,11 +3,127 @@
 V2 API documentation
 
 ## Table of Contents
-- [/v2/sum](#endpt-1)
-- [/v2/sum](#endpt-2)
+- [/v2/data](#endpt-1)
+- [/v2/data](#endpt-2)
+- [/v2/data](#endpt-3)
+- [/v2/sum](#endpt-4)
+- [/v2/sum](#endpt-5)
 
 ___
 ###### endpt #1
+```
+DELETE - /v2/data
+```
+
+**Status**: LIVE
+
+**Availability**: PUBLIC
+
+#### Description:
+- updates stored numbers
+
+Params:
+
+| Name | Type | Description |
+|--|--|--|
+| **version** | `integer` | A version number (*Required)
+
+
+Example Request:
+```
+{
+  "version": 1
+}
+```
+
+Example Response:
+```
+[
+  true
+]
+```
+___
+###### endpt #2
+```
+PATCH - /v2/data
+```
+
+**Status**: LIVE
+
+**Availability**: PUBLIC
+
+#### Description:
+- updates stored numbers
+
+Params:
+
+| Name | Type | Description |
+|--|--|--|
+| **a** | `integer` | a number (Optional)
+| **b** | `integer` | a number (Optional)
+| **version** | `integer` | A version number (*Required)
+
+
+Example Request:
+```
+{
+  "a": 10,
+  "b": 25,
+  "version": 1
+}
+```
+
+Example Response:
+```
+[
+  {
+    "a": 10,
+    "b": 25
+  }
+]
+```
+___
+###### endpt #3
+```
+PUT - /v2/data
+```
+
+**Status**: LIVE
+
+**Availability**: PUBLIC
+
+#### Description:
+- stores numbers
+
+Params:
+
+| Name | Type | Description |
+|--|--|--|
+| **a** | `integer` | a number (*Required)
+| **b** | `integer` | a number (*Required)
+| **version** | `integer` | A version number (*Required)
+
+
+Example Request:
+```
+{
+  "a": 10,
+  "b": 25,
+  "version": 1
+}
+```
+
+Example Response:
+```
+[
+  {
+    "a": 10,
+    "b": 25
+  }
+]
+```
+___
+###### endpt #4
 ```
 GET - /v2/sum
 ```
@@ -46,7 +162,7 @@ Example Response:
 }
 ```
 ___
-###### endpt #2
+###### endpt #5
 ```
 POST - /v2/sum
 ```

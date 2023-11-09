@@ -192,6 +192,208 @@
         }
       }
     },
+    "/v2/data": {
+      "delete": {
+        "summary": "/data",
+        "description": "updates stored numbers",
+        "deprecated": false,
+        "tags": [
+          "/v2"
+        ],
+        "parameters": [
+          {
+            "name": "version",
+            "in": "query",
+            "description": "A version number",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1,
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "boolean"
+                  }
+                },
+                "example": [
+                  true
+                ]
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralError"
+                },
+                "example": {
+                  "errorText": "Error!"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "/data",
+        "description": "updates stored numbers",
+        "deprecated": false,
+        "tags": [
+          "/v2"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "a": {
+                    "type": "integer",
+                    "description": "a number",
+                    "format": "int64"
+                  },
+                  "b": {
+                    "type": "integer",
+                    "description": "a number",
+                    "format": "int64"
+                  },
+                  "version": {
+                    "type": "integer",
+                    "description": "A version number",
+                    "format": "int64"
+                  }
+                },
+                "example": {
+                  "a": 10,
+                  "b": 25,
+                  "version": 1
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "example": [
+                  {
+                    "a": 10,
+                    "b": 25
+                  }
+                ]
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralError"
+                },
+                "example": {
+                  "errorText": "Error!"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "/data",
+        "description": "stores numbers",
+        "deprecated": false,
+        "tags": [
+          "/v2"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "a": {
+                    "type": "integer",
+                    "description": "a number",
+                    "format": "int64"
+                  },
+                  "b": {
+                    "type": "integer",
+                    "description": "a number",
+                    "format": "int64"
+                  },
+                  "version": {
+                    "type": "integer",
+                    "description": "A version number",
+                    "format": "int64"
+                  }
+                },
+                "example": {
+                  "a": 10,
+                  "b": 25,
+                  "version": 1
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "example": [
+                  {
+                    "a": 10,
+                    "b": 25
+                  }
+                ]
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralError"
+                },
+                "example": {
+                  "errorText": "Error!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v2/sum": {
       "get": {
         "summary": "/sum",
