@@ -30,8 +30,11 @@ rio.get('/hello', (req, res) => {
 },
 []);
 
-rio.post('/add', (req, res) => {
-  let { a, b } = req.body;
+rio.post('/data', (req, res) => {
+  let {
+    a,
+    b,
+  } = req.body;
   a = parseInt(a, 10);
   b = parseInt(b, 10);
   const result = JSON.stringify({ result: a + b });
@@ -41,6 +44,45 @@ rio.post('/add', (req, res) => {
   A,
   B,
 ]);
+
+rio.put('/data', (req, res) => {
+  let {
+    a,
+    b,
+  } = req.body;
+  a = parseInt(a, 10);
+  b = parseInt(b, 10);
+  const result = JSON.stringify({ result: a + b });
+  res.status(200).send(result);
+},
+[
+  A,
+  B,
+]);
+
+rio.patch('/data', (req, res) => {
+  let {
+    a,
+    b,
+  } = req.body;
+  a = parseInt(a, 10);
+  b = parseInt(b, 10);
+  const result = JSON.stringify({ result: a + b });
+  res.status(200).send(result);
+},
+[
+  A,
+  B,
+]);
+
+rio.delete(
+  '/data',
+  (req, res) => {
+    const { version } = req.query;
+    res.status(200).send(JSON.stringify({ result: version }));
+  },
+  [],
+);
 
 rio.post('/valids', (req, res) => {
   let {
@@ -111,10 +153,10 @@ afterAll(async () => {
   }, 500));
 });
 
-describe('Using rio.get and rio.put', () => {
+describe('Using rio.get, rio.put, rio.post, rio.patch, and rio.delete', () => {
   test('Checking endpoints', async () => {
     const { routes } = rio.utils.getEndpoints(app, rio.paths);
-    expect(routes.length).toBe(11);
+    expect(routes.length).toBe(14);
   });
 
   test('Get sum', async () => {
@@ -128,7 +170,7 @@ describe('Using rio.get and rio.put', () => {
 
   test('Post, with arguments', async () => {
     const res = await request(app)
-      .post('/add')
+      .post('/data')
       .send({
         a: 1,
         b: 2,
@@ -138,6 +180,43 @@ describe('Using rio.get and rio.put', () => {
     const { text } = res;
     const { result } = JSON.parse(text);
     expect(result).toEqual(3);
+  });
+
+  test('Put, with arguments', async () => {
+    const res = await request(app)
+      .put('/data')
+      .send({
+        a: 1,
+        b: 2,
+        version: 1,
+      });
+    expect(res.statusCode).toEqual(200);
+    const { text } = res;
+    const { result } = JSON.parse(text);
+    expect(result).toEqual(3);
+  });
+
+  test('Patch, with arguments', async () => {
+    const res = await request(app)
+      .patch('/data')
+      .send({
+        a: 1,
+        b: 2,
+        version: 1,
+      });
+    expect(res.statusCode).toEqual(200);
+    const { text } = res;
+    const { result } = JSON.parse(text);
+    expect(result).toEqual(3);
+  });
+
+  test('Delete data', async () => {
+    const res = await request(app)
+      .delete('/data?version=1');
+    expect(res.statusCode).toEqual(200);
+    const { text } = res;
+    const { result } = JSON.parse(text);
+    expect(result).toEqual('1');
   });
 
   test('Post, with arguments', async () => {
@@ -156,7 +235,7 @@ describe('Using rio.get and rio.put', () => {
 
   test('Post, without arguments', async () => {
     const res = await request(app)
-      .post('/add')
+      .post('/data')
       .send({
         a: 1,
         version: 1,
@@ -169,7 +248,7 @@ describe('Using rio.get and rio.put', () => {
 
   test('Post, with wrong type arguments', async () => {
     const res = await request(app)
-      .post('/add')
+      .post('/data')
       .send({
         a: 1,
         b: 'A',

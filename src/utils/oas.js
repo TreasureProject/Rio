@@ -103,11 +103,11 @@ function writeRoutes(oas, routes, globalArgs, moduleForEndpoints, rioExampleResu
 
       oas.paths[route][method].tags = [module];
 
-      if (method === 'get') {
+      if (method === 'get' || method === 'delete') {
         oas.paths[route][method].parameters = parameters;
       }
 
-      if (method === 'post') {
+      if (method === 'post' || method === 'patch' || method === 'put') {
         oas.paths[route][method].requestBody = requestBody;
       }
 
