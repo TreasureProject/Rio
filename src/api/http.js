@@ -69,19 +69,19 @@ function handleHTTP(globalArgs, req, res, next, callback, useBody) {
 
 function handleListener(handler, method, endpoint, callback) {
   switch (method) {
-    case "POST":
+    case 'POST':
       handler.post(endpoint, callback);
       break;
-    case "PUT":
+    case 'PUT':
       handler.put(endpoint, callback);
       break;
-    case "PATCH":
+    case 'PATCH':
       handler.patch(endpoint, callback);
       break;
-    case "DELETE":
+    case 'DELETE':
       handler.delete(endpoint, callback);
       break;
-    case "GET":
+    case 'GET':
     default:
       handler.get(endpoint, callback);
       break;
@@ -117,7 +117,7 @@ function addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, descripti
   const globals = ignoreGlobals ? [] : rio.globalArgs;
 
   handleListener(handler, method, endpoint, (req, res, next) => {
-    handleHTTP(globals, req, res, next, callback, ["POST", "PUT", "PATCH"].includes(method));
+    handleHTTP(globals, req, res, next, callback, ['POST', 'PUT', 'PATCH'].includes(method));
   });
 }
 
