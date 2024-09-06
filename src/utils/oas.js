@@ -1,4 +1,4 @@
-const router = require("./router");
+const router = require('./router');
 const {
   getRioRC,
   formatEndpoint,
@@ -6,7 +6,7 @@ const {
   removeModule,
   isInModule,
   isInMiscModule,
-} = require("./rc");
+} = require('./rc');
 
 function writeRoutes(
   oas,
@@ -20,7 +20,7 @@ function writeRoutes(
   rioStatusOfEndpoint,
   rioArgsForEndpoint,
   rioIgnoreGlobalsForEndpoint,
-  rioTagsForEndpoint
+  rioTagsForEndpoint,
 ) {
   const endpointCount = routes.length;
   routes.sort((a, b) => {
@@ -62,12 +62,12 @@ function writeRoutes(
         const argument = args[j];
         const param = {
           name: argument.name,
-          in: "query",
+          in: 'query',
           description: argument.description,
           required: argument.required,
           schema: {
             type: argument.type.oasType,
-            ...(argument.type.oasType === "array" && {
+            ...(argument.type.oasType === 'array' && {
               items: {
                 type: argument.itemType,
               },
@@ -85,7 +85,7 @@ function writeRoutes(
 
         properties[argument.name] = {
           type: argument.type.oasType,
-          ...(argument.type.oasType === "array" && {
+          ...(argument.type.oasType === 'array' && {
             items: {
               type: argument.itemType,
             },
@@ -103,9 +103,9 @@ function writeRoutes(
       const requestBody = {
         required: true,
         content: {
-          "application/json": {
+          'application/json': {
             schema: {
-              type: "object",
+              type: 'object',
               properties,
               example: examplePost,
             },
@@ -115,7 +115,7 @@ function writeRoutes(
 
       let module = moduleForEndpoints[endpoint];
       if (module == null) {
-        module = "Misc";
+        module = 'Misc';
       }
 
       oas.paths[route][method] = {
@@ -123,7 +123,7 @@ function writeRoutes(
         description,
       };
 
-      oas.paths[route][method].deprecated = status.name === "deprecated";
+      oas.paths[route][method].deprecated = status.name === 'deprecated';
 
       if (rioTagsForEndpoint[endpoint].length > 0) {
         oas.paths[route][method].tags = rioTagsForEndpoint[endpoint];
@@ -131,71 +131,71 @@ function writeRoutes(
         oas.paths[route][method].tags = [module];
       }
 
-      if (method === "get" || method === "delete") {
+      if (method === 'get' || method === 'delete') {
         oas.paths[route][method].parameters = parameters;
       }
 
-      if (method === "post" || method === "patch" || method === "put") {
+      if (method === 'post' || method === 'patch' || method === 'put') {
         oas.paths[route][method].requestBody = requestBody;
       }
 
       const goodStatusResponse = {
-        description: "OK",
+        description: 'OK',
       };
 
       let goodStatusContent = null;
       const response = rioExampleResultOfEndpoint[endpoint];
       if (response != null) {
         const isArray = Array.isArray(response);
-        const isObject = typeof response === "object";
-        const isString = typeof response === "string";
-        const isNumber = typeof response === "number";
+        const isObject = typeof response === 'object';
+        const isString = typeof response === 'string';
+        const isNumber = typeof response === 'number';
 
         let type = null;
         let items = null;
         const responseProperties = {};
 
         if (isArray) {
-          type = "array";
+          type = 'array';
           if (response.length > 0) {
             items = {
               type: typeof response[0],
             };
           } else {
             items = {
-              type: "object",
+              type: 'object',
             };
           }
         } else if (isObject) {
-          type = "object";
+          type = 'object';
           const keys = Object.keys(response);
           for (let j = 0; j < keys.length; j += 1) {
             const key = keys[j];
             const value = response[key];
-            const pIsObject = typeof value === "object";
-            const pIsString = typeof value === "string";
-            const pIsNumber = typeof value === "number";
+            const pIsObject = typeof value === 'object';
+            const pIsString = typeof value === 'string';
+            const pIsNumber = typeof value === 'number';
             const pIsArray = Array.isArray(value);
             let valueType = null;
             let valueItems = null;
 
             if (pIsArray) {
-              valueType = "array";
+              valueType = 'array';
               if (value.length > 0) {
                 valueItems = {
                   type: typeof value[0],
                 };
               } else {
                 valueItems = {
-                  type: "object",
+                  type: 'object',
                 };
               }
             } else if (pIsObject) {
-              valueType = "object";
+              valueType = 'object';
             } else if (pIsString) {
-              valueType = "string";
+              valueType = 'string';
             } else if (pIsNumber) {
-              valueType = "number";
+              valueType = 'number';
             }
 
             if (valueType != null) {
@@ -211,9 +211,9 @@ function writeRoutes(
             }
           }
         } else if (isString) {
-          type = "string";
+          type = 'string';
         } else if (isNumber) {
-          type = "number";
+          type = 'number';
         }
 
         if (type != null) {
@@ -230,7 +230,7 @@ function writeRoutes(
           }
 
           goodStatusContent = {
-            "application/json": {
+            'application/json': {
               schema,
               example: response,
             },
@@ -245,11 +245,11 @@ function writeRoutes(
       oas.paths[route][method].responses = {
         200: goodStatusResponse,
         default: {
-          description: "Error",
+          description: 'Error',
           content: {
-            "application/json": {
+            'application/json': {
               schema: {
-                $ref: "#/components/schemas/GeneralError",
+                $ref: '#/components/schemas/GeneralError',
               },
               example: errorExample,
             },
@@ -274,36 +274,36 @@ function oasGenerate(
   rioStatusOfEndpoint,
   rioAvailabilityOfEndpoint,
   rioIgnoreGlobalsForEndpoint,
-  rioTagsForEndpoint
+  rioTagsForEndpoint,
 ) {
   const { moduleForEndpoints, modules, routes } = router.getEndpoints(
     app,
     paths,
     rioStatusOfEndpoint,
     rioAvailabilityOfEndpoint,
-    isPublic
+    isPublic,
   );
   routes.sort();
   const rc = getRioRC(path);
 
   const oas = {};
-  oas.openapi = "3.0.3";
+  oas.openapi = '3.0.3';
 
-  let license = "UNLICENSED";
+  let license = 'UNLICENSED';
   const rcLicense = rc.license;
   if (rcLicense != null) {
     license = rcLicense;
   }
 
   oas.info = {
-    version: "1.0.0",
+    version: '1.0.0',
     title: appName,
     license: {
       name: license,
     },
   };
 
-  let servers = ["NONE"];
+  let servers = ['NONE'];
   const rcServers = rc.servers;
   if (rcServers != null) {
     servers = rcServers;
@@ -321,12 +321,12 @@ function oasGenerate(
 
   let errorModel = {
     error: {
-      type: "string",
+      type: 'string',
     },
   };
 
   let errorExample = {
-    error: "There was an error!!!",
+    error: 'There was an error!!!',
   };
 
   if (rc.errorModel) {
@@ -341,7 +341,7 @@ function oasGenerate(
   if (rc.apiKeys && Array.isArray(rc.apiKeys)) {
     let { apiKeyLocation } = rc;
     if (apiKeyLocation == null) {
-      apiKeyLocation = "query";
+      apiKeyLocation = 'query';
     }
 
     securitySchemes = {};
@@ -349,7 +349,7 @@ function oasGenerate(
     for (let i = 0; i < apiKeyCount; i += 1) {
       const apiKey = rc.apiKeys[i];
       securitySchemes[apiKey] = {
-        type: "apiKey",
+        type: 'apiKey',
         name: apiKey,
         in: apiKeyLocation,
       };
@@ -359,7 +359,7 @@ function oasGenerate(
   oas.components = {
     schemas: {
       GeneralError: {
-        type: "object",
+        type: 'object',
         properties: errorModel,
       },
     },
@@ -384,7 +384,7 @@ function oasGenerate(
       rioStatusOfEndpoint,
       rioArgsForEndpoint,
       rioIgnoreGlobalsForEndpoint,
-      rioTagsForEndpoint
+      rioTagsForEndpoint,
     );
   }
   // This just means that the route is one part like /foo
@@ -401,10 +401,10 @@ function oasGenerate(
     rioStatusOfEndpoint,
     rioArgsForEndpoint,
     rioIgnoreGlobalsForEndpoint,
-    rioTagsForEndpoint
+    rioTagsForEndpoint,
   );
 
-  const fileName = `${isPublic ? "public-" : ""}swagger.json`;
+  const fileName = `${isPublic ? 'public-' : ''}swagger.json`;
   const formatted = JSON.stringify(oas, null, 2);
   writeToFile(fileName, formatted);
 }
