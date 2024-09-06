@@ -8,7 +8,20 @@ const {
   isInMiscModule,
 } = require('./rc');
 
-function writeRoutes(oas, routes, globalArgs, moduleForEndpoints, rioExampleResultOfEndpoint, errorExample, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioStatusOfEndpoint, rioArgsForEndpoint, rioIgnoreGlobalsForEndpoint) {
+function writeRoutes(
+  oas,
+  routes,
+  globalArgs,
+  moduleForEndpoints,
+  rioExampleResultOfEndpoint,
+  errorExample,
+  rioTypeOfEndpoint,
+  rioDescriptionOfEndpoint,
+  rioStatusOfEndpoint,
+  rioArgsForEndpoint,
+  rioIgnoreGlobalsForEndpoint,
+  rioTagsForEndpoint,
+) {
   const endpointCount = routes.length;
   routes.sort((a, b) => {
     if (formatEndpoint(a) < formatEndpoint(b)) {
@@ -54,6 +67,12 @@ function writeRoutes(oas, routes, globalArgs, moduleForEndpoints, rioExampleResu
           required: argument.required,
           schema: {
             type: argument.type.oasType,
+            ...(argument.type.oasType === 'array' && {
+              items: {
+                type: argument.itemType,
+              },
+            }),
+
             example: argument.exampleValue,
           },
         };
@@ -66,6 +85,11 @@ function writeRoutes(oas, routes, globalArgs, moduleForEndpoints, rioExampleResu
 
         properties[argument.name] = {
           type: argument.type.oasType,
+          ...(argument.type.oasType === 'array' && {
+            items: {
+              type: argument.itemType,
+            },
+          }),
           description: argument.description,
         };
 
@@ -101,7 +125,11 @@ function writeRoutes(oas, routes, globalArgs, moduleForEndpoints, rioExampleResu
 
       oas.paths[route][method].deprecated = status.name === 'deprecated';
 
-      oas.paths[route][method].tags = [module];
+      if (rioTagsForEndpoint[endpoint].length > 0) {
+        oas.paths[route][method].tags = rioTagsForEndpoint[endpoint];
+      } else {
+        oas.paths[route][method].tags = [module];
+      }
 
       if (method === 'get' || method === 'delete') {
         oas.paths[route][method].parameters = parameters;
@@ -232,8 +260,29 @@ function writeRoutes(oas, routes, globalArgs, moduleForEndpoints, rioExampleResu
   }
 }
 
-function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint, rioIgnoreGlobalsForEndpoint) {
-  const { moduleForEndpoints, modules, routes } = router.getEndpoints(app, paths, rioStatusOfEndpoint, rioAvailabilityOfEndpoint, isPublic);
+function oasGenerate(
+  path,
+  isPublic,
+  paths,
+  app,
+  appName,
+  globalArgs,
+  rioArgsForEndpoint,
+  rioTypeOfEndpoint,
+  rioDescriptionOfEndpoint,
+  rioExampleResultOfEndpoint,
+  rioStatusOfEndpoint,
+  rioAvailabilityOfEndpoint,
+  rioIgnoreGlobalsForEndpoint,
+  rioTagsForEndpoint,
+) {
+  const { moduleForEndpoints, modules, routes } = router.getEndpoints(
+    app,
+    paths,
+    rioStatusOfEndpoint,
+    rioAvailabilityOfEndpoint,
+    isPublic,
+  );
   routes.sort();
   const rc = getRioRC(path);
 
@@ -323,10 +372,37 @@ function oasGenerate(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
   for (let i = 0; i < modules.length; i += 1) {
     const module = modules[i];
     const moduleRoutes = routes.filter((route) => isInModule(route, module));
-    writeRoutes(oas, moduleRoutes, globalArgs, moduleForEndpoints, rioExampleResultOfEndpoint, errorExample, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioStatusOfEndpoint, rioArgsForEndpoint, rioIgnoreGlobalsForEndpoint);
+    writeRoutes(
+      oas,
+      moduleRoutes,
+      globalArgs,
+      moduleForEndpoints,
+      rioExampleResultOfEndpoint,
+      errorExample,
+      rioTypeOfEndpoint,
+      rioDescriptionOfEndpoint,
+      rioStatusOfEndpoint,
+      rioArgsForEndpoint,
+      rioIgnoreGlobalsForEndpoint,
+      rioTagsForEndpoint,
+    );
   }
+  // This just means that the route is one part like /foo
   const miscRoutes = routes.filter((route) => isInMiscModule(route));
-  writeRoutes(oas, miscRoutes, globalArgs, moduleForEndpoints, rioExampleResultOfEndpoint, errorExample, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioStatusOfEndpoint, rioArgsForEndpoint, rioIgnoreGlobalsForEndpoint);
+  writeRoutes(
+    oas,
+    miscRoutes,
+    globalArgs,
+    moduleForEndpoints,
+    rioExampleResultOfEndpoint,
+    errorExample,
+    rioTypeOfEndpoint,
+    rioDescriptionOfEndpoint,
+    rioStatusOfEndpoint,
+    rioArgsForEndpoint,
+    rioIgnoreGlobalsForEndpoint,
+    rioTagsForEndpoint,
+  );
 
   const fileName = `${isPublic ? 'public-' : ''}swagger.json`;
   const formatted = JSON.stringify(oas, null, 2);
