@@ -8,6 +8,7 @@ const rioExampleResultOfEndpoint = {};
 const rioStatusOfEndpoint = {};
 const rioAvailabilityOfEndpoint = {};
 const rioIgnoreGlobalsForEndpoint = {};
+const rioTagsForEndpoint = {};
 
 function invalidType(providedArg, res) {
   const result = JSON.stringify({ error: `Argument ${providedArg.name} was not of the specified type ${providedArg.type.name}` });
@@ -88,7 +89,7 @@ function handleListener(handler, method, endpoint, callback) {
   }
 }
 
-function addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, description, exampleResult, method, status, availability, routerName = '') {
+function addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, description, exampleResult, method, status, availability, routerName = '', tags = []) {
   const key = `${method}${routerName}${endpoint}`;
   rioArgsForEndpoint[key] = args;
   rioTypeOfEndpoint[key] = method;
@@ -97,6 +98,7 @@ function addHTTPListener(rio, endpoint, ignoreGlobals, callback, args, descripti
   rioStatusOfEndpoint[key] = status;
   rioAvailabilityOfEndpoint[key] = availability;
   rioIgnoreGlobalsForEndpoint[key] = ignoreGlobals;
+  rioTagsForEndpoint[key] = tags;
 
   let handler = rio.app;
 
@@ -130,4 +132,5 @@ module.exports = {
   rioStatusOfEndpoint,
   rioAvailabilityOfEndpoint,
   rioIgnoreGlobalsForEndpoint,
+  rioTagsForEndpoint,
 };
