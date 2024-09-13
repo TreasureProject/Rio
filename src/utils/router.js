@@ -4,10 +4,9 @@ function getEndpoints(app, paths, rioStatusOfEndpoint = {}, rioAvailabilityOfEnd
   const modules = [];
   const moduleForEndpoints = {};
 
-  function addPath(endpoint) {
+  function addModule(endpoint) {
     const parts = endpoint.path.split('/');
     parts.shift();
-    const formatted = `${Object.keys(endpoint.methods)[0].toUpperCase()}${endpoint.path}`;
     if (parts.length > 1) {
       parts.pop();
 
@@ -18,7 +17,37 @@ function getEndpoints(app, paths, rioStatusOfEndpoint = {}, rioAvailabilityOfEnd
           addedModule[module] = true;
           modules.push(module);
         }
-        moduleForEndpoints[formatted] = module;
+      }
+    }
+  }
+
+  function getModuleForEndpoint(endpoint) {
+    let longestMatchCount = -1;
+    let longestModule = null;
+
+    for (let i = 0; i < modules.length; i += 1) {
+      const module = modules[i];
+      if (endpoint.path.startsWith(module) && module.length > longestMatchCount) {
+        longestMatchCount = module.length;
+        longestModule = module;
+      }
+    }
+
+    return longestModule;
+  }
+
+  function addPath(endpoint) {
+    const parts = endpoint.path.split('/');
+    parts.shift();
+    const formatted = `${Object.keys(endpoint.methods)[0].toUpperCase()}${endpoint.path}`;
+    if (parts.length > 1) {
+      parts.pop();
+
+      if (parts.length > 0) {
+        const module = getModuleForEndpoint(endpoint);
+        if (module) {
+          moduleForEndpoints[formatted] = module;
+        }
       }
     }
 
@@ -40,6 +69,21 @@ function getEndpoints(app, paths, rioStatusOfEndpoint = {}, rioAvailabilityOfEnd
     }
   }
 
+  const endpoints = Object.keys(paths);
+  const pathsCount = endpoints.length;
+  for (let i = 0; i < pathsCount; i += 1) {
+    const endpointPath = endpoints[i];
+    const endpoint = paths[endpointPath];
+    addModule(endpoint);
+  }
+
+  app._router.stack.forEach((middleware) => {
+    const endpoint = middleware.route;
+    if (endpoint && endpoint.path && !Array.isArray(endpoint.path)) {
+      addModule(endpoint);
+    }
+  });
+
   app._router.stack.forEach((middleware) => {
     const endpoint = middleware.route;
     if (endpoint && endpoint.path && !Array.isArray(endpoint.path)) {
@@ -47,13 +91,12 @@ function getEndpoints(app, paths, rioStatusOfEndpoint = {}, rioAvailabilityOfEnd
     }
   });
 
-  const endpoints = Object.keys(paths);
-  const pathsCount = endpoints.length;
   for (let i = 0; i < pathsCount; i += 1) {
     const endpointPath = endpoints[i];
     const endpoint = paths[endpointPath];
     addPath(endpoint);
   }
+
   return { routes, modules, moduleForEndpoints };
 }
 

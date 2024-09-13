@@ -35,11 +35,23 @@ function removeModule(route, module) {
   return withoutModule;
 }
 
-function isInModule(route, module) {
+function isInModule(route, module, modules) {
   let parts = route.split('/');
   parts.shift();
   parts = `/${parts.join('/')}`;
-  return parts.startsWith(module);
+
+  let longestMatchCount = -1;
+  let longestModule = null;
+
+  for (let i = 0; i < modules.length; i += 1) {
+    const m = modules[i];
+    if (parts.startsWith(m) && m.length > longestMatchCount) {
+      longestMatchCount = module.length;
+      longestModule = m;
+    }
+  }
+
+  return longestModule === module;
 }
 
 function isInMiscModule(route) {

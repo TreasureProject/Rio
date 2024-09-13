@@ -371,7 +371,7 @@ function oasGenerate(
 
   for (let i = 0; i < modules.length; i += 1) {
     const module = modules[i];
-    const moduleRoutes = routes.filter((route) => isInModule(route, module));
+    const moduleRoutes = routes.filter((route) => isInModule(route, module, modules));
     writeRoutes(
       oas,
       moduleRoutes,
