@@ -1,6 +1,6 @@
 {
   "name": "rio-express",
-  "version": "1.0.17",
+  "version": "1.2.1",
   "description": "Automatic Express API README generator",
   "author": "Ryu Games",
   "repository": "https://github.com/RyuGames/Rio",
@@ -17,7 +17,8 @@
     "coverage": "codecov",
     "readme": "rio init && rio init --private",
     "pub": "npm version patch --force && npm publish",
-    "oas": "rio oas && rio oas --private"
+    "oas": "rio oas && rio oas --private",
+    "docs": "npm run readme && npm run oas"
   },
   "dependencies": {
     "commander": "^8.2.0"

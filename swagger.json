@@ -13,260 +13,6 @@
     }
   ],
   "paths": {
-    "/greetings/say/hi": {
-      "get": {
-        "summary": "/hi",
-        "description": "Returns Hi!",
-        "deprecated": false,
-        "tags": [
-          "/greetings/say"
-        ],
-        "parameters": [
-          {
-            "name": "version",
-            "in": "query",
-            "description": "A version number",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "example": 1,
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                },
-                "example": "Hi!"
-              }
-            }
-          },
-          "default": {
-            "description": "Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GeneralError"
-                },
-                "example": {
-                  "errorText": "Error!"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/greetings/get": {
-      "get": {
-        "summary": "/get",
-        "description": "Returns Hi!",
-        "deprecated": false,
-        "tags": [
-          "/greetings"
-        ],
-        "parameters": [
-          {
-            "name": "version",
-            "in": "query",
-            "description": "A version number",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "example": 1,
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object"
-                  }
-                },
-                "example": []
-              }
-            }
-          },
-          "default": {
-            "description": "Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GeneralError"
-                },
-                "example": {
-                  "errorText": "Error!"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/math/makeSum": {
-      "post": {
-        "summary": "/makeSum",
-        "description": "Adds two numbers together",
-        "deprecated": false,
-        "tags": [
-          "/math"
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "a": {
-                    "type": "integer",
-                    "description": "A number to be added",
-                    "format": "int64"
-                  },
-                  "b": {
-                    "type": "integer",
-                    "description": "Another number to be added",
-                    "format": "int64"
-                  },
-                  "version": {
-                    "type": "integer",
-                    "description": "A version number",
-                    "format": "int64"
-                  }
-                },
-                "example": {
-                  "a": 1,
-                  "b": 1,
-                  "version": 1
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "result": {
-                      "type": "number"
-                    }
-                  }
-                },
-                "example": {
-                  "result": 2
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GeneralError"
-                },
-                "example": {
-                  "errorText": "Error!"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/math/sum": {
-      "get": {
-        "summary": "/sum",
-        "description": "Adds two numbers together",
-        "deprecated": false,
-        "tags": [
-          "/math"
-        ],
-        "parameters": [
-          {
-            "name": "a",
-            "in": "query",
-            "description": "A number to be added",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "example": 1,
-              "format": "int64"
-            }
-          },
-          {
-            "name": "b",
-            "in": "query",
-            "description": "Another number to be added",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "example": 1,
-              "format": "int64"
-            }
-          },
-          {
-            "name": "version",
-            "in": "query",
-            "description": "A version number",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "example": 1,
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "result": {
-                      "type": "number"
-                    }
-                  }
-                },
-                "example": {
-                  "result": 2
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GeneralError"
-                },
-                "example": {
-                  "errorText": "Error!"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/v2/data": {
       "delete": {
         "summary": "/data",
@@ -615,6 +361,309 @@
                 "example": [
                   35
                 ]
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralError"
+                },
+                "example": {
+                  "errorText": "Error!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/greetings/say/:greeting": {
+      "get": {
+        "summary": "/:greeting",
+        "description": "Returns the greeting!",
+        "deprecated": false,
+        "tags": [
+          "/greetings/say"
+        ],
+        "parameters": [
+          {
+            "name": "version",
+            "in": "query",
+            "description": "A version number",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1,
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Hi!"
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralError"
+                },
+                "example": {
+                  "errorText": "Error!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/greetings/say/hi": {
+      "get": {
+        "summary": "/hi",
+        "description": "Returns Hi!",
+        "deprecated": false,
+        "tags": [
+          "/greetings/say"
+        ],
+        "parameters": [
+          {
+            "name": "version",
+            "in": "query",
+            "description": "A version number",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1,
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Hi!"
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralError"
+                },
+                "example": {
+                  "errorText": "Error!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/greetings/get": {
+      "get": {
+        "summary": "/get",
+        "description": "Returns Hi!",
+        "deprecated": false,
+        "tags": [
+          "/greetings"
+        ],
+        "parameters": [
+          {
+            "name": "version",
+            "in": "query",
+            "description": "A version number",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1,
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "example": []
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralError"
+                },
+                "example": {
+                  "errorText": "Error!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/math/makeSum": {
+      "post": {
+        "summary": "/makeSum",
+        "description": "Adds two numbers together",
+        "deprecated": false,
+        "tags": [
+          "/math"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "a": {
+                    "type": "integer",
+                    "description": "A number to be added",
+                    "format": "int64"
+                  },
+                  "b": {
+                    "type": "integer",
+                    "description": "Another number to be added",
+                    "format": "int64"
+                  },
+                  "version": {
+                    "type": "integer",
+                    "description": "A version number",
+                    "format": "int64"
+                  }
+                },
+                "example": {
+                  "a": 1,
+                  "b": 1,
+                  "version": 1
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "example": {
+                  "result": 2
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralError"
+                },
+                "example": {
+                  "errorText": "Error!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/math/sum": {
+      "get": {
+        "summary": "/sum",
+        "description": "Adds two numbers together",
+        "deprecated": false,
+        "tags": [
+          "/math"
+        ],
+        "parameters": [
+          {
+            "name": "a",
+            "in": "query",
+            "description": "A number to be added",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1,
+              "format": "int64"
+            }
+          },
+          {
+            "name": "b",
+            "in": "query",
+            "description": "Another number to be added",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1,
+              "format": "int64"
+            }
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "description": "A version number",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1,
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "example": {
+                  "result": 2
+                }
               }
             }
           },
