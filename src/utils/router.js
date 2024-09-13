@@ -3,6 +3,7 @@ function getEndpoints(app, paths, rioStatusOfEndpoint = {}, rioAvailabilityOfEnd
   const addedModule = {};
   const modules = [];
   const moduleForEndpoints = {};
+  const addedRoute = {};
 
   function addModule(endpoint) {
     const parts = endpoint.path.split('/');
@@ -64,7 +65,8 @@ function getEndpoints(app, paths, rioStatusOfEndpoint = {}, rioAvailabilityOfEnd
       }
     }
 
-    if (canAdd) {
+    if (canAdd && !addedRoute[formatted]) {
+      addedRoute[formatted] = true;
       routes.push(formatted);
     }
   }
