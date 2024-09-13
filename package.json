@@ -17,7 +17,8 @@
     "coverage": "codecov",
     "readme": "rio init && rio init --private",
     "pub": "npm version patch --force && npm publish",
-    "oas": "rio oas && rio oas --private"
+    "oas": "rio oas && rio oas --private",
+    "docs": "npm run readme && npm run oas"
   },
   "dependencies": {
     "commander": "^8.2.0"

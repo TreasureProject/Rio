@@ -51,11 +51,17 @@ function getContentForRoutes(endpoints, globalArgs, rioIgnoreGlobalsForEndpoint,
     const header = `\`\`\`\n${type} - ${formatEndpoint(endpoint)}\n\`\`\`\n\n`;
     content += header;
 
-    const status = rioStatusOfEndpoint[endpoint].name.toUpperCase();
-    content += `**Status**: ${status}\n\n`;
+    const status = rioStatusOfEndpoint[endpoint];
+    if (status && status.name) {
+      const statusText = status.name.toUpperCase();
+      content += `**Status**: ${statusText}\n\n`;
+    }
 
-    const availability = rioAvailabilityOfEndpoint[endpoint].name.toUpperCase();
-    content += `**Availability**: ${availability}\n\n`;
+    const availability = rioAvailabilityOfEndpoint[endpoint];
+    if (availability && availability.name) {
+      const availabilityText = availability.name.toUpperCase();
+      content += `**Availability**: ${availabilityText}\n\n`;
+    }
 
     const description = rioDescriptionOfEndpoint[endpoint];
     if (description != null) {
