@@ -136,7 +136,7 @@ afterAll(async () => {
 describe('Using rio.get, rio.put, rio.post, rio.patch, and rio.delete', () => {
   test('Checking endpoints', async () => {
     const { routes } = rio.utils.getEndpoints(app, rio.paths);
-    expect(routes.length).toBe(17);
+    expect(routes.length).toBe(18);
   });
 
   test('Get sum', async () => {

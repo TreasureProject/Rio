@@ -100,6 +100,17 @@ rio.get(
 );
 
 rio.get(
+  '/greetings/say/:greeting',
+  (req, res) => {
+    const { greeting } = req.params;
+    res.status(200).send(greeting);
+  },
+  [],
+  'Returns the greeting!',
+  'Hi!',
+);
+
+rio.get(
   '/greetings/get',
   (req, res) => {
     res.status(200).send('Hi!');
