@@ -111,6 +111,28 @@ rio.get(
 );
 
 rio.get(
+  '/greetings/say/greet/:greeting/hi',
+  (req, res) => {
+    const { greeting } = req.params;
+    res.status(200).send(`${greeting}, hi!`);
+  },
+  [],
+  'Returns the greeting!',
+  'Hi!',
+);
+
+rio.get(
+  '/greetings/say/greet/:greeting/yo',
+  (req, res) => {
+    const { greeting } = req.params;
+    res.status(200).send(`${greeting}, yo!`);
+  },
+  [],
+  'Returns the greeting!',
+  'Hi!',
+);
+
+rio.get(
   '/greetings/get',
   (req, res) => {
     res.status(200).send('Hi!');

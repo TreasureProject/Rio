@@ -478,6 +478,104 @@
         }
       }
     },
+    "/greetings/say/greet/:greeting/hi": {
+      "get": {
+        "summary": "/hi",
+        "description": "Returns the greeting!",
+        "deprecated": false,
+        "tags": [
+          "/greetings/say/greet/:greeting"
+        ],
+        "parameters": [
+          {
+            "name": "version",
+            "in": "query",
+            "description": "A version number",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1,
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Hi!"
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralError"
+                },
+                "example": {
+                  "errorText": "Error!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/greetings/say/greet/:greeting/yo": {
+      "get": {
+        "summary": "/yo",
+        "description": "Returns the greeting!",
+        "deprecated": false,
+        "tags": [
+          "/greetings/say/greet/:greeting"
+        ],
+        "parameters": [
+          {
+            "name": "version",
+            "in": "query",
+            "description": "A version number",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1,
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Hi!"
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralError"
+                },
+                "example": {
+                  "errorText": "Error!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/greetings/get": {
       "get": {
         "summary": "/get",

@@ -1,6 +1,6 @@
 {
   "name": "rio-express",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Automatic Express API README generator",
   "author": "Ryu Games",
   "repository": "https://github.com/RyuGames/Rio",

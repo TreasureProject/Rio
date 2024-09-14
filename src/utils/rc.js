@@ -46,7 +46,7 @@ function isInModule(route, module, modules) {
   for (let i = 0; i < modules.length; i += 1) {
     const m = modules[i];
     if (parts.startsWith(m) && m.length > longestMatchCount) {
-      longestMatchCount = module.length;
+      longestMatchCount = m.length;
       longestModule = m;
     }
   }
