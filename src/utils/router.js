@@ -1,9 +1,12 @@
-function getEndpoints(app, paths, rioStatusOfEndpoint = {}, rioAvailabilityOfEndpoint = {}, isPublic = true) {
+const { getRioRC } = require('./rc');
+
+function getEndpoints(path, app, paths, rioStatusOfEndpoint = {}, rioAvailabilityOfEndpoint = {}, isPublic = true) {
   const routes = [];
   const addedModule = {};
   const modules = [];
   const moduleForEndpoints = {};
   const addedRoute = {};
+  const rc = getRioRC(path);
 
   function addModule(endpoint) {
     const parts = endpoint.path.split('/');
@@ -14,6 +17,21 @@ function getEndpoints(app, paths, rioStatusOfEndpoint = {}, rioAvailabilityOfEnd
       if (parts.length > 0) {
         let module = parts.join('/');
         module = `/${module}`;
+
+        if (rc && rc.modules) {
+          const modulesInRc = Object.keys(rc.modules);
+          for (let i = 0; i < modulesInRc.length; i += 1) {
+            const m = modulesInRc[i];
+            if (module.startsWith(m)) {
+              if (addedModule[m] == null) {
+                addedModule[m] = true;
+                modules.push(m);
+              }
+              return;
+            }
+          }
+        }
+
         if (addedModule[module] == null) {
           addedModule[module] = true;
           modules.push(module);

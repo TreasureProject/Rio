@@ -277,6 +277,7 @@ function oasGenerate(
   rioTagsForEndpoint,
 ) {
   const { moduleForEndpoints, modules, routes } = router.getEndpoints(
+    path,
     app,
     paths,
     rioStatusOfEndpoint,
@@ -371,7 +372,7 @@ function oasGenerate(
 
   for (let i = 0; i < modules.length; i += 1) {
     const module = modules[i];
-    const moduleRoutes = routes.filter((route) => isInModule(route, module, modules));
+    const moduleRoutes = routes.filter((route) => isInModule(rc, route, module, modules));
     writeRoutes(
       oas,
       moduleRoutes,
