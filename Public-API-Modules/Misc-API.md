@@ -3,8 +3,9 @@
 All other endpoints
 
 ## Table of Contents
-- [/](#endpt-1)
-- [/](#endpt-2)
+- [[GET] — ](#endpt-1)
+- [[POST] — ](#endpt-2)
+- [[GET] — greetings](#endpt-3)
 
 ___
 ###### endpt #1
@@ -67,4 +68,33 @@ Example Response:
 {
   "result": "Hello, world"
 }
+```
+___
+###### endpt #3
+```
+GET - /greetings
+```
+
+**Status**: LIVE
+
+**Availability**: PUBLIC
+
+#### Description:
+- Returns Hello, world!
+
+Params:
+
+| Name | Type | Description |
+|--|--|--|
+| **version** | `integer` | A version number (*Required)
+
+
+Example Request:
+```
+/greetings?version=1
+```
+
+Example Response:
+```
+"Hello, world!"
 ```

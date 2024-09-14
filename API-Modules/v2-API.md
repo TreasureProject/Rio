@@ -3,11 +3,11 @@
 V2 API documentation
 
 ## Table of Contents
-- [/v2/data](#endpt-1)
-- [/v2/data](#endpt-2)
-- [/v2/data](#endpt-3)
-- [/v2/sum](#endpt-4)
-- [/v2/sum](#endpt-5)
+- [[DELETE] — v2/data](#endpt-1)
+- [[PATCH] — v2/data](#endpt-2)
+- [[PUT] — v2/data](#endpt-3)
+- [[GET] — v2/sum](#endpt-4)
+- [[POST] — v2/sum](#endpt-5)
 
 ___
 ###### endpt #1

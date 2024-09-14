@@ -3,16 +3,21 @@ const fs = require('fs');
 function getRioRC(path) {
   if (path) {
     // eslint-disable-next-line
-    const rc = require(`${path}/.riorc.js`);
-    return rc;
+    return require(`${path}/.riorc.js`);
   }
-  return {};
+
+  // eslint-disable-next-line
+  return require(`${process.cwd()}/.riorc.js`);
 }
 
-function formatEndpoint(route) {
+function formatEndpoint(route, version = 1) {
   let parts = route.split('/');
-  parts.shift();
-  parts = `/${parts.join('/')}`;
+  if (version === 1) {
+    parts.shift();
+    parts = `/${parts.join('/')}`;
+  } else {
+    parts = `[${parts[0]}] — ${parts.slice(1).join('/')}`;
+  }
   return parts;
 }
 
@@ -35,10 +40,20 @@ function removeModule(route, module) {
   return withoutModule;
 }
 
-function isInModule(route, module, modules) {
+function isInModule(rc, route, module, modules) {
   let parts = route.split('/');
   parts.shift();
   parts = `/${parts.join('/')}`;
+
+  if (rc && rc.modules) {
+    const modulesInRc = Object.keys(rc.modules);
+    for (let i = 0; i < modulesInRc.length; i += 1) {
+      const m = modulesInRc[i];
+      if (module.startsWith(m) && parts.startsWith(m)) {
+        return true;
+      }
+    }
+  }
 
   let longestMatchCount = -1;
   let longestModule = null;

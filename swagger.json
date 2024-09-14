@@ -380,13 +380,13 @@
         }
       }
     },
-    "/greetings/say/:greeting": {
+    "/greetings": {
       "get": {
-        "summary": "/:greeting",
-        "description": "Returns the greeting!",
+        "summary": "/greetings",
+        "description": "Returns Hello, world!",
         "deprecated": false,
         "tags": [
-          "/greetings/say"
+          "Misc"
         ],
         "parameters": [
           {
@@ -409,154 +409,7 @@
                 "schema": {
                   "type": "string"
                 },
-                "example": "Hi!"
-              }
-            }
-          },
-          "default": {
-            "description": "Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GeneralError"
-                },
-                "example": {
-                  "errorText": "Error!"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/greetings/say/hi": {
-      "get": {
-        "summary": "/hi",
-        "description": "Returns Hi!",
-        "deprecated": false,
-        "tags": [
-          "/greetings/say"
-        ],
-        "parameters": [
-          {
-            "name": "version",
-            "in": "query",
-            "description": "A version number",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "example": 1,
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                },
-                "example": "Hi!"
-              }
-            }
-          },
-          "default": {
-            "description": "Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GeneralError"
-                },
-                "example": {
-                  "errorText": "Error!"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/greetings/say/greet/:greeting/hi": {
-      "get": {
-        "summary": "/hi",
-        "description": "Returns the greeting!",
-        "deprecated": false,
-        "tags": [
-          "/greetings/say/greet/:greeting"
-        ],
-        "parameters": [
-          {
-            "name": "version",
-            "in": "query",
-            "description": "A version number",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "example": 1,
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                },
-                "example": "Hi!"
-              }
-            }
-          },
-          "default": {
-            "description": "Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GeneralError"
-                },
-                "example": {
-                  "errorText": "Error!"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/greetings/say/greet/:greeting/yo": {
-      "get": {
-        "summary": "/yo",
-        "description": "Returns the greeting!",
-        "deprecated": false,
-        "tags": [
-          "/greetings/say/greet/:greeting"
-        ],
-        "parameters": [
-          {
-            "name": "version",
-            "in": "query",
-            "description": "A version number",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "example": 1,
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                },
-                "example": "Hi!"
+                "example": "Hello, world!"
               }
             }
           },
@@ -609,6 +462,202 @@
                   }
                 },
                 "example": []
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralError"
+                },
+                "example": {
+                  "errorText": "Error!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/greetings/say/:greeting": {
+      "get": {
+        "summary": "/say/:greeting",
+        "description": "Returns the greeting!",
+        "deprecated": false,
+        "tags": [
+          "/greetings"
+        ],
+        "parameters": [
+          {
+            "name": "version",
+            "in": "query",
+            "description": "A version number",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1,
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Hi!"
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralError"
+                },
+                "example": {
+                  "errorText": "Error!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/greetings/say/greet/:greeting/hi": {
+      "get": {
+        "summary": "/say/greet/:greeting/hi",
+        "description": "Returns the greeting!",
+        "deprecated": false,
+        "tags": [
+          "/greetings"
+        ],
+        "parameters": [
+          {
+            "name": "version",
+            "in": "query",
+            "description": "A version number",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1,
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Hi!"
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralError"
+                },
+                "example": {
+                  "errorText": "Error!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/greetings/say/greet/:greeting/yo": {
+      "get": {
+        "summary": "/say/greet/:greeting/yo",
+        "description": "Returns the greeting!",
+        "deprecated": false,
+        "tags": [
+          "/greetings"
+        ],
+        "parameters": [
+          {
+            "name": "version",
+            "in": "query",
+            "description": "A version number",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1,
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Hi!"
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralError"
+                },
+                "example": {
+                  "errorText": "Error!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/greetings/say/hi": {
+      "get": {
+        "summary": "/say/hi",
+        "description": "Returns Hi!",
+        "deprecated": false,
+        "tags": [
+          "/greetings"
+        ],
+        "parameters": [
+          {
+            "name": "version",
+            "in": "query",
+            "description": "A version number",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1,
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Hi!"
               }
             }
           },

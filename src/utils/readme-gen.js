@@ -37,7 +37,7 @@ function getContentForRoutes(endpoints, globalArgs, rioIgnoreGlobalsForEndpoint,
     content += '## Table of Contents\n';
     for (let i = 0; i < endpointCount; i += 1) {
       const endpoint = endpoints[i];
-      content += `- [${formatEndpoint(endpoint)}](#endpt-${i + 1})\n`;
+      content += `- [${formatEndpoint(endpoint, 2)}](#endpt-${i + 1})\n`;
     }
     content += '\n';
   }
@@ -152,7 +152,7 @@ function writeNoModules(apiREADME, cnt, globalArgs, rioIgnoreGlobalsForEndpoint,
 }
 
 function writeREADME(path, isPublic, paths, app, appName, globalArgs, rioArgsForEndpoint, rioTypeOfEndpoint, rioDescriptionOfEndpoint, rioExampleResultOfEndpoint, rioStatusOfEndpoint, rioAvailabilityOfEndpoint, rioIgnoreGlobalsForEndpoint) {
-  const { modules, routes } = router.getEndpoints(app, paths, rioStatusOfEndpoint, rioAvailabilityOfEndpoint, isPublic);
+  const { modules, routes } = router.getEndpoints(path, app, paths, rioStatusOfEndpoint, rioAvailabilityOfEndpoint, isPublic);
   routes.sort();
   const rc = getRioRC(path);
 
@@ -175,7 +175,7 @@ function writeREADME(path, isPublic, paths, app, appName, globalArgs, rioArgsFor
         let totalEndpoints = 0;
         for (let i = 0; i < modules.length; i += 1) {
           const module = modules[i];
-          const moduleRoutes = routes.filter((route) => isInModule(route, module, modules));
+          const moduleRoutes = routes.filter((route) => isInModule(rc, route, module, modules));
           routesForModule[module] = moduleRoutes;
           const moduleRoutesCount = moduleRoutes.length;
           if (moduleRoutesCount > 0) {

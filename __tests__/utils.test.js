@@ -1,6 +1,6 @@
 const express = require('express');
 const rio = require('../src/index');
-const utils = require('../src/utils/index');
+const { getEndpoints } = require('../src/utils');
 
 const app = express();
 rio.init(app, null, null);
@@ -18,7 +18,7 @@ test('Write to OAS no crash', () => {
 });
 
 test('Getting endpoints', () => {
-  const { routes } = rio.utils.getEndpoints(app, rio.paths);
+  const { routes } = getEndpoints(null, app, rio.paths);
   expect(routes.length).toBe(1);
 });
 
@@ -292,8 +292,4 @@ describe('Optional Argument initializers - shorthand', () => {
     expect(a.required).toBe(false);
     expect(a.description).toBe('Hi!');
   });
-});
-
-test('No rc path', () => {
-  expect(utils.getRioRC(null)).toEqual({});
 });

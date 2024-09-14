@@ -3,8 +3,8 @@
 All math related functionality
 
 ## Table of Contents
-- [/math/makeSum](#endpt-1)
-- [/math/sum](#endpt-2)
+- [[POST] — math/makeSum](#endpt-1)
+- [[GET] — math/sum](#endpt-2)
 
 ___
 ###### endpt #1

@@ -3,7 +3,7 @@
 All math related functionality
 
 ## Table of Contents
-- [/math/sum](#endpt-1)
+- [[GET] — math/sum](#endpt-1)
 
 ___
 ###### endpt #1

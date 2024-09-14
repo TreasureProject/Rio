@@ -2,10 +2,8 @@
 
 ## API Modules
 - [/v2](API-Modules/v2-API.md) (5 total endpoints)
-- [/greetings/say](API-Modules/greetings-say-API.md) (2 total endpoints)
-- [/greetings/say/greet/:greeting](API-Modules/greetings-say-greet-:greeting-API.md) (2 total endpoints)
-- [/greetings](API-Modules/greetings-API.md) (1 total endpoint)
+- [/greetings](API-Modules/greetings-API.md) (6 total endpoints)
 - [/math](API-Modules/math-API.md) (2 total endpoints)
-- [Misc](API-Modules/Misc-API.md) (2 total endpoints)
+- [Misc](API-Modules/Misc-API.md) (3 total endpoints)
 
-Total Endpoints: 14
+Total Endpoints: 16

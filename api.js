@@ -90,6 +90,16 @@ rio.router.delete(
 app.use(routerName, router);
 
 rio.get(
+  '/greetings',
+  (req, res) => {
+    res.status(200).send('Hello, world!');
+  },
+  [],
+  'Returns Hello, world!',
+  'Hello, world!',
+);
+
+rio.get(
   '/greetings/say/hi',
   (req, res) => {
     res.status(200).send('Hi!');
